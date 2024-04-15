@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 /* default ful styling, ändra sen till egen */
 * {
   box-sizing: border-box;
@@ -14,13 +12,21 @@ html {
 }
 
 body {
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-family: 'Poppins';
-  background: #360033;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-family: "Poppins";
+  background: #360033; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #0b8793,
+    #360033
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #0b8793,
+    #360033
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-
 
 /* img {
   border-radius: 10px;
@@ -32,8 +38,12 @@ body {
 } */
 
 .mini-audio-player {
-  background: linear-gradient(to top, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: #360033;  /* fallback for old browsers */
+  background: linear-gradient(
+    to top,
+    #0b8793,
+    #360033
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #360033; /* fallback for old browsers */
   opacity: 98%;
 }
 
@@ -44,9 +54,7 @@ body {
   margin-bottom: 0;
   padding: 2px;
   line-height: 38px;
-  
 }
-
 
 /* audio image */
 .icon-wrapper {
@@ -54,17 +62,17 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin: 5px;
 }
-
 
 .audio-icon {
   font-size: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  border-radius: 4px;
   background: #989898;
 }
 
@@ -77,7 +85,7 @@ body {
 
 .mini .audio-image {
   width: 60px;
-  height: 70px;
+  height: 60px;
 }
 
 .display-container .mini {
@@ -92,7 +100,8 @@ body {
 
 /* controls */
 
-.controls button, .volume button {
+.controls button,
+.volume button {
   border: none;
   background-color: transparent;
   margin-right: 8px;
@@ -124,8 +133,6 @@ button:not(.volBtn) svg {
   justify-content: space-between;
 }
 
-
-
 /* time */
 .time {
   color: #d6d6d6e4;
@@ -142,8 +149,8 @@ button:not(.volBtn) svg {
   font-size: 0.875rem;
   line-height: 1.25rem;
   text-align: center;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   background-color: #fafafa;
   border-bottom: 1px solid #f0f0f2;
 }
@@ -156,11 +163,9 @@ button:not(.volBtn) svg {
   margin: 0;
 }
 
-
 /* ------------------------------------------ */
 
-
-input[type=radio] {
+input[type="radio"] {
   display: none;
 }
 
@@ -171,7 +176,7 @@ input[type=radio] {
   left: 0;
   right: 0;
   margin: auto;
-  transition: transform .4s ease;
+  transition: transform 0.4s ease;
   cursor: pointer;
 }
 
@@ -201,39 +206,44 @@ input[type=radio] {
   object-fit: cover;
 }
 
-#item-1:checked ~ .cards #song-3, #item-2:checked ~ .cards #song-1, #item-3:checked ~ .cards #song-2 {
-  transform: translatex(-40%) scale(.8);
-  opacity: .4;
+#item-1:checked ~ .cards #song-3,
+#item-2:checked ~ .cards #song-1,
+#item-3:checked ~ .cards #song-2 {
+  transform: translatex(-40%) scale(0.8);
+  opacity: 0.4;
   z-index: 0;
 }
 
-#item-1:checked ~ .cards #song-2, #item-2:checked ~ .cards #song-3, #item-3:checked ~ .cards #song-1 {
-  transform: translatex(40%) scale(.8);
-  opacity: .4;
+#item-1:checked ~ .cards #song-2,
+#item-2:checked ~ .cards #song-3,
+#item-3:checked ~ .cards #song-1 {
+  transform: translatex(40%) scale(0.8);
+  opacity: 0.4;
   z-index: 0;
 }
 
-#item-1:checked ~ .cards #song-1, #item-2:checked ~ .cards #song-2, #item-3:checked ~ .cards #song-3 {
+#item-1:checked ~ .cards #song-1,
+#item-2:checked ~ .cards #song-2,
+#item-3:checked ~ .cards #song-3 {
   transform: translatex(0) scale(1);
   opacity: 1;
   z-index: 1;
 }
-  
-#item-1:checked ~ .cards #song-1 img, 
-#item-2:checked ~ .cards #song-2 img, 
-#item-3:checked ~ .cards #song-3 img {
-    box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
-  }
 
+#item-1:checked ~ .cards #song-1 img,
+#item-2:checked ~ .cards #song-2 img,
+#item-3:checked ~ .cards #song-3 img {
+  box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
+}
 
 #item-2:checked ~ .player #test {
   transform: translateY(0);
 }
 
-#item-2:checked ~ .player #test  {
+#item-2:checked ~ .player #test {
   transform: translateY(-40px);
 }
 
-#item-3:checked ~ .player #test  {
+#item-3:checked ~ .player #test {
   transform: translateY(-80px);
 }

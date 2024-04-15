@@ -1,8 +1,7 @@
-import { state } from './state';
-import axios from 'axios';
-import { Dispatch } from '@reduxjs/toolkit';
-import { setTracksFromApi } from '../configureStore/musicSlice';
-
+import { state } from "./state";
+import axios from "axios";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setTracksFromApi } from "../configureStore/musicSlice";
 
 // //------------- Get Tracks ----------------//
 
@@ -31,16 +30,14 @@ import { setTracksFromApi } from '../configureStore/musicSlice';
 
 //// ------- ANVÄND FUNKTIONEN NEDANFÖR FÖR HÄMTNING ----------- //
 
-
-
 const API_URL = "https://api.jamendo.com/v3.0/";
 const clientId = "5bcc718f";
 
 interface FetchParams {
-  [key: string]: any;  // Flexiblare än att använda string
+  [key: string]: any; // Flexiblare än att använda string
 }
 
-export const fetchDataFromJamendo = async<T>(
+export const fetchDataFromJamendo = async <T>(
   endpoint: string,
   params: FetchParams = {},
   dispatch: Dispatch<any>,
@@ -52,14 +49,14 @@ export const fetchDataFromJamendo = async<T>(
     ...params,
   };
   const queryParameters = new URLSearchParams(queryParams).toString();
-  
 
   try {
-    const response = await axios.get<{results: T}>(
+    const response = await axios.get<{ results: T }>(
       `${API_URL}${endpoint}?${queryParameters}`
     );
     if (response) {
-         dispatch(action(response.data.results));
+      console.log("response", response);
+      dispatch(action(response.data.results));
     }
   } catch (error) {
     console.error(error);
