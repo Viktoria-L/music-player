@@ -4,6 +4,8 @@ import { handleNext, setDuration } from "../configureStore/musicSlice";
 import { RootState } from "../configureStore/configureStore";
 
 //TODO, vill man inte spara currentTrack infon i local storage så när man öppnar sidan så läses iaf de senaste in i denna
+//FÖR NU SÅ VISAS DEN BILD SOM ÄR FÄRSTA FEATURED TRACK.. i minidisplayen
+
 //Renders audio content
 const MiniDisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
   const dispatch = useDispatch();

@@ -1,5 +1,4 @@
 import AudioPlayer from "../music-player/maximizedPlayer/AudioPlayer";
-import { FeaturedAlbums } from "../components/FeaturedAlbums";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -55,7 +54,7 @@ const Home = () => {
         <p className="tracking-wide mt-2">Explore new music everyday</p>
 
         <button
-          className="bold border m-5"
+          className="bold border mt-5"
           onClick={() =>
             fetchDataFromJamendo<Album[]>(
               "albums",
@@ -68,7 +67,7 @@ const Home = () => {
           Fetch featured albums from Jamendo
         </button>
         <button
-          className="bold border m-5"
+          className="bold border mt-5"
           onClick={() =>
             fetchDataFromJamendo<Track[]>(
               "tracks",

@@ -14,8 +14,8 @@ import { RootState } from "../configureStore/configureStore";
 const MiniAudioPlayer = () => {
   const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
 
-  const audioRef = useRef();
-  const progressBarRef = useRef();
+  const audioRef = useRef<HTMLAudioElement>();
+  const progressBarRef = useRef<HTMLInputElement>();
 
   return (
     <div className="mini-audio-player fixed bottom-0 h-20 w-full">

@@ -44,7 +44,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="w-full h-20 relaive top-0 flex justify-between items-center px-4">
+    <header className="w-full h-20 fixed top-0 flex justify-between items-center px-4 z-9">
       <GiAllSeeingEye className="text-5xl z-10" />
 
       {showSearch ? (
