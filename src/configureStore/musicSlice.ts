@@ -7,7 +7,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 //Spara musiken som man laddat i state här
 //TODO, låten behöver in här
 
-interface CurrentTrack {
+interface TrackInfo {
   id: string;
   artist_name?: string;
   audio: string;
@@ -20,7 +20,8 @@ interface MusicState {
   timeProgress: number;
   duration: number;
   tracks: Track[];
-  currentTrack: CurrentTrack;
+  singleTrack: TrackInfo;
+  currentTrack: TrackInfo;
   albums: Album[];
   currentAlbum: Album | null;
 }
@@ -30,18 +31,21 @@ const initialState: MusicState = {
   timeProgress: 0,
   duration: 0,
   tracks: [],
+  singleTrack: {
+    id: "",
+    image: "",
+    artist_name: "",
+    name: "Nothing",
+    audio:
+      "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
+  },
   currentTrack: {
     id: "",
     image: "",
-    // position: 0,
     artist_name: "",
     name: "Nothing",
-    // duration: 0,
-    // license_ccurl: "",
     audio:
       "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
-    // audiodownload: "",
-    // audiodownload_allowed: false
   },
   albums: [],
   currentAlbum: {
@@ -69,6 +73,9 @@ const musicSlice = createSlice({
         state.currentTrack = action.payload[0];
       }
     },
+    setSingleTrack: (state, action: PayloadAction<Track>) => {
+      state.singleTrack = action.payload;
+    },
     setAlbums: (state, action: PayloadAction<Album[]>) => {
       state.albums = action.payload;
     },
@@ -77,6 +84,18 @@ const musicSlice = createSlice({
     },
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
+    },
+    resetTracks: (state) => {
+      state.tracks = [];
+      state.trackIndex = 0;
+      state.currentTrack = {
+        id: "",
+        image: "",
+        artist_name: "",
+        name: "Nothing",
+        audio:
+          "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
+      };
     },
     handleNext: (state) => {
       if (state.trackIndex >= state.tracks.length - 1) {
@@ -112,5 +131,7 @@ export const {
   setAlbums,
   setCurrentAlbum,
   setCurrentTrack,
+  setSingleTrack,
+  resetTracks,
 } = musicSlice.actions;
 export default musicSlice.reducer;

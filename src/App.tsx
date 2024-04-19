@@ -1,34 +1,38 @@
-import './App.css'
+import "./App.css";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  RouterProvider
+  RouterProvider,
 } from "react-router-dom";
-import Root from './pages/Root';
-import Home from './pages/Home';
-import AlbumPage from './pages/AlbumPage';
+import Root from "./pages/Root";
+import Home from "./pages/Home";
+import AlbumPage from "./pages/AlbumPage";
+import TrackPage from "./pages/TrackPage";
+import FeaturedPage from "./pages/FeaturedPage";
 
 function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Root />}>
+        <Route index element={<Home />}></Route>
+        <Route path="/album/:id" element={<AlbumPage />}></Route>
+        <Route path="/track/:id" element={<TrackPage />}></Route>
+        <Route path="/featured" element={<FeaturedPage />}></Route>
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Root />}>
-       <Route index element={<Home />}></Route>
-       <Route path='/album/:id' element={<AlbumPage />}></Route>
-       {/* <Route path='/search' element={<SearchResults />}></Route>
+        {/* <Route path='/search' element={<SearchResults />}></Route>
        <Route path='/artist/:id' element={<ArtistPage />}></Route>
        <Route path='/' element={< />}></Route>
        <Route path='/playlist/:id' element={<Playlist />}></Route> */}
-    </Route>
-  )
-)
+      </Route>
+    )
+  );
 
   return (
     <>
-<RouterProvider router={router} />
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

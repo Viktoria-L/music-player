@@ -35,7 +35,7 @@ const Root = () => {
       <div className="h-full flex overflow-hidden flex-grow mt-20">
         <Navbar openNav={openNav} setOpenNav={setOpenNav} />
         <div
-          className={`duration-300 transition-width ease-in-out flex overflow-hidden flex-grow ${
+          className={`duration-300 pb-20 transition-width ease-in-out flex overflow-hidden flex-grow ${
             openNav ? "ml-72" : "ml-20"
           }`}
         >

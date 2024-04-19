@@ -11,11 +11,26 @@ import { fetchDataFromJamendo } from "../utils/http";
 import { Featured } from "../components/Featured";
 import { EntityType } from "../components/Featured";
 import { Track } from "../models/TracksResponse";
+import { RootState } from "@reduxjs/toolkit/query";
+import GenreSelector from "../components/GenreSelector";
 
 const Home = () => {
   const [musicData, setMusicData] = useState(null);
   const dispatch = useDispatch();
+  const data = useSelector((state: RootState) => state.musicInStore.tracks);
   //const currentalbum: Album = useSelector((state: RootState) => state.musicInStore.currentAlbum);
+
+  useEffect(() => {
+    console.log("tracks från slice", data);
+    //TODO, antingen måste datan hämtas här eller sparas i ett FeaturedTrack state, jag behöver separera på playibg tracks och
+    //tracks som visas ut
+    // fetchDataFromJamendo<Track[]>(
+    //   "tracks",
+    //   { limit: "10", featured: 1 },
+    //   dispatch,
+    //   setTracksFromApi
+    // );
+  }, []);
 
   // SE GENERISK HÄMTNING I HTTP.JS FILEN //
 
@@ -82,6 +97,7 @@ const Home = () => {
 
         <Featured entity={EntityType.Albums} />
         <Featured entity={EntityType.Tracks} />
+        <GenreSelector />
       </div>
     </>
   );

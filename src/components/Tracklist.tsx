@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../configureStore/configureStore";
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
-import { setCurrentTrack } from "../configureStore/musicSlice";
+import {
+  setCurrentTrack,
+  setTracksFromApi,
+} from "../configureStore/musicSlice";
 
 export const Tracklist = () => {
   const dispatch = useDispatch();
@@ -49,7 +52,7 @@ export const Tracklist = () => {
                     <IoPlay
                       className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
                       aria-hidden="true"
-                      onClick={() => dispatch(setCurrentTrack(track))}
+                      onClick={() => dispatch(setTracksFromApi(tracks))}
                     />
                   </div>
                 </td>
