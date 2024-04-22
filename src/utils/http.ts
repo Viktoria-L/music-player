@@ -37,11 +37,11 @@ interface FetchParams {
   [key: string]: any; // Flexiblare än att använda string
 }
 
-export const fetchDataFromJamendo = async <T>(
+export const fetchDataFromJamendo = async <T, P>(
   endpoint: string,
   params: FetchParams = {},
   dispatch: Dispatch<any>,
-  action: (data: T) => { type: string; payload: T }
+  action: (data: T) => { type: string; payload: P }
 ) => {
   const queryParams: Record<string, string> = {
     client_id: clientId,

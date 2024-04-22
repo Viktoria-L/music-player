@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../configureStore/configureStore";
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
-import {
-  setCurrentTrack,
-  setTracksFromApi,
-} from "../configureStore/musicSlice";
+import { setPlayStatus, setTracksFromApi } from "../configureStore/musicSlice";
 
 export const Tracklist = () => {
   const dispatch = useDispatch();
@@ -17,6 +14,13 @@ export const Tracklist = () => {
   useEffect(() => {
     console.log("tracks", tracks);
   }, [tracks]);
+
+  const handlePlay = (index: number) => {
+    if (tracks) {
+      dispatch(setTracksFromApi({ tracks, index }));
+      dispatch(setPlayStatus(true));
+    }
+  };
 
   return (
     <div>
@@ -45,14 +49,14 @@ export const Tracklist = () => {
         </thead>
         <tbody className="divide-y divide-gray-500">
           {tracks &&
-            tracks.map((track) => (
+            tracks.map((track, index) => (
               <tr key={track.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <IoPlay
                       className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
                       aria-hidden="true"
-                      onClick={() => dispatch(setTracksFromApi(tracks))}
+                      onClick={() => handlePlay(index)}
                     />
                   </div>
                 </td>

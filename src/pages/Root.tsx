@@ -30,12 +30,12 @@ const Root = () => {
   }, [windowWidth, threshold]);
 
   return (
-    <div className="text-white flex flex-col h-screen min-w-[345px]">
+    <div className="text-white flex flex-col h-[calc(100vh-80px)] min-w-[345px]">
       <Header />
       <div className="h-full flex overflow-hidden flex-grow mt-20">
         <Navbar openNav={openNav} setOpenNav={setOpenNav} />
         <div
-          className={`duration-300 pb-20 transition-width ease-in-out flex overflow-hidden flex-grow ${
+          className={`duration-300 transition-width ease-in-out flex overflow-auto flex-grow ${
             openNav ? "ml-72" : "ml-20"
           }`}
         >
@@ -48,14 +48,3 @@ const Root = () => {
 };
 
 export default Root;
-
-{
-  /* <div className="text-white relative min-w-[345px]">
-      <Header />
-      <div className="flex h-[calc(100vh-80px)]">
-        <Navbar />
-        <Outlet />
-      </div>
-      <MiniAudioPlayer />
-    </div> */
-}

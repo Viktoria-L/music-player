@@ -1,9 +1,5 @@
-// import DisplayTrack from "./DisplayTrack";
-//import Controls from "./Controls";
 import ProgressBar from "./ProgressBar";
 import { useRef } from "react";
-//import { tracks } from '../../assets/music/tracks';
-//import { useSelector } from "react-redux";
 import { PlayControls } from "./PlayControls";
 import { VolumeControls } from "./VolumeControls";
 import MiniDisplayTrack from "./MiniDisplayTrack";
@@ -19,7 +15,7 @@ const MiniAudioPlayer = () => {
 
   return (
     <div className="mini-audio-player fixed bottom-0 h-20 w-full">
-      <div className="inner flex md:gap-40">
+      <div className="inner flex md:gap-20">
         <MiniDisplayTrack
           {...{ audioRef, progressBarRef, tracks }}
           mini="mini"

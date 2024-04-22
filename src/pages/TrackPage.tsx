@@ -2,9 +2,14 @@ import { useLocation } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 import { useEffect } from "react";
 import { fetchDataFromJamendo } from "../utils/http";
-import { setCurrentTrack, setSingleTrack } from "../configureStore/musicSlice";
+import {
+  setCurrentTrack,
+  setPlayStatus,
+  setSingleTrack,
+} from "../configureStore/musicSlice";
 import { formatTime } from "../utils/helperFunctions";
 import { useDispatch } from "react-redux";
+import { Track } from "../models/TracksResponse";
 
 const TrackPage = () => {
   const { state } = useLocation();
@@ -22,6 +27,11 @@ const TrackPage = () => {
       );
     }
   }, [state, dispatch]);
+
+  const handlePlay = (data: Track) => {
+    dispatch(setCurrentTrack(data));
+    dispatch(setPlayStatus(true));
+  };
 
   //Todo lägg till bakåtknapp överst på sidan, ovanför albumnamn eller vad det ska stå först
   //Bakåtknappen måste återställa currentAlbum till ingenting ifall man går tillbaka, dock inte current track
@@ -71,7 +81,7 @@ const TrackPage = () => {
                     <IoPlay
                       className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
                       aria-hidden="true"
-                      onClick={() => dispatch(setCurrentTrack(state))}
+                      onClick={() => handlePlay(state)}
                     />
                   </div>
                 </td>

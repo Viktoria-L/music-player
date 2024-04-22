@@ -20,10 +20,12 @@ interface MusicState {
   timeProgress: number;
   duration: number;
   tracks: Track[];
+  featuredTracks: Track[];
   singleTrack: TrackInfo;
   currentTrack: TrackInfo;
   albums: Album[];
   currentAlbum: Album | null;
+  isPlaying: boolean;
 }
 
 const initialState: MusicState = {
@@ -31,6 +33,7 @@ const initialState: MusicState = {
   timeProgress: 0,
   duration: 0,
   tracks: [],
+  featuredTracks: [],
   singleTrack: {
     id: "",
     image: "",
@@ -61,20 +64,31 @@ const initialState: MusicState = {
     zip_allowed: true,
     tracks: [],
   },
+  isPlaying: false,
 };
 
 const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
-    setTracksFromApi: (state, action) => {
-      state.tracks = action.payload;
-      if (action.payload.length > 0) {
-        state.currentTrack = action.payload[0];
+    setTracksFromApi: (
+      state,
+      action: PayloadAction<{ tracks: Track[]; index?: number }>
+    ) => {
+      const { tracks, index = 0 } = action.payload;
+      state.tracks = tracks;
+      state.trackIndex = index;
+      if (tracks.length > 0) {
+        state.currentTrack = tracks[index];
+        // tracks[index >= 0 && index < tracks.length ? index : 0];
+        // state.trackIndex = index;
       }
     },
     setSingleTrack: (state, action: PayloadAction<Track>) => {
       state.singleTrack = action.payload;
+    },
+    setFeaturedTracks: (state, action: PayloadAction<Track[]>) => {
+      state.featuredTracks = action.payload;
     },
     setAlbums: (state, action: PayloadAction<Album[]>) => {
       state.albums = action.payload;
@@ -101,7 +115,7 @@ const musicSlice = createSlice({
       if (state.trackIndex >= state.tracks.length - 1) {
         state.trackIndex = 0;
       } else {
-        state.trackIndex = state.trackIndex + 1;
+        state.trackIndex += 1;
       }
       state.currentTrack = state.tracks[state.trackIndex];
     },
@@ -109,7 +123,7 @@ const musicSlice = createSlice({
       if (state.trackIndex === 0) {
         state.trackIndex = state.tracks.length - 1;
       } else {
-        state.trackIndex = state.trackIndex - 1;
+        state.trackIndex -= 1;
       }
       state.currentTrack = state.tracks[state.trackIndex];
     },
@@ -118,6 +132,12 @@ const musicSlice = createSlice({
     },
     setTimeProgress: (state, action) => {
       state.timeProgress = action.payload;
+    },
+    togglePlay: (state) => {
+      state.isPlaying = !state.isPlaying;
+    },
+    setPlayStatus: (state, action: PayloadAction<boolean>) => {
+      state.isPlaying = action.payload;
     },
   },
 });
@@ -128,10 +148,13 @@ export const {
   setDuration,
   setTimeProgress,
   setTracksFromApi,
+  setFeaturedTracks,
   setAlbums,
   setCurrentAlbum,
   setCurrentTrack,
   setSingleTrack,
   resetTracks,
+  togglePlay,
+  setPlayStatus,
 } = musicSlice.actions;
 export default musicSlice.reducer;

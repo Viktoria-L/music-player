@@ -7,41 +7,63 @@ import {
   IoPause,
 } from "react-icons/io5";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, RefObject } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handleNext,
   handlePrevious,
   setDuration,
   setTimeProgress,
+  togglePlay,
 } from "../configureStore/musicSlice";
-// import PropTypes from 'prop-types';
+import { RootState } from "../configureStore/configureStore";
 
-export const PlayControls = ({ audioRef, progressBarRef, mini = "" }) => {
+interface PlayControlsProps {
+  audioRef: RefObject<HTMLAudioElement>;
+  progressBarRef: RefObject<HTMLInputElement>;
+  mini?: string;
+}
+
+export const PlayControls = ({
+  audioRef,
+  progressBarRef,
+  mini = "",
+}: PlayControlsProps) => {
   const dispatch = useDispatch();
   // const trackIndex = useSelector((state) => state.musicInStore.trackIndex);
   // const currentTrack = useSelector((state) => state.musicInStore.currentTrack);
   // const timeProgress = useSelector((state) => state.musicInStore.timeProgress);
-  const duration = useSelector((state) => state.musicInStore.duration);
-
-  const [isPlaying, setIsPlaying] = useState(false);
+  const duration = useSelector(
+    (state: RootState) => state.musicInStore.duration
+  );
+  const isPlaying = useSelector(
+    (state: RootState) => state.musicInStore.isPlaying
+  );
 
   const togglePlayPause = () => {
-    setIsPlaying((prevState) => !prevState);
+    dispatch(togglePlay());
+    // setIsPlaying((prevState) => !prevState);
   };
 
-  const playAnimationRef = useRef();
+  const playAnimationRef = useRef<number | null>(null);
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current.currentTime;
-    dispatch(setTimeProgress(currentTime));
-    progressBarRef.current.value = currentTime;
-    progressBarRef.current.style.setProperty(
-      "--range-progress",
-      `${(progressBarRef.current.value / duration) * 100}%`
-    );
+    if (audioRef.current && progressBarRef.current) {
+      const currentTime = audioRef.current.currentTime;
+      dispatch(setTimeProgress(currentTime));
+      progressBarRef.current.value = currentTime;
+      const progressPercentage = (currentTime / duration) * 100;
+      progressBarRef.current.style.setProperty(
+        "--range-progress",
+        `${progressPercentage}%`
+      );
+      // progressBarRef.current.style.setProperty(
+      //   "--range-progress",
+      //   `${(progressBarRef.current.value / duration) * 100}%`
+      // );
 
-    playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [audioRef, duration, progressBarRef, setTimeProgress]);
+      playAnimationRef.current = requestAnimationFrame(repeat);
+    }
+  }, [audioRef, duration, progressBarRef, setTimeProgress, dispatch]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -51,18 +73,6 @@ export const PlayControls = ({ audioRef, progressBarRef, mini = "" }) => {
     }
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [isPlaying, audioRef, repeat]);
-
-  //Set and jump to next/prev track
-  // const handlePrevious = () => {
-  //     if (trackIndex === 0) {
-  //         let lastTrackIndex = tracks.length - 1;
-  //         setTrackIndex(lastTrackIndex);
-  //         setCurrentTrack(tracks[lastTrackIndex]);
-  //       } else {
-  //         setTrackIndex((prev) => prev - 1);
-  //         setCurrentTrack(tracks[trackIndex - 1]);
-  //       }
-  //     };
 
   return (
     <div className={`controls flex text-center ${mini}`}>
@@ -96,9 +106,3 @@ export const PlayControls = ({ audioRef, progressBarRef, mini = "" }) => {
     </div>
   );
 };
-
-// PlayControls.propTypes = {
-//     audioRef: PropTypes.object.isRequired,
-//     progressBarRef: PropTypes.object.isRequired,
-//     mini: PropTypes.string
-// }

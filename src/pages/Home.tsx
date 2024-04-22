@@ -5,6 +5,7 @@ import {
   setTracksFromApi,
   setAlbums,
   setCurrentAlbum,
+  setFeaturedTracks,
 } from "../configureStore/musicSlice";
 import { Album } from "../models/AlbumResponse";
 import { fetchDataFromJamendo } from "../utils/http";
@@ -71,7 +72,7 @@ const Home = () => {
         <button
           className="bold border mt-5"
           onClick={() =>
-            fetchDataFromJamendo<Album[]>(
+            fetchDataFromJamendo<Album[], Album[]>(
               "albums",
               { limit: "10", featured: 1 },
               dispatch,
@@ -84,11 +85,11 @@ const Home = () => {
         <button
           className="bold border mt-5"
           onClick={() =>
-            fetchDataFromJamendo<Track[]>(
+            fetchDataFromJamendo<Track[], { tracks: Track[]; index?: number }>(
               "tracks",
               { limit: "10", featured: 1 },
               dispatch,
-              setTracksFromApi
+              (tracks) => setTracksFromApi({ tracks })
             )
           }
         >
