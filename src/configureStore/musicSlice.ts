@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Track } from "../models/TracksResponse";
 import { Album } from "../models/AlbumResponse";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { Artist } from "../models/ArtistsResponse";
+import { Playlist } from "../models/PlaylistResponse";
 
 //let trackIndex;
 //Spara musiken som man laddat i state här
@@ -19,12 +21,14 @@ interface MusicState {
   trackIndex: number;
   timeProgress: number;
   duration: number;
+  artists: Artist[];
   tracks: Track[];
   featuredTracks: Track[];
   singleTrack: TrackInfo;
   currentTrack: TrackInfo;
   albums: Album[];
   currentAlbum: Album | null;
+  playlists: Playlist[];
   isPlaying: boolean;
 }
 
@@ -32,6 +36,7 @@ const initialState: MusicState = {
   trackIndex: 0,
   timeProgress: 0,
   duration: 0,
+  artists: [],
   tracks: [],
   featuredTracks: [],
   singleTrack: {
@@ -64,6 +69,7 @@ const initialState: MusicState = {
     zip_allowed: true,
     tracks: [],
   },
+  playlists: [],
   isPlaying: false,
 };
 
@@ -90,6 +96,9 @@ const musicSlice = createSlice({
     setFeaturedTracks: (state, action: PayloadAction<Track[]>) => {
       state.featuredTracks = action.payload;
     },
+    setArtists: (state, action: PayloadAction<Artist[]>) => {
+      state.artists = action.payload;
+    },
     setAlbums: (state, action: PayloadAction<Album[]>) => {
       state.albums = action.payload;
     },
@@ -98,6 +107,9 @@ const musicSlice = createSlice({
     },
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
+    },
+    setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
+      state.playlists = action.payload;
     },
     resetTracks: (state) => {
       state.tracks = [];
@@ -149,6 +161,7 @@ export const {
   setTimeProgress,
   setTracksFromApi,
   setFeaturedTracks,
+  setArtists,
   setAlbums,
   setCurrentAlbum,
   setCurrentTrack,
@@ -156,5 +169,6 @@ export const {
   resetTracks,
   togglePlay,
   setPlayStatus,
+  setPlaylists,
 } = musicSlice.actions;
 export default musicSlice.reducer;

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { GoInfo, GoHome, GoListUnordered, GoLog } from "react-icons/go";
 import { PiMusicNotes } from "react-icons/pi";
+import { BiAlbum } from "react-icons/bi";
+import { GiHeadphones } from "react-icons/gi";
 
 interface NavbarProps {
   openNav: boolean;
@@ -68,24 +70,46 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/" className="">
+          <NavLink to="/artists" className="">
+            {openNav ? (
+              <div className="flex gap-2 items-center">
+                <PiMusicNotes className="text-xl" /> Artists
+              </div>
+            ) : (
+              <PiMusicNotes className="text-2xl" />
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/albums" className="">
+            {openNav ? (
+              <div className="flex gap-2 items-center">
+                <BiAlbum className="text-xl" /> Albums
+              </div>
+            ) : (
+              <BiAlbum className="text-2xl" />
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/songs" className="">
+            {openNav ? (
+              <div className="flex gap-2 items-center">
+                <GiHeadphones className="text-xl" /> Songs
+              </div>
+            ) : (
+              <GiHeadphones className="text-2xl" />
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/playlists" className="">
             {openNav ? (
               <div className="flex gap-2 items-center">
                 <GoListUnordered className="text-xl" /> Playlists
               </div>
             ) : (
               <GoListUnordered className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <PiMusicNotes className="text-xl" /> Songs
-              </div>
-            ) : (
-              <PiMusicNotes className="text-2xl" />
             )}
           </NavLink>
         </li>

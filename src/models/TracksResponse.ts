@@ -27,6 +27,7 @@ export interface Track {
   audio: string;
   audiodownload: string;
   audiodownload_allowed: boolean;
+  playlistadddate?: string;
   artist_id?: string;
   artist_name?: string;
   artist_idstr?: string;
