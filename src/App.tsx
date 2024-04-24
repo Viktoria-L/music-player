@@ -14,6 +14,7 @@ import Albums from "./pages/Albums";
 import Artists from "./pages/Artists";
 import Songs from "./pages/Songs";
 import Playlists from "./pages/Playlists";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   const router = createBrowserRouter(
@@ -27,6 +28,7 @@ function App() {
         <Route path="/album/:id" element={<AlbumPage />}></Route>
         <Route path="/track/:id" element={<TrackPage />}></Route>
         <Route path="/featured" element={<FeaturedPage />}></Route>
+        <Route path="/search/:query" element={<SearchResults />} />
 
         {/* <Route path='/search' element={<SearchResults />}></Route>
        <Route path='/artist/:id' element={<ArtistPage />}></Route>

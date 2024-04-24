@@ -40,7 +40,7 @@ const Playlists = () => {
                 <img src={data.image} className="h-48 w-48 rounded-xl"></img>
               </div>
 
-              <Link to={`/album/${data.id}`} state={data}>
+              <Link to={`/playlist/${data.id}`} state={data}>
                 <p className="text-wrap mt-2">{data.name}</p>
               </Link>
             </div>

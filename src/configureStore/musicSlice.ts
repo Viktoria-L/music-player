@@ -29,6 +29,7 @@ interface MusicState {
   albums: Album[];
   currentAlbum: Album | null;
   playlists: Playlist[];
+  searchResults: Track[];
   isPlaying: boolean;
 }
 
@@ -70,6 +71,7 @@ const initialState: MusicState = {
     tracks: [],
   },
   playlists: [],
+  searchResults: [],
   isPlaying: false,
 };
 
@@ -110,6 +112,9 @@ const musicSlice = createSlice({
     },
     setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
       state.playlists = action.payload;
+    },
+    setSearchResults: (state, action: PayloadAction<Track[]>) => {
+      state.searchResults = action.payload;
     },
     resetTracks: (state) => {
       state.tracks = [];
@@ -170,5 +175,6 @@ export const {
   togglePlay,
   setPlayStatus,
   setPlaylists,
+  setSearchResults,
 } = musicSlice.actions;
 export default musicSlice.reducer;
