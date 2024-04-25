@@ -97,12 +97,12 @@ const SearchResults = () => {
     );
   };
 
-  const getUniqueArtists = (artists) => {
+  const getUniqueArtists = (artists: Track[]) => {
     const artistMap = new Map();
     artists.forEach((artist) => {
       // Använder artistnamnet som nyckel för att säkerställa att varje artist endast läggs till en gång
-      if (!artistMap.has(artist.artist_name.toLowerCase())) {
-        artistMap.set(artist.artist_name.toLowerCase(), artist);
+      if (!artistMap.has(artist.artist_name!.toLowerCase())) {
+        artistMap.set(artist.artist_name!.toLowerCase(), artist);
       }
     });
     return Array.from(artistMap.values()); // Konvertera tillbaka till array
