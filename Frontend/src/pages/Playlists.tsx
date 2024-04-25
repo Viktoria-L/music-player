@@ -6,6 +6,8 @@ import { RootState } from "../configureStore/configureStore";
 import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 
+//Todo, det är någt jag gjort med renderingen, skriver ba ut en playlist?
+
 const Playlists = () => {
   const dispatch = useDispatch();
   const playlists = useSelector(
