@@ -1,15 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 import { useEffect } from "react";
-import { fetchDataFromJamendo } from "../utils/http";
+import { fetchDataFromJamendo } from "../../utils/http";
 import {
   setCurrentTrack,
   setPlayStatus,
   setSingleTrack,
-} from "../configureStore/musicSlice";
-import { formatTime } from "../utils/helperFunctions";
+} from "../../configureStore/musicSlice";
+import { formatTime } from "../../utils/helperFunctions";
 import { useDispatch } from "react-redux";
-import { Track } from "../models/TracksResponse";
+import { Track } from "../../models/TracksResponse";
 
 const TrackPage = () => {
   const { state } = useLocation();

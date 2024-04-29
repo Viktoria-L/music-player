@@ -11,7 +11,7 @@ const app = express();
 const saltRounds = 10;
 
 const corsOptions = {
-  origin: "http://localhost:5174", // Eller vilken URL din frontend använder
+  origin: "http://localhost:5173", // eventuellt ändra denna?
   credentials: true, // Detta tillåter cookies och autentiseringstokens att skickas med requests
 };
 
@@ -92,7 +92,12 @@ app.get("/api/favorites", restrict, async (req, res) => {
 app.post("/api/favorites", restrict, async (req, res) => {
   const favorite = await favoritesCollection.insertOne({
     userId: req.session.user.id,
-    songId: req.body.songId,
+    id: req.body.id,
+    audio: req.body.audio,
+    image: req.body.image,
+    artist_name: req.body.artist_name,
+    name: req.body.name,
+    duration: req.body.duration,
   });
   res.json(favorite);
 });

@@ -12,10 +12,15 @@ import { fetchDataFromJamendo } from "../utils/http";
 import { Featured } from "../components/Featured";
 import { EntityType } from "../components/Featured";
 import { Track } from "../models/TracksResponse";
-import { RootState } from "@reduxjs/toolkit/query";
 import GenreSelector from "../components/GenreSelector";
+import { useAuth } from "../authStore/AuthStore";
+import { Favorites } from "../components/Favorites";
+import { RootState } from "../configureStore/configureStore";
+
+//Todo, gör en wrapper apply till tailwind så man slipper kopiera in all tailwind kod alltid
 
 const Home = () => {
+  const { isAuthenticated } = useAuth();
   const [musicData, setMusicData] = useState(null);
   const dispatch = useDispatch();
   const data = useSelector((state: RootState) => state.musicInStore.tracks);
@@ -24,7 +29,7 @@ const Home = () => {
   useEffect(() => {
     console.log("tracks från slice", data);
     //TODO, antingen måste datan hämtas här eller sparas i ett FeaturedTrack state, jag behöver separera på playibg tracks och
-    //tracks som visas ut
+    //tracks som visas ut i featured tracks för den uppdateras till annan musik om jag t.ex gåre in på listan songs
     // fetchDataFromJamendo<Track[]>(
     //   "tracks",
     //   { limit: "10", featured: 1 },
@@ -98,6 +103,12 @@ const Home = () => {
 
         <Featured entity={EntityType.Albums} />
         <Featured entity={EntityType.Tracks} />
+        {isAuthenticated && (
+          <>
+            {/* <Favorites entity={EntityType.Albums} /> */}
+            <Favorites entity={EntityType.Tracks} />
+          </>
+        )}
         <GenreSelector />
       </div>
     </>

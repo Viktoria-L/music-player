@@ -1,8 +1,8 @@
-import { fetchDataFromJamendo } from "../utils/http";
+import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { Album } from "../models/AlbumResponse";
-import { setAlbums } from "../configureStore/musicSlice";
-import { RootState } from "../configureStore/configureStore";
+import { Album } from "../../models/AlbumResponse";
+import { setAlbums } from "../../configureStore/musicSlice";
+import { RootState } from "../../configureStore/configureStore";
 import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 

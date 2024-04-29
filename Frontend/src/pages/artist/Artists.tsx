@@ -1,12 +1,12 @@
-import { fetchDataFromJamendo } from "../utils/http";
+import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { Album } from "../models/AlbumResponse";
-import { setArtists } from "../configureStore/musicSlice";
-import { RootState } from "../configureStore/configureStore";
+import { Album } from "../../models/AlbumResponse";
+import { setArtists } from "../../configureStore/musicSlice";
+import { RootState } from "../../configureStore/configureStore";
 import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 import { useState } from "react";
-import { Artist } from "../models/ArtistsResponse";
+import { Artist } from "../../models/ArtistsResponse";
 
 const Artists = () => {
   const dispatch = useDispatch();

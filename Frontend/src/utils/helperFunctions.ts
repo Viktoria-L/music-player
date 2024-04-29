@@ -1,5 +1,8 @@
 // Här lägger jag sånt som kan vara till nytta eller behöver skrivas om
 
+import { Album } from "../models/AlbumResponse";
+import { Track } from "../models/TracksResponse";
+
 // ----------------- ALLA GET FUNKTIONER OCH VAD DE HÄMTAR ------------ //
 // Tracks - const response = await axios.get(`${API_URL}tracks/?client_id=${clientId}&format=jsonpretty&limit=5&tags=electronic&featured=1`)
 // similar Tracks - const response = await axios.get(`${API_URL}tracks/similar?client_id=${clientId}
@@ -44,3 +47,72 @@ export function formatTime(seconds: number): string {
   const secondsLeft = seconds % 60;
   return `${minutes}:${secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}`;
 }
+
+//Funktioner mot mitt API/mongoDB databas
+const baseUrl = "http://localhost:3000/api";
+
+interface PlaylistDetails {
+  name: string;
+  songs?: string[];
+}
+
+// interface SongId {
+//   songId: string;
+// }
+
+export const fetchFavorites = async () => {
+  const response = await fetch(`${baseUrl}/favorites`, {
+    credentials: "include",
+  });
+  return response.json();
+};
+
+// Function to add a favorite song
+export const addToFavorites = async (songDetails: Track) => {
+  const response = await fetch(`${baseUrl}/favorites`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(songDetails),
+    credentials: "include",
+  });
+  return response.json();
+};
+
+// Function to fetch playlists
+export const fetchPlaylists = async () => {
+  const response = await fetch(`${baseUrl}/playlists`, {
+    credentials: "include",
+  });
+  return response.json();
+};
+
+// Function to create a new playlist
+export const createPlaylist = async (playlistDetails: PlaylistDetails) => {
+  const response = await fetch(`${baseUrl}/playlists`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(playlistDetails),
+    credentials: "include",
+  });
+  return response.json();
+};
+
+// Function to add a song to a playlist
+export const addSongToPlaylist = async (
+  playlistId: string,
+  songDetails: Track
+) => {
+  const response = await fetch(`${baseUrl}/playlists/${playlistId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(songDetails),
+    credentials: "include",
+  });
+  return response.json();
+};

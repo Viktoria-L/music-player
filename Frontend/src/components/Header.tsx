@@ -8,11 +8,15 @@ import {
   GoChevronDown,
 } from "react-icons/go";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authStore/AuthStore";
 
 export const Header = () => {
+  const { isAuthenticated } = useAuth();
   const [showSearch, setShowSearch] = useState(true);
   const [collapseMenu, setCollapseMenu] = useState(false);
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
+  const navigate = useNavigate();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const threshold = 470;
@@ -43,6 +47,8 @@ export const Header = () => {
     setShowDropdownMenu(!showDropdownMenu);
   };
 
+  //TODO, lägg till koll på profilgubben, isAuthenticated? --> visa profil annars gå till loginsida
+
   return (
     <header className="w-full h-20 fixed top-0 flex justify-between items-center px-4 z-9">
       <GiAllSeeingEye className="text-5xl z-10" />
@@ -65,7 +71,12 @@ export const Header = () => {
         <span className="flex sm:gap-7 gap-3 items-center text-xl pr-4">
           <GoGear />
           <GoBell />
-          <GoPerson />
+          <GoPerson
+            className="cursor-pointer"
+            onClick={() => {
+              isAuthenticated ? navigate(`/profile`) : navigate(`/login/`);
+            }}
+          />
         </span>
       )}
       {showDropdownMenu && (
@@ -73,7 +84,7 @@ export const Header = () => {
           <div className="flex flex-col gap-3 items-center text-xl">
             <GoGear />
             <GoBell />
-            <GoPerson />
+            <GoPerson onClick={() => navigate(`/login/`)} />
           </div>
         </div>
       )}

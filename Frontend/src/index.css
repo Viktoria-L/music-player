@@ -247,3 +247,7 @@ input[type="radio"] {
 #item-3:checked ~ .player #test {
   transform: translateY(-80px);
 }
+
+.userForm input {
+  @apply bg-teal rounded-md text-white p-2;
+}
