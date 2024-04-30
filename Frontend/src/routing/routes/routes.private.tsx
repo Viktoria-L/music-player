@@ -1,11 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../authStore/AuthStore";
 import React, { ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../stores/configureStore";
 
 export const PrivateRoute: React.FC<{ children: ReactElement }> = ({
   children,
 }) => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   // const isAuthenticated = auth.data && auth.data.authToken && auth.data.authToken.token
 

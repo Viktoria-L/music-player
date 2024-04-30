@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../configureStore/configureStore";
+import { RootState } from "../stores/configureStore";
 
 //Renders the progressbar and time
 const ProgressBar = ({ progressBarRef, audioRef }) => {

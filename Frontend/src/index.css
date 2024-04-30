@@ -251,3 +251,13 @@ input[type="radio"] {
 .userForm input {
   @apply bg-teal rounded-md text-white p-2;
 }
+
+.submenu-right {
+  position: absolute;
+  left: 100%;
+}
+
+.submenu-left {
+  position: absolute;
+  right: 100%;
+}

@@ -4,7 +4,7 @@ import ProgressBar from "../ProgressBar";
 import { useEffect, useRef } from "react";
 // import { tracks } from '../../assets/music/tracks';
 import { useSelector } from "react-redux";
-import { RootState } from "../../configureStore/configureStore";
+import { RootState } from "../../stores/configureStore";
 
 //Parent,root component
 const AudioPlayer = () => {

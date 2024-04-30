@@ -3,8 +3,16 @@ import { Navbar } from "../components/Navbar";
 import { Header } from "../components/Header";
 import MiniAudioPlayer from "../music-player/MiniAudioPlayer";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../stores/configureStore";
+import { fetchPlaylists } from "../stores/userStore/userThunk";
 
 const Root = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  ); // Antag att din autentiseringsstatus lagras här
+
   const [openNav, setOpenNav] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const threshold = 900;

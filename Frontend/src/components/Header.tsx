@@ -9,10 +9,13 @@ import {
 } from "react-icons/go";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../authStore/AuthStore";
+import { useSelector } from "react-redux";
+import { RootState } from "../stores/configureStore";
 
 export const Header = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const [showSearch, setShowSearch] = useState(true);
   const [collapseMenu, setCollapseMenu] = useState(false);
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
@@ -46,8 +49,6 @@ export const Header = () => {
   const toggleDropdownMenu = () => {
     setShowDropdownMenu(!showDropdownMenu);
   };
-
-  //TODO, lägg till koll på profilgubben, isAuthenticated? --> visa profil annars gå till loginsida
 
   return (
     <header className="w-full h-20 fixed top-0 flex justify-between items-center px-4 z-9">

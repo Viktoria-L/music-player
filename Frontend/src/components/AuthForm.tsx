@@ -1,22 +1,28 @@
 import { FormEvent, useState } from "react";
-import { useAuth } from "../authStore/AuthStore";
+import { useSelector, useDispatch } from "react-redux";
+import { login, register } from "../stores/authStore/authSlice";
+import { AppDispatch, RootState } from "../stores/configureStore";
 
 function AuthForm() {
-  const { login, register } = useAuth();
+  const dispatch: AppDispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const [isRegistering, setIsRegistering] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    login(user, pass);
+    // const loginData = { user: user, pass: pass };
+    dispatch(login({ user, pass }));
   };
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    register(firstname, lastname, user, pass);
+    dispatch(register({ firstname, lastname, user, pass }));
   };
 
   return (

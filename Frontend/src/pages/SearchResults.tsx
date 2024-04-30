@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { fetchDataFromJamendo } from "../utils/http";
-import { RootState } from "../configureStore/configureStore";
+import { RootState } from "../stores/configureStore";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Track } from "../models/TracksResponse";
@@ -8,7 +8,7 @@ import {
   setSearchResults,
   setTracksFromApi,
   setPlayStatus,
-} from "../configureStore/musicSlice";
+} from "../stores/musicStore/musicSlice";
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 

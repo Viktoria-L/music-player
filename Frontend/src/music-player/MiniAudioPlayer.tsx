@@ -4,7 +4,7 @@ import { PlayControls } from "./PlayControls";
 import { VolumeControls } from "./VolumeControls";
 import MiniDisplayTrack from "./MiniDisplayTrack";
 import { useSelector } from "react-redux";
-import { RootState } from "../configureStore/configureStore";
+import { RootState } from "../stores/configureStore";
 
 //Parent,root component
 const MiniAudioPlayer = () => {

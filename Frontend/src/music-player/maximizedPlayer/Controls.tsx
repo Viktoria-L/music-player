@@ -16,7 +16,7 @@ import {
   handlePrevious,
   setDuration,
   setTimeProgress,
-} from "../../configureStore/musicSlice";
+} from "../../stores/musicStore/musicSlice";
 
 //Renders audio controls and volume slider
 const Controls = ({ audioRef, progressBarRef, tracks }) => {

@@ -6,7 +6,7 @@ import {
   setCurrentTrack,
   setPlayStatus,
   setSingleTrack,
-} from "../../configureStore/musicSlice";
+} from "../../stores/musicStore/musicSlice";
 import { formatTime } from "../../utils/helperFunctions";
 import { useDispatch } from "react-redux";
 import { Track } from "../../models/TracksResponse";

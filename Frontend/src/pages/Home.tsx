@@ -1,30 +1,32 @@
 import AudioPlayer from "../music-player/maximizedPlayer/AudioPlayer";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setTracksFromApi,
-  setAlbums,
-  setCurrentAlbum,
-  setFeaturedTracks,
-} from "../configureStore/musicSlice";
+import { setTracksFromApi, setAlbums } from "../stores/musicStore/musicSlice";
 import { Album } from "../models/AlbumResponse";
 import { fetchDataFromJamendo } from "../utils/http";
 import { Featured } from "../components/Featured";
 import { EntityType } from "../components/Featured";
 import { Track } from "../models/TracksResponse";
 import GenreSelector from "../components/GenreSelector";
-import { useAuth } from "../authStore/AuthStore";
 import { Favorites } from "../components/Favorites";
-import { RootState } from "../configureStore/configureStore";
+import { AppDispatch, RootState } from "../stores/configureStore";
+import { fetchPlaylists } from "../stores/userStore/userThunk";
 
 //Todo, gör en wrapper apply till tailwind så man slipper kopiera in all tailwind kod alltid
 
 const Home = () => {
-  const { isAuthenticated } = useAuth();
-  const [musicData, setMusicData] = useState(null);
-  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const dispatch: AppDispatch = useDispatch();
   const data = useSelector((state: RootState) => state.musicInStore.tracks);
   //const currentalbum: Album = useSelector((state: RootState) => state.musicInStore.currentAlbum);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchPlaylists());
+    }
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     console.log("tracks från slice", data);

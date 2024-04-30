@@ -113,7 +113,7 @@ app.post("/api/playlists", restrict, async (req, res) => {
   const playlist = await playlistsCollection.insertOne({
     userId: req.session.user.id,
     name: req.body.name,
-    songs: [],
+    tracks: [],
   });
   res.json(playlist);
 });
@@ -121,7 +121,7 @@ app.post("/api/playlists", restrict, async (req, res) => {
 app.put("/api/playlists/:id", restrict, async (req, res) => {
   const updateResult = await playlistsCollection.findOneAndUpdate(
     { _id: new ObjectId(req.params.id), userId: req.session.user.id },
-    { $push: { songs: req.body.songId } }
+    { $push: { tracks: req.body } }
   );
   res.json(updateResult);
 });

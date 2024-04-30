@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Album } from "../models/AlbumResponse";
-import { RootState } from "../configureStore/configureStore";
+import { AppDispatch, RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
 import { Link } from "react-router-dom";
-import { resetTracks } from "../configureStore/musicSlice";
+import { resetTracks } from "../stores/musicStore/musicSlice";
 import AlbumDisplay from "./AlbumDisplay";
-import { fetchFavorites } from "../utils/helperFunctions";
+import { fetchFavorites } from "../stores/userStore/userThunk";
 import { useEffect, useState } from "react";
 
 //TODO varje album behöver en tryckbar PLAY ikon som spelar albumets första låt?, och en länk  på hela albumet som navigerar den till albumet
@@ -22,39 +22,31 @@ export enum EntityType {
 }
 
 export const Favorites = ({ entity }: { entity: EntityType }) => {
-  const albums: Album[] = useSelector(
-    (state: RootState) => state.musicInStore.albums
-  );
+  // const albums: Album[] = useSelector(
+  //   (state: RootState) => state.musicInStore.albums
+  // );
   // const artists = useSelector((state: RootState) => state.musicInStore.artists);
-  const [tracks, setTracks] = useState<Track[]>([]);
+  //const [tracks, setTracks] = useState<Track[]>([]);
 
-  //   const tracks: Track[] = useSelector(
-  //     (state: RootState) => state.musicInStore.tracks
-  //   );
+  const tracks: Track[] = useSelector(
+    (state: RootState) => state.user.favorites
+  );
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    getFavorites();
+    dispatch(fetchFavorites());
   }, []);
 
-  const getFavorites = async () => {
-    const response = await fetchFavorites();
-    if (response) {
-      setTracks(response);
-    }
-  };
-
-  const dispatch = useDispatch();
-
-  let favoriteData: any[] = [];
+  let favoriteData: Track[] = [];
   let title: string = "";
   let basePath: string = "";
 
   switch (entity) {
-    case EntityType.Albums:
-      favoriteData = albums;
-      title = "Favorite albums";
-      basePath = "album";
-      break;
+    // case EntityType.Albums:
+    //   favoriteData = albums;
+    //   title = "Favorite albums";
+    //   basePath = "album";
+    //   break;
     // case EntityType.Artists:
     // featuredData = artists;
     //title = 'Featured Artists';
@@ -70,6 +62,10 @@ export const Favorites = ({ entity }: { entity: EntityType }) => {
       break;
   }
 
+  useEffect(() => {
+    console.log("tracksfav", tracks);
+  }, [tracks]);
+
   return (
     <div className="mt-8">
       <div className="flex justify-between w-full items-center">
@@ -79,7 +75,7 @@ export const Favorites = ({ entity }: { entity: EntityType }) => {
         </Link>
       </div>
       <div className="flex flex-wrap gap-5 w-full">
-        {favoriteData.slice(0, 4).map((data) => (
+        {tracks.slice(0, 4).map((data) => (
           <AlbumDisplay data={data} basePath={basePath} />
         ))}
       </div>

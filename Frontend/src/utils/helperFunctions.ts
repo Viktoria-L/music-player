@@ -48,71 +48,71 @@ export function formatTime(seconds: number): string {
   return `${minutes}:${secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}`;
 }
 
-//Funktioner mot mitt API/mongoDB databas
-const baseUrl = "http://localhost:3000/api";
+// //Funktioner mot mitt API/mongoDB databas
+// const baseUrl = "http://localhost:3000/api";
 
-interface PlaylistDetails {
-  name: string;
-  songs?: string[];
-}
-
-// interface SongId {
-//   songId: string;
+// interface PlaylistDetails {
+//   name: string;
+//   songs?: string[];
 // }
 
-export const fetchFavorites = async () => {
-  const response = await fetch(`${baseUrl}/favorites`, {
-    credentials: "include",
-  });
-  return response.json();
-};
+// // interface SongId {
+// //   songId: string;
+// // }
 
-// Function to add a favorite song
-export const addToFavorites = async (songDetails: Track) => {
-  const response = await fetch(`${baseUrl}/favorites`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(songDetails),
-    credentials: "include",
-  });
-  return response.json();
-};
+// export const fetchFavorites = async () => {
+//   const response = await fetch(`${baseUrl}/favorites`, {
+//     credentials: "include",
+//   });
+//   return response.json();
+// };
 
-// Function to fetch playlists
-export const fetchPlaylists = async () => {
-  const response = await fetch(`${baseUrl}/playlists`, {
-    credentials: "include",
-  });
-  return response.json();
-};
+// // Function to add a favorite song
+// export const addToFavorites = async (songDetails: Track) => {
+//   const response = await fetch(`${baseUrl}/favorites`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(songDetails),
+//     credentials: "include",
+//   });
+//   return response.json();
+// };
 
-// Function to create a new playlist
-export const createPlaylist = async (playlistDetails: PlaylistDetails) => {
-  const response = await fetch(`${baseUrl}/playlists`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(playlistDetails),
-    credentials: "include",
-  });
-  return response.json();
-};
+// // Function to fetch playlists
+// export const fetchPlaylists = async () => {
+//   const response = await fetch(`${baseUrl}/playlists`, {
+//     credentials: "include",
+//   });
+//   return response.json();
+// };
 
-// Function to add a song to a playlist
-export const addSongToPlaylist = async (
-  playlistId: string,
-  songDetails: Track
-) => {
-  const response = await fetch(`${baseUrl}/playlists/${playlistId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(songDetails),
-    credentials: "include",
-  });
-  return response.json();
-};
+// // Function to create a new playlist
+// export const createPlaylist = async (playlistDetails: PlaylistDetails) => {
+//   const response = await fetch(`${baseUrl}/playlists`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(playlistDetails),
+//     credentials: "include",
+//   });
+//   return response.json();
+// };
+
+// // Function to add a song to a playlist
+// export const addSongToPlaylist = async (
+//   playlistId: string,
+//   songDetails: Track
+// ) => {
+//   const response = await fetch(`${baseUrl}/playlists/${playlistId}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(songDetails),
+//     credentials: "include",
+//   });
+//   return response.json();
+// };

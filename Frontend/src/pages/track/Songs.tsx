@@ -1,8 +1,8 @@
 import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
 import { Album } from "../../models/AlbumResponse";
-import { setTracksFromApi } from "../../configureStore/musicSlice";
-import { RootState } from "../../configureStore/configureStore";
+import { setTracksFromApi } from "../../stores/musicStore/musicSlice";
+import { RootState } from "../../stores/configureStore";
 import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 import { Track } from "../../models/TracksResponse";

@@ -17,22 +17,24 @@ import Songs from "./pages/track/Songs";
 import Playlists from "./pages/playlist/Playlists";
 import SearchResults from "./pages/SearchResults";
 import LoginPage from "./pages/LoginPage";
-import { useAuth } from "./authStore/AuthStore";
 import ProfilePage from "./pages/profile/ProfilePage";
 import { PrivateRoute } from "./routing/routes/routes.private";
-import { FavoritesPage } from "./components/Favorites";
+import FavoritesPage from "./pages/FavoritesPage";
 import Playlist from "./pages/playlist/Playlist";
+import { useSelector } from "react-redux";
+import { RootState } from "./stores/configureStore";
 
 //TODO, vilka fler rutter bör vara bakom private? playlist som är ens egna och favoritmarkerade saker , lägg till i routes
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         <Route index element={<Home />}></Route>
-        {/* <Route path="/login" element={<LoginPage />}></Route> */}
         <Route
           path="/login"
           element={isAuthenticated ? <Navigate to="/" /> : <LoginPage />}

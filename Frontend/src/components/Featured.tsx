@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Album } from "../models/AlbumResponse";
-import { RootState } from "../configureStore/configureStore";
+import { RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
 import { IoPlay } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { resetTracks } from "../configureStore/musicSlice";
+import { resetTracks } from "../stores/musicStore/musicSlice";
 import AlbumDisplay from "./AlbumDisplay";
 //TODO varje album behöver en tryckbar PLAY ikon som spelar albumets första låt?, och en länk  på hela albumet som navigerar den till albumet
 //När man hovrar över albumet lär en div utanför med en kant synas, kolla som de t.ex. är på spotfy

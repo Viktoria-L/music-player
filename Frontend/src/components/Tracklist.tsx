@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../configureStore/configureStore";
+import { RootState } from "../stores/configureStore";
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
-import { setPlayStatus, setTracksFromApi } from "../configureStore/musicSlice";
+import {
+  setPlayStatus,
+  setTracksFromApi,
+} from "../stores/musicStore/musicSlice";
 
 export const Tracklist = () => {
   const dispatch = useDispatch();

@@ -2,9 +2,9 @@ import { useLocation, useParams } from "react-router-dom";
 import { Tracklist } from "../../components/Tracklist";
 import { useEffect } from "react";
 import { fetchDataFromJamendo } from "../../utils/http";
-import { setCurrentAlbum } from "../../configureStore/musicSlice";
+import { setCurrentAlbum } from "../../stores/musicStore/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../configureStore/configureStore";
+import { RootState } from "../../stores/configureStore";
 
 const AlbumPage = () => {
   const { state } = useLocation();

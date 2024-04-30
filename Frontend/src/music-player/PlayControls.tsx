@@ -15,8 +15,8 @@ import {
   setDuration,
   setTimeProgress,
   togglePlay,
-} from "../configureStore/musicSlice";
-import { RootState } from "../configureStore/configureStore";
+} from "../stores/musicStore/musicSlice";
+import { RootState } from "../stores/configureStore";
 
 interface PlayControlsProps {
   audioRef: RefObject<HTMLAudioElement>;

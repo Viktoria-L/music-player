@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Track } from "../models/TracksResponse";
-import { Album } from "../models/AlbumResponse";
+import { Track } from "../../models/TracksResponse";
+import { Album } from "../../models/AlbumResponse";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Artist } from "../models/ArtistsResponse";
-import { Playlist } from "../models/PlaylistResponse";
+import { Artist } from "../../models/ArtistsResponse";
+import { Playlist } from "../../models/PlaylistResponse";
 
 //let trackIndex;
 //Spara musiken som man laddat i state här

@@ -1,10 +1,14 @@
-import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { GoInfo, GoHome, GoListUnordered, GoLog } from "react-icons/go";
 import { PiMusicNotes } from "react-icons/pi";
 import { BiAlbum } from "react-icons/bi";
 import { GiHeadphones } from "react-icons/gi";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../stores/configureStore";
+import { logout } from "../stores/authStore/authSlice";
+import { fetchPlaylists } from "../stores/userStore/userThunk";
+import { useEffect } from "react";
 
 interface NavbarProps {
   openNav: boolean;
@@ -12,29 +16,15 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
-  //   const [openNav, setOpenNav] = useState(true);
-  //   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  //   const threshold = 900;
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const userPlaylists = useSelector((state: RootState) => state.user.playlists);
+  const dispatch: AppDispatch = useDispatch();
 
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //   };
-
-  //   useEffect(() => {
-  //     window.addEventListener("resize", handleResize);
-
-  //     return () => {
-  //       window.removeEventListener("resize", handleResize);
-  //     };
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (windowWidth <= threshold) {
-  //       setOpenNav(false);
-  //     } else {
-  //       setOpenNav(true);
-  //     }
-  //   }, [windowWidth, threshold]);
+  useEffect(() => {
+    dispatch(fetchPlaylists());
+  }, []);
 
   return (
     <div
@@ -125,6 +115,32 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           </NavLink>
         </li>
       </ul>
+      <br />
+      <br />
+      <br />
+      <br />
+
+      {isAuthenticated && (
+        <>
+          <span>YOUR PLAYLISTS</span>
+          <ul>
+            {userPlaylists.map((playlist) => (
+              <li>
+                <Link to={`/playlist/${playlist._id}`}>{playlist.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <p>{isAuthenticated ? "Logged in" : "Not logged in"}</p>
+      <button className="p-2 bg-slate-400" onClick={() => dispatch(logout())}>
+        Log out
+      </button>
     </div>
   );
 };
