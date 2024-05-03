@@ -15,7 +15,7 @@ const TrackPage = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
 
-  //TODO, lägg in så man kan spela hela albumet med och laddar in tracks i tracksfrom api
+  //Todo, lägg in hjärtan favoriter
   useEffect(() => {
     if (state) {
       console.log("state", state);
@@ -33,12 +33,8 @@ const TrackPage = () => {
     dispatch(setPlayStatus(true));
   };
 
-  //Todo lägg till bakåtknapp överst på sidan, ovanför albumnamn eller vad det ska stå först
-  //Bakåtknappen måste återställa currentAlbum till ingenting ifall man går tillbaka, dock inte current track
-  // eller nä ska man återställa currentalbum, eftersom playern ska köras även om jag navigerar mig runt..
-
   return (
-    <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+    <div className="track wrapper">
       <h2 className="text-4xl font-bold tracking-wider">Trackpage</h2>
       <div className="my-5 flex items-end gap-5">
         <img src={state.image} className="w-64 h-64"></img>

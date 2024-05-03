@@ -23,6 +23,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import Playlist from "./pages/playlist/Playlist";
 import { useSelector } from "react-redux";
 import { RootState } from "./stores/configureStore";
+import ArtistPage from "./pages/artist/ArtistPage";
 
 //TODO, vilka fler rutter bör vara bakom private? playlist som är ens egna och favoritmarkerade saker , lägg till i routes
 
@@ -49,6 +50,7 @@ function App() {
           }
         ></Route>
         <Route path="/artists" element={<Artists />}></Route>
+        <Route path="/artist/:id" element={<ArtistPage />}></Route>
         <Route path="/albums" element={<Albums />}></Route>
         <Route path="/songs" element={<Songs />}></Route>
         <Route path="/playlists" element={<Playlists />}></Route>
@@ -67,9 +69,9 @@ function App() {
         <Route path="/search/:query" element={<SearchResults />} />
 
         {/* <Route path='/search' element={<SearchResults />}></Route>
-       <Route path='/artist/:id' element={<ArtistPage />}></Route>
-       <Route path='/' element={< />}></Route>
-       <Route path='/playlist/:id' element={<Playlist />}></Route> */}
+      
+      
+        */}
       </Route>
     )
   );

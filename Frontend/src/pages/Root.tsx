@@ -1,18 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Header } from "../components/Header";
 import MiniAudioPlayer from "../music-player/MiniAudioPlayer";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../stores/configureStore";
-import { fetchPlaylists } from "../stores/userStore/userThunk";
+// import { useDispatch, useSelector } from "react-redux";
+// import { AppDispatch, RootState } from "../stores/configureStore";
+import { NavigationArrow } from "../components/NavigationArrow";
 
 const Root = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  ); // Antag att din autentiseringsstatus lagras här
-
+  // const dispatch: AppDispatch = useDispatch();
+  // const isAuthenticated = useSelector(
+  //   (state: RootState) => state.auth.isAuthenticated
+  // );
+  const location = useLocation();
   const [openNav, setOpenNav] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const threshold = 900;
@@ -43,10 +43,11 @@ const Root = () => {
       <div className="h-full flex overflow-hidden flex-grow mt-20">
         <Navbar openNav={openNav} setOpenNav={setOpenNav} />
         <div
-          className={`duration-300 transition-width ease-in-out flex overflow-auto flex-grow ${
+          className={`duration-300 transition-width ease-in-out flex flex-col overflow-auto flex-grow ${
             openNav ? "ml-72" : "ml-20"
           }`}
         >
+          {location.pathname !== "/" && <NavigationArrow />}
           <Outlet />
         </div>
       </div>

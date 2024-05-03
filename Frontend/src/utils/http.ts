@@ -1,7 +1,5 @@
-import { state } from "./state";
 import axios from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
-import { setTracksFromApi } from "../stores/musicStore/musicSlice";
 
 // //------------- Get Tracks ----------------//
 

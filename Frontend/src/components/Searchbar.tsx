@@ -2,8 +2,6 @@ import { GoSearch } from "react-icons/go";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-//Todo, gör så att om man borde kunna söka både namn och artist ..
-
 export const SearchBar = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const navigate = useNavigate();

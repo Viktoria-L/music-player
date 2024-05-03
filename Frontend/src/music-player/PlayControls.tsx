@@ -1,34 +1,32 @@
 import {
-  IoPlayBack,
-  IoPlayForward,
   IoPlaySkipBack,
   IoPlaySkipForward,
   IoPlay,
   IoPause,
 } from "react-icons/io5";
 
-import { useState, useEffect, useRef, useCallback, RefObject } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handleNext,
   handlePrevious,
-  setDuration,
   setTimeProgress,
   togglePlay,
 } from "../stores/musicStore/musicSlice";
 import { RootState } from "../stores/configureStore";
+import { AudioProps } from "./MiniAudioPlayer";
 
-interface PlayControlsProps {
-  audioRef: RefObject<HTMLAudioElement>;
-  progressBarRef: RefObject<HTMLInputElement>;
-  mini?: string;
-}
+// interface PlayControlsProps {
+//   audioRef: RefObject<HTMLAudioElement>;
+//   progressBarRef: RefObject<HTMLInputElement>;
+//   mini?: string;
+// }
 
 export const PlayControls = ({
   audioRef,
   progressBarRef,
   mini = "",
-}: PlayControlsProps) => {
+}: AudioProps) => {
   const dispatch = useDispatch();
   // const trackIndex = useSelector((state) => state.musicInStore.trackIndex);
   // const currentTrack = useSelector((state) => state.musicInStore.currentTrack);
@@ -50,7 +48,7 @@ export const PlayControls = ({
     if (audioRef.current && progressBarRef.current) {
       const currentTime = audioRef.current.currentTime;
       dispatch(setTimeProgress(currentTime));
-      progressBarRef.current.value = currentTime;
+      progressBarRef.current.value = currentTime.toString();
       const progressPercentage = (currentTime / duration) * 100;
       progressBarRef.current.style.setProperty(
         "--range-progress",
@@ -67,9 +65,9 @@ export const PlayControls = ({
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current.play();
+      audioRef.current?.play();
     } else {
-      audioRef.current.pause();
+      audioRef.current?.pause();
     }
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [isPlaying, audioRef, repeat]);

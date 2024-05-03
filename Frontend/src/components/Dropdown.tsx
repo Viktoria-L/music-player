@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
 import { addSongToPlaylist } from "../stores/userStore/userThunk";
 
+//Todo, borde manage i menyn vara add to favorites?
 interface DropDownProps {
   menuRef: React.RefObject<HTMLDivElement>;
   track: Track;

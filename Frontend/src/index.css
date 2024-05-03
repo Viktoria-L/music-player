@@ -261,3 +261,9 @@ input[type="radio"] {
   position: absolute;
   right: 100%;
 }
+
+/* -------- TAILWIND CSS ---------- */
+
+.wrapper {
+  @apply flex flex-grow flex-col mt-8 sm:px-8 px-4;
+}

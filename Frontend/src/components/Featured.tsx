@@ -1,13 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Album } from "../models/AlbumResponse";
-import { RootState } from "../stores/configureStore";
+import { AppDispatch, RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
-import { IoPlay } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { resetTracks } from "../stores/musicStore/musicSlice";
 import AlbumDisplay from "./AlbumDisplay";
-//TODO varje album behöver en tryckbar PLAY ikon som spelar albumets första låt?, och en länk  på hela albumet som navigerar den till albumet
-//När man hovrar över albumet lär en div utanför med en kant synas, kolla som de t.ex. är på spotfy
 
 // eslint-disable-next-line react-refresh/only-export-components
 export enum EntityType {
@@ -22,9 +18,9 @@ export const Featured = ({ entity }: { entity: EntityType }) => {
   );
   // const artists = useSelector((state: RootState) => state.musicInStore.artists);
   const tracks: Track[] = useSelector(
-    (state: RootState) => state.musicInStore.tracks
+    (state: RootState) => state.musicInStore.featuredTracks
   );
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   let featuredData: any[] = [];
   let title: string = "";

@@ -5,9 +5,29 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { Artist } from "../../models/ArtistsResponse";
 import { Playlist } from "../../models/PlaylistResponse";
 
-//let trackIndex;
-//Spara musiken som man laddat i state här
-//TODO, låten behöver in här
+// Fungerade inte med playbacken när denna funktion var med..
+//function getInitialTrack(): TrackInfo {
+//   const savedTrack = localStorage.getItem("currentTrack");
+//   if (savedTrack !== null) {
+//     try {
+//       return JSON.parse(savedTrack);
+//     } catch (e) {
+//       console.error("Error parsing JSON from localStorage", e);
+//     }
+//   }
+//   return {
+//     id: "",
+//     image: "",
+//     artist_name: "",
+//     name: "",
+//     audio:
+//       "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
+//   };
+// }
+
+// export function saveToLocalStorage(state: MusicState) {
+//   localStorage.setItem("currentTrack", JSON.stringify(state.currentTrack));
+// }
 
 interface TrackInfo {
   id: string;
@@ -52,7 +72,7 @@ const initialState: MusicState = {
     id: "",
     image: "",
     artist_name: "",
-    name: "Nothing",
+    name: "",
     audio:
       "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
   },

@@ -12,7 +12,7 @@ import {
   fetchPlaylists,
 } from "../../stores/userStore/userThunk";
 
-//Todo, lägg in playlistbild..
+//Todo, lägg in nån bra playlistbild..
 
 const Playlists = () => {
   const [playlistName, setPlaylistName] = useState<string>("");
@@ -33,7 +33,7 @@ const Playlists = () => {
 
   return (
     <>
-      <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+      <div className="playslists wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular playlists</h2>
         <p className="tracking-wide mt-2">Explore new music everyday</p>
 

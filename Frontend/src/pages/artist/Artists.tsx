@@ -1,11 +1,8 @@
 import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { Album } from "../../models/AlbumResponse";
 import { setArtists } from "../../stores/musicStore/musicSlice";
 import { RootState } from "../../stores/configureStore";
 import { Link } from "react-router-dom";
-import { IoPlay } from "react-icons/io5";
-import { useState } from "react";
 import { Artist } from "../../models/ArtistsResponse";
 
 const Artists = () => {
@@ -14,7 +11,7 @@ const Artists = () => {
 
   return (
     <>
-      <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+      <div className="artistspage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular artists</h2>
         <p className="tracking-wide mt-2">Explore new music everyday</p>
 
@@ -45,7 +42,7 @@ const Artists = () => {
                     ></img>
                   </div>
 
-                  <Link to={`/artist/${data.id}`} state={data}>
+                  <Link to={`/artist/${data.name}`} state={data}>
                     <p className="text-wrap text-center mt-2">{data.name}</p>
                   </Link>
                 </div>

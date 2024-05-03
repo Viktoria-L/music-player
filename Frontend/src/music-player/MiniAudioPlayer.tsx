@@ -1,17 +1,25 @@
 import ProgressBar from "./ProgressBar";
-import { useRef } from "react";
+import { useRef, RefObject } from "react";
 import { PlayControls } from "./PlayControls";
 import { VolumeControls } from "./VolumeControls";
 import MiniDisplayTrack from "./MiniDisplayTrack";
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/configureStore";
+import { Track } from "../models/TracksResponse";
+
+export interface AudioProps {
+  audioRef: RefObject<HTMLAudioElement>;
+  progressBarRef: RefObject<HTMLInputElement>;
+  mini?: string;
+  tracks?: Track[];
+}
 
 //Parent,root component
 const MiniAudioPlayer = () => {
   const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
 
-  const audioRef = useRef<HTMLAudioElement>();
-  const progressBarRef = useRef<HTMLInputElement>();
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const progressBarRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="mini-audio-player fixed bottom-0 h-20 w-full">

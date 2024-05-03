@@ -2,12 +2,14 @@ import { BsMusicNoteBeamed } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { handleNext, setDuration } from "../stores/musicStore/musicSlice";
 import { RootState } from "../stores/configureStore";
+import { AudioProps } from "./MiniAudioPlayer";
 
-//TODO, vill man inte spara currentTrack infon i local storage så när man öppnar sidan så läses iaf de senaste in i denna
-//FÖR NU SÅ VISAS DEN BILD SOM ÄR FÄRSTA FEATURED TRACK.. i minidisplayen
-
-//Renders audio content
-const MiniDisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
+const MiniDisplayTrack = ({
+  audioRef,
+  progressBarRef,
+  mini = "",
+  tracks,
+}: AudioProps) => {
   const dispatch = useDispatch();
 
   const currentTrack = useSelector(
@@ -22,10 +24,12 @@ const MiniDisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
   );
 
   const onLoadedMetadata = () => {
-    const seconds = audioRef.current.duration;
+    const seconds = audioRef.current?.duration;
     // setDuration(seconds);
     dispatch(setDuration(seconds));
-    progressBarRef.current.max = seconds;
+    if (progressBarRef.current && seconds) {
+      progressBarRef.current.max = seconds.toString();
+    }
   };
 
   return (
@@ -72,9 +76,3 @@ const MiniDisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
 };
 
 export default MiniDisplayTrack;
-
-// MiniDisplayTrack.propTypes = {
-//     audioRef: PropTypes.object.isRequired,
-//     progressBarRef: PropTypes.object.isRequired,
-//     mini: PropTypes.string
-// }

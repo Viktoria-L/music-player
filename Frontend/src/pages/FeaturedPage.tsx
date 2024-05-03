@@ -11,7 +11,7 @@ const FeaturedPage = () => {
 
   return (
     <>
-      <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+      <div className="featurepage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">
           Featured {state.entity}
         </h2>

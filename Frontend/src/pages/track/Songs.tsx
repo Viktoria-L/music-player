@@ -1,6 +1,5 @@
 import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { Album } from "../../models/AlbumResponse";
 import { setTracksFromApi } from "../../stores/musicStore/musicSlice";
 import { RootState } from "../../stores/configureStore";
 import { Link } from "react-router-dom";
@@ -13,7 +12,7 @@ const Songs = () => {
 
   return (
     <>
-      <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+      <div className="trackspage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular songs</h2>
         <p className="tracking-wide mt-2">Explore new music everyday</p>
 

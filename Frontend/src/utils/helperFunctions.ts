@@ -116,3 +116,47 @@ export function formatTime(seconds: number): string {
 //   });
 //   return response.json();
 // };
+
+//borttagen kod
+
+// useEffect(() => {
+//   console.log("tracks från slice", data);
+//TODO, antingen måste datan hämtas här eller sparas i ett FeaturedTrack state, jag behöver separera på playibg tracks och
+//tracks som visas ut i featured tracks för den uppdateras till annan musik om jag t.ex gåre in på listan songs
+// fetchDataFromJamendo<Track[]>(
+//   "tracks",
+//   { limit: "10", featured: 1 },
+//   dispatch,
+//   setTracksFromApi
+// );
+//}, []);
+
+// SE GENERISK HÄMTNING I HTTP.JS FILEN //
+
+//   const fetchDataFromJamendo = async () => {
+//     const API_URL = state.api.baseUrl;
+//     const clientId = "5bcc718f";
+
+//     try {
+//       // limit parameter sätter gränsen för hur många responer,default är 10
+//       //   const response = await axios.get(`${API_URL}albums/?client_id=${clientId}&format=jsonpretty&artist_name=anitek`)
+//       // GET 10 artists - const response = await axios.get(`${API_URL}artists/?client_id=${clientId}&format=jsonpretty`)
+
+//       // const response = await axios.get(`${API_URL}artists/tracks?client_id=${clientId}&format=jsonpretty`)
+
+//       const response = await axios.get(
+//         `${API_URL}tracks/?client_id=${clientId}&format=jsonpretty&limit=5&tags=electronic&featured=1`
+//       );
+//       //const response = await axios.get(`${API_URL}playlists/?client_id=${clientId}&format=jsonpretty`)
+
+//       if (response) {
+//         setMusicData(response.data);
+//         dispatch(setTracksFromApi(response.data.results));
+//       }
+//     } catch (error) {
+//       console.log(error);
+//       return null;
+//     }
+//   };
+
+//   fetchDataFromJamendo<Album[]>('albums', { limit: '10' }, dispatch, setAlbums);

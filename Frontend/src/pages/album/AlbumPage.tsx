@@ -10,11 +10,10 @@ const AlbumPage = () => {
   const { state } = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
+
   const album = useSelector(
     (state: RootState) => state.musicInStore.currentAlbum
   );
-
-  //TODO, lägg in så man kan spela hela albumet med och laddar in trtacks i tracksfrom api
 
   useEffect(() => {
     if (state) {
@@ -33,15 +32,10 @@ const AlbumPage = () => {
         setCurrentAlbum
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //Todo lägg till bakåtknapp överst på sidan, ovanför albumnamn eller vad det ska stå först
-  //Bakåtknappen måste återställa currentAlbum till ingenting ifall man går tillbaka, dock inte current track
-  // eller nä ska man återställa currentalbum, eftersom playern ska köras även om jag navigerar mig runt..
-
   return (
-    <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+    <div className="albumpage wrapper">
       <h2 className="text-4xl font-bold tracking-wider">Albumpage</h2>
       {(state || album) && (
         <>

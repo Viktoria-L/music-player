@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/configureStore";
+import { AudioProps } from "./MiniAudioPlayer";
 
-//Renders the progressbar and time
-const ProgressBar = ({ progressBarRef, audioRef }) => {
+const ProgressBar = ({ progressBarRef, audioRef }: AudioProps) => {
   const timeProgress = useSelector(
     (state: RootState) => state.musicInStore.timeProgress
   );
@@ -11,7 +11,13 @@ const ProgressBar = ({ progressBarRef, audioRef }) => {
   );
 
   const handleProgressChange = () => {
-    audioRef.current.currentTime = progressBarRef.current.value;
+    //    audioRef.current.currentTime = progressBarRef.current?.value;
+    if (progressBarRef.current) {
+      const value = Number(progressBarRef.current.value);
+      if (audioRef.current) {
+        audioRef.current.currentTime = value;
+      }
+    }
   };
 
   const formatTime = (time: number) => {

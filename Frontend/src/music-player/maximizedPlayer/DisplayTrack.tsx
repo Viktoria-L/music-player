@@ -1,25 +1,33 @@
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { handleNext, setDuration } from "../../stores/musicStore/musicSlice";
+import { AppDispatch, RootState } from "../../stores/configureStore";
+import { AudioProps } from "../MiniAudioPlayer";
 
-//Renders audio content
-const DisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
-  const dispatch = useDispatch();
-
-  //TODO musikData måste in i storen på något sätt för där sätts currentTrack
-  const currentTrack = useSelector((state) => state.musicInStore.currentTrack);
-  const duration = useSelector((state) => state.musicInStore.duration);
-
-  //console.log(musicData.results[1].tracks[0].audio)
+const DisplayTrack = ({
+  audioRef,
+  progressBarRef,
+  mini = "",
+  tracks,
+}: AudioProps) => {
+  const dispatch: AppDispatch = useDispatch();
+  const currentTrack = useSelector(
+    (state: RootState) => state.musicInStore.currentTrack
+  );
+  // const duration = useSelector(
+  //   (state: RootState) => state.musicInStore.duration
+  // );
 
   const onLoadedMetadata = () => {
-    const seconds = audioRef.current.duration;
+    const seconds = audioRef.current?.duration;
     // setDuration(seconds);
     dispatch(setDuration(seconds));
-    progressBarRef.current.max = seconds;
+    if (progressBarRef.current && seconds) {
+      progressBarRef.current.max = seconds.toString();
+    }
   };
-  //Den övre utkommenterade är hur det såg ut först
-  // Datan i responsen ser olika ut beroende på om man hämtar tracks eller album eller artist.. hur ska man lösa det?
+
+  //TODO, fråga Datan i responsen ser olika ut beroende på om man hämtar tracks eller album eller artist.. hur ska man lösa det?
 
   return (
     <div className="display-container w-full">
@@ -31,13 +39,12 @@ const DisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
           dispatch(handleNext());
         }}
       />
-      {/* <audio src={musicData.results[1]?.audio} ref={audioRef} onLoadedMetadata={onLoadedMetadata} onEnded={()=>{dispatch(handleNext())}} /> */}
 
       <div className={`flex gap-4 flex-col ${mini}`}>
         <div className="audio-image">
           {currentTrack.image ? (
             <div className="image-crop">
-              <img src={currentTrack.image} alt="nånting" />
+              <img src={currentTrack.image} alt="album image" />
             </div>
           ) : (
             <div className="icon-wrapper">
@@ -59,10 +66,3 @@ const DisplayTrack = ({ audioRef, progressBarRef, mini = "", tracks }) => {
 };
 
 export default DisplayTrack;
-
-// DisplayTrack.propTypes = {
-//     audioRef: PropTypes.object.isRequired,
-//     progressBarRef: PropTypes.object.isRequired,
-//     mini: PropTypes.string,
-//     musicData:  PropTypes.object,
-// }

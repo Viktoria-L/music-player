@@ -12,7 +12,7 @@ const Albums = () => {
 
   return (
     <>
-      <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+      <div className="albumspage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular albums</h2>
         <p className="tracking-wide mt-2">Explore new music everyday</p>
 

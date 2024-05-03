@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { GoInfo, GoHome, GoListUnordered, GoLog } from "react-icons/go";
 import { PiMusicNotes } from "react-icons/pi";
@@ -7,8 +7,8 @@ import { GiHeadphones } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../stores/configureStore";
 import { logout } from "../stores/authStore/authSlice";
-import { fetchPlaylists } from "../stores/userStore/userThunk";
-import { useEffect } from "react";
+import { fetchPlaylists, createPlaylist } from "../stores/userStore/userThunk";
+import { useEffect, useState } from "react";
 
 interface NavbarProps {
   openNav: boolean;
@@ -16,6 +16,9 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
+  const navigate = useNavigate();
+  const [showCreateInput, setShowCreateInput] = useState(false);
+  const [playlistName, setPlaylistName] = useState<string>("");
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -24,7 +27,14 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
 
   useEffect(() => {
     dispatch(fetchPlaylists());
-  }, []);
+  }, [isAuthenticated]);
+
+  const handleCreate = async () => {
+    await dispatch(createPlaylist({ name: playlistName }));
+    setShowCreateInput(false);
+    setPlaylistName("");
+    dispatch(fetchPlaylists());
+  };
 
   return (
     <div
@@ -120,15 +130,32 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
       <br />
       <br />
 
-      {isAuthenticated && (
+      {isAuthenticated && userPlaylists && (
         <>
           <span>YOUR PLAYLISTS</span>
-          <ul>
+          <ul className="flex flex-col gap-1">
             {userPlaylists.map((playlist) => (
               <li>
                 <Link to={`/playlist/${playlist._id}`}>{playlist.name}</Link>
               </li>
             ))}
+            <li onClick={() => setShowCreateInput((prev) => !prev)}>
+              Create new playlist +
+            </li>
+            {showCreateInput && (
+              <>
+                <input
+                  className="bg-teal"
+                  type="text"
+                  value={playlistName}
+                  onChange={(e) => setPlaylistName(e.target.value)}
+                  placeholder="Choose playlist name"
+                />
+                <button className="bg-teal border" onClick={handleCreate}>
+                  Create
+                </button>
+              </>
+            )}
           </ul>
         </>
       )}
@@ -138,11 +165,15 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
       <br />
 
       <p>{isAuthenticated ? "Logged in" : "Not logged in"}</p>
-      <button className="p-2 bg-slate-400" onClick={() => dispatch(logout())}>
-        Log out
-      </button>
+      {isAuthenticated ? (
+        <button className="p-2 bg-slate-400" onClick={() => dispatch(logout())}>
+          Log out
+        </button>
+      ) : (
+        <button className="p-2 bg-slate-400" onClick={() => navigate("/login")}>
+          Log in
+        </button>
+      )}
     </div>
   );
 };
-
-//TODO, gör en till UL nedanför som kan fyllas på med spellistor. och visa spellistor samt en spellista add new

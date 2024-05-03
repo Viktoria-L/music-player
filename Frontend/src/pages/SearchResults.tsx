@@ -116,13 +116,12 @@ const SearchResults = () => {
     }
   };
 
-  //gÖR UTskriften för tracks till en table låtlista
   //Gör album utskrivften likadan som featured bilderna
   // gör artist till runda precis som på artistpage
   // Eventuellt göra en tags meny upptill med All, artists, songs/tracks, albums
   return (
     <>
-      <div className="home flex flex-grow flex-col mt-8 sm:px-8 px-4">
+      <div className="searchpage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">
           Search results for "{query}"
         </h2>

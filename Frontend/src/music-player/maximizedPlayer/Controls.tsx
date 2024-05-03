@@ -17,14 +17,20 @@ import {
   setDuration,
   setTimeProgress,
 } from "../../stores/musicStore/musicSlice";
+import { AudioProps } from "../MiniAudioPlayer";
+import { RootState } from "../../stores/configureStore";
+
+//TODO, ordna allt här som e rött
 
 //Renders audio controls and volume slider
-const Controls = ({ audioRef, progressBarRef, tracks }) => {
+const Controls = ({ audioRef, progressBarRef, tracks }: AudioProps) => {
   const dispatch = useDispatch();
   // const trackIndex = useSelector((state) => state.musicInStore.trackIndex);
   // const currentTrack = useSelector((state) => state.musicInStore.currentTrack);
   // const timeProgress = useSelector((state) => state.musicInStore.timeProgress);
-  const duration = useSelector((state) => state.musicInStore.duration);
+  const duration = useSelector(
+    (state: RootState) => state.musicInStore.duration
+  );
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(60);

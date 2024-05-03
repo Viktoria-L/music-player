@@ -1,6 +1,6 @@
 const ProfilePage = () => {
   return (
-    <div>
+    <div className="profile wrapper">
       ProfilePage
       <p>
         Här bör ens privata spellistor renderas ut och favoritmarkerade
