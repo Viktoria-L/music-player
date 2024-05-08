@@ -24,7 +24,7 @@ const Dropdown: React.FC<DropDownProps> = ({ menuRef, track }) => {
         const menuWidth = menuRef.current.getBoundingClientRect();
         const spaceRight = window.innerWidth - menuWidth.right;
         const spaceLeft = menuWidth.left;
-        const requiredSpace = 300; // Justera efter menybredd
+        const requiredSpace = 300;
 
         const newPosition =
           spaceRight < requiredSpace && spaceLeft >= requiredSpace
@@ -38,7 +38,7 @@ const Dropdown: React.FC<DropDownProps> = ({ menuRef, track }) => {
 
     if (showSubmenu) {
       window.addEventListener("resize", updateMenuPosition);
-      updateMenuPosition(); // Kör initialt för att ställa in positionen
+      updateMenuPosition();
     }
 
     return () => {

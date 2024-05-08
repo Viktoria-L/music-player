@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Track } from "../../models/TracksResponse";
 
 export interface PlaylistDetails {
-  _id?: string;
+  _id: string;
   name: string;
   tracks?: Track[];
 }
@@ -46,7 +46,7 @@ export const fetchPlaylists = createAsyncThunk(
 
 export const createPlaylist = createAsyncThunk(
   "user/createPlaylist",
-  async (playlistDetails: PlaylistDetails) => {
+  async (playlistDetails: string) => {
     const response = await fetch(`${baseUrl}/playlists`, {
       method: "POST",
       headers: {

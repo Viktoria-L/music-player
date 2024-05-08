@@ -42,6 +42,8 @@ interface MusicState {
   timeProgress: number;
   duration: number;
   artists: Artist[];
+  artistTracks: Artist;
+  artistAlbums: Artist;
   tracks: Track[];
   featuredTracks: Track[];
   singleTrack: TrackInfo;
@@ -58,6 +60,24 @@ const initialState: MusicState = {
   timeProgress: 0,
   duration: 0,
   artists: [],
+  artistTracks: {
+    id: "",
+    name: "",
+    website: "",
+    joindate: "",
+    image: "",
+    tracks: [],
+    albums: [],
+  },
+  artistAlbums: {
+    id: "",
+    name: "",
+    website: "",
+    joindate: "",
+    image: "",
+    tracks: [],
+    albums: [],
+  },
   tracks: [],
   featuredTracks: [],
   singleTrack: {
@@ -120,6 +140,12 @@ const musicSlice = createSlice({
     },
     setArtists: (state, action: PayloadAction<Artist[]>) => {
       state.artists = action.payload;
+    },
+    setArtistTracks: (state, action: PayloadAction<Artist[]>) => {
+      state.artistTracks = action.payload[0];
+    },
+    setArtistAlbums: (state, action: PayloadAction<Artist[]>) => {
+      state.artistAlbums = action.payload[0];
     },
     setAlbums: (state, action: PayloadAction<Album[]>) => {
       state.albums = action.payload;
@@ -187,6 +213,8 @@ export const {
   setTracksFromApi,
   setFeaturedTracks,
   setArtists,
+  setArtistTracks,
+  setArtistAlbums,
   setAlbums,
   setCurrentAlbum,
   setCurrentTrack,

@@ -16,15 +16,7 @@ const AlbumPage = () => {
   );
 
   useEffect(() => {
-    if (state) {
-      fetchDataFromJamendo(
-        `albums/tracks`,
-        { id: state.id, artist_name: state.artist_name },
-        dispatch,
-        setCurrentAlbum
-      );
-    } else if (!state) {
-      console.log("inget state");
+    if (id) {
       fetchDataFromJamendo(
         `albums/tracks`,
         { id: id },
@@ -32,7 +24,7 @@ const AlbumPage = () => {
         setCurrentAlbum
       );
     }
-  }, []);
+  }, [id]);
 
   return (
     <div className="albumpage wrapper">

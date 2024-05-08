@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
+import { useState, useEffect } from "react";
 
 // //------------- Get Tracks ----------------//
 
@@ -28,11 +29,11 @@ import { Dispatch } from "@reduxjs/toolkit";
 
 //// ------- ANVÄND FUNKTIONEN NEDANFÖR FÖR HÄMTNING ----------- //
 
-const API_URL = "https://api.jamendo.com/v3.0/";
-const clientId = "5bcc718f";
+export const API_URL = "https://api.jamendo.com/v3.0/";
+export const clientId = "5bcc718f";
 
 interface FetchParams {
-  [key: string]: any; // Flexiblare än att använda string
+  [key: string]: any;
 }
 
 export const fetchDataFromJamendo = async <T, P>(
@@ -59,6 +60,31 @@ export const fetchDataFromJamendo = async <T, P>(
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+export const fetchData = async <T>(
+  endpoint: string,
+  params: FetchParams = {}
+): Promise<T> => {
+  const queryParams: Record<string, string> = {
+    client_id: clientId,
+    format: "jsonpretty",
+    ...params,
+  };
+  const queryParameters = new URLSearchParams(queryParams).toString();
+  try {
+    const response = await axios.get<T>(
+      `${API_URL}${endpoint}?${queryParameters}`
+    );
+    if (response.headers.status === "success") {
+      return response.data;
+    } else {
+      throw new Error("Request failed with status: " + response.headers.status);
+    }
+  } catch (error) {
+    console.error("Failed to fetch artist", error);
+    throw error;
   }
 };
 

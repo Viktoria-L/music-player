@@ -35,7 +35,6 @@ const Artists = () => {
               return (
                 <div key={data.id} className="w-48">
                   <div className="w-48 relative">
-                    {/* <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" /> */}
                     <img
                       src={data.image}
                       className="h-48 w-48 rounded-full"

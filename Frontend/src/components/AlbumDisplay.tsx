@@ -13,14 +13,14 @@ import {
   setCurrentTrack,
   setPlayStatus,
 } from "../stores/musicStore/musicSlice";
-import { GiStaticWaves } from "react-icons/gi";
 
 interface DisplayProps {
   data: Track;
   basePath: string;
 }
 
-//TODO länk över hela albumdisplay?
+//TODO länk över hela albumdisplay? Nu är det bara länk äver titeln
+// TODO, vad är det som ska bara visas om man är inloggad, är det menyn och hjärtana
 
 const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
   const [showDropdown, setShowDropdown] = useState(false);
