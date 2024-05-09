@@ -128,7 +128,8 @@ const ArtistPage = () => {
             </table>
           </div>
 
-          <div className="flex flex-wrap gap-5 w-full">
+          <div className="flex flex-col flex-wrap gap-5 w-full">
+            <h3>Albums</h3>
             {artistAlbums &&
               artistAlbums.map((data) => (
                 <div key={data.id} className="w-48">

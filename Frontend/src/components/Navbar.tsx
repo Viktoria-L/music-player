@@ -30,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
   }, [isAuthenticated]);
 
   const handleCreate = async () => {
-    await dispatch(createPlaylist({ name: playlistName }));
+    await dispatch(createPlaylist(playlistName));
     setShowCreateInput(false);
     setPlaylistName("");
     dispatch(fetchPlaylists());

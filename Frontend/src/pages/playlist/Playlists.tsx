@@ -20,16 +20,21 @@ const Playlists = () => {
   const playlists = useSelector(
     (state: RootState) => state.musicInStore.playlists
   );
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const userPlaylists = useSelector((state: RootState) => state.user.playlists);
 
   const handleCreate = async () => {
-    await dispatch(createPlaylist({ name: playlistName }));
+    await dispatch(createPlaylist(playlistName));
     dispatch(fetchPlaylists());
   };
 
   useEffect(() => {
-    dispatch(fetchPlaylists());
-  }, []);
+    if (isAuthenticated) {
+      dispatch(fetchPlaylists());
+    }
+  }, [isAuthenticated]);
 
   return (
     <>
@@ -84,7 +89,8 @@ const Playlists = () => {
         <div className="text-xl bold">
           <h2>Your playlists</h2>
           <div className="flex flex-wrap gap-5 w-full">
-            {userPlaylists &&
+            {isAuthenticated &&
+              userPlaylists &&
               userPlaylists.map((list, i) => (
                 <div key={i} className="w-48">
                   <div className="w-48 relative">
