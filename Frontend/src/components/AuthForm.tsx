@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, register } from "../stores/authStore/authSlice";
 import { AppDispatch, RootState } from "../stores/configureStore";
 import { fetchFavorites, fetchPlaylists } from "../stores/userStore/userThunk";
+//TODO, byt språk
 
 function AuthForm() {
   const dispatch: AppDispatch = useDispatch();
@@ -17,7 +18,6 @@ function AuthForm() {
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const loginData = { user: user, pass: pass };
     await dispatch(login({ user, pass }));
     dispatch(fetchFavorites());
     dispatch(fetchPlaylists());

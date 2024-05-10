@@ -56,8 +56,8 @@ export const Featured = ({ entity }: { entity: EntityType }) => {
         </Link>
       </div>
       <div className="flex flex-wrap gap-5 w-full">
-        {featuredData.slice(0, 4).map((data) => (
-          <AlbumDisplay data={data} basePath={basePath} />
+        {featuredData.slice(0, 4).map((data, i) => (
+          <AlbumDisplay key={i} data={data} basePath={basePath} />
         ))}
       </div>
     </div>

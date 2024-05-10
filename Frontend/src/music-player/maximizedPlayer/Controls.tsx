@@ -22,7 +22,6 @@ import { RootState } from "../../stores/configureStore";
 
 //TODO, ordna allt här som e rött
 
-//Renders audio controls and volume slider
 const Controls = ({ audioRef, progressBarRef, tracks }: AudioProps) => {
   const dispatch = useDispatch();
   // const trackIndex = useSelector((state) => state.musicInStore.trackIndex);

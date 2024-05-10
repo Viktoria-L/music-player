@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
+import { ApiHeaders } from "../models/ApiHeaderResponse";
 
 // //------------- Get Tracks ----------------//
 
@@ -41,7 +42,8 @@ export const fetchDataFromJamendo = async <T, P>(
   endpoint: string,
   params: FetchParams = {},
   dispatch: Dispatch<any>,
-  action: (data: T) => { type: string; payload: P }
+  action: (data: T) => { type: string; payload: P },
+  setError: (errorMsg: string) => void
 ) => {
   const queryParams: Record<string, string> = {
     client_id: clientId,
@@ -51,43 +53,23 @@ export const fetchDataFromJamendo = async <T, P>(
   const queryParameters = new URLSearchParams(queryParams).toString();
 
   try {
-    const response = await axios.get<{ results: T }>(
+    const response = await axios.get<{ headers: ApiHeaders; results: T }>(
       `${API_URL}${endpoint}?${queryParameters}`
     );
-    if (response) {
+    if (response.data.headers.status !== "success") {
+      const errorMsg =
+        response.data.headers.error_message || "An unknown error occurred";
+      setError(errorMsg);
+      console.error("API error:", errorMsg);
+    }
+    if (response.data.headers.status === "success") {
       console.log("response", response);
       dispatch(action(response.data.results));
     }
   } catch (error) {
-    console.error(error);
+    console.error("HTTP error:", error);
+    setError("Network error or server is unreachable");
     return null;
-  }
-};
-
-//TODO, ta bort denna nedan? använde jag den
-
-export const fetchData = async <T>(
-  endpoint: string,
-  params: FetchParams = {}
-): Promise<T> => {
-  const queryParams: Record<string, string> = {
-    client_id: clientId,
-    format: "jsonpretty",
-    ...params,
-  };
-  const queryParameters = new URLSearchParams(queryParams).toString();
-  try {
-    const response = await axios.get<T>(
-      `${API_URL}${endpoint}?${queryParameters}`
-    );
-    if (response.headers.status === "success") {
-      return response.data;
-    } else {
-      throw new Error("Request failed with status: " + response.headers.status);
-    }
-  } catch (error) {
-    console.error("Failed to fetch artist", error);
-    throw error;
   }
 };
 

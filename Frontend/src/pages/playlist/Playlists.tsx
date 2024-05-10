@@ -12,8 +12,6 @@ import {
   fetchPlaylists,
 } from "../../stores/userStore/userThunk";
 
-//Todo, lägg in nån bra playlistbild..
-
 const Playlists = () => {
   const [playlistName, setPlaylistName] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
@@ -94,8 +92,8 @@ const Playlists = () => {
           <div className="flex flex-wrap gap-5 w-full">
             {isAuthenticated &&
               userPlaylists &&
-              userPlaylists.map((list, i) => (
-                <div key={i} className="w-48">
+              userPlaylists.map((list) => (
+                <div key={list._id} className="w-48">
                   <div className="w-48 relative">
                     <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
                     <img src={playlist} className="h-48 w-48 rounded-xl"></img>
@@ -108,7 +106,9 @@ const Playlists = () => {
                     <p className="text-wrap mt-2">{list.name}</p>
                   </Link>
                   {list.tracks &&
-                    list.tracks.map((track) => <p>Track: {track.name}</p>)}
+                    list.tracks.map((track) => (
+                      <p key={track.id}>Track: {track.name}</p>
+                    ))}
                 </div>
               ))}
           </div>

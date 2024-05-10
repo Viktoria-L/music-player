@@ -46,7 +46,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
     };
   }, [menuRef]);
 
-  //TODO , borde jag lyfta ut dessa funktioner och exportera/ importera dem där de behövs
+  //TODO , borde jag lyfta ut dessa funktioner och exportera/ importera dem där de behövs?
 
   const handlePlay = (data: Track) => {
     dispatch(setCurrentTrack(data));
@@ -112,7 +112,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
       </div>
 
       {basePath && (
-        <Link to={`${basePath}/${id}`} state={data}>
+        <Link to={`/${basePath}/${id}`} state={data}>
           <p className="text-wrap mt-2">{name}</p>
           {location.pathname === "/featured" && (
             <p className="text-wrap mt-2">{artist_name}</p>

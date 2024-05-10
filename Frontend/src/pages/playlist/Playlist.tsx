@@ -13,9 +13,6 @@ import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../../utils/helperFunctions";
 import { Track } from "../../models/TracksResponse";
 
-//TODO, behöver kunna ta in både mina sparade spellistor och de officiella
-//TODO state eller hämta via id
-
 const PlaylistPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const { state } = useLocation();

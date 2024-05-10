@@ -1,4 +1,3 @@
-//TODO gör en sida likt albumPage
 import { useLocation, useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchDataFromJamendo } from "../../utils/http";
@@ -15,15 +14,10 @@ import { formatTime } from "../../utils/helperFunctions";
 import { Artist } from "../../models/ArtistsResponse";
 import { Track } from "../../models/TracksResponse";
 
-//Todo, fundering, borde jag typas om tracks och album här eller, responsen är ju dock som den som heter artist..
-
 const ArtistPage = () => {
   const { state } = useLocation();
   const { id } = useParams();
   const dispatch: AppDispatch = useDispatch();
-  // const [artistTracks, setArtistTracks] = useState<Artist | null>(null);
-  // const [artistAlbums, setArtistAlbums] = useState<ArtistAlbum | null>(null);
-  // const [error, setError] = useState<string | null>(null);
   const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
   const artistTracks = useSelector(
     (state: RootState) => state.musicInStore.artistTracks.tracks
