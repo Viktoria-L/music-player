@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Track } from "../models/TracksResponse";
 import {
   setSearchResults,
-  setTracksFromApi,
+  setTracksToPlay,
   setPlayStatus,
 } from "../stores/musicStore/musicSlice";
 import { IoPlay } from "react-icons/io5";
@@ -111,7 +111,7 @@ const SearchResults = () => {
   const handlePlay = (index: number) => {
     if (groupedResults.tracks) {
       const tracks = groupedResults.tracks;
-      dispatch(setTracksFromApi({ tracks, index }));
+      dispatch(setTracksToPlay({ tracks, index }));
       dispatch(setPlayStatus(true));
     }
   };

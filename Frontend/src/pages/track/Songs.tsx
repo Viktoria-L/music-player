@@ -1,14 +1,15 @@
 import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { setTracksFromApi } from "../../stores/musicStore/musicSlice";
+import { setFeaturedTracks } from "../../stores/musicStore/musicSlice";
 import { RootState } from "../../stores/configureStore";
-import { Link } from "react-router-dom";
-import { IoPlay } from "react-icons/io5";
 import { Track } from "../../models/TracksResponse";
+import AlbumDisplay from "../../components/AlbumDisplay";
 
 const Songs = () => {
   const dispatch = useDispatch();
-  const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
+  const tracks = useSelector(
+    (state: RootState) => state.musicInStore.featuredTracks
+  );
 
   return (
     <>
@@ -19,11 +20,11 @@ const Songs = () => {
         <button
           className="bold border mt-5"
           onClick={() =>
-            fetchDataFromJamendo<Track[], { tracks: Track[]; index?: number }>(
+            fetchDataFromJamendo<Track[], Track[]>(
               "tracks",
               { limit: "20", featured: 1 },
               dispatch,
-              (tracks) => setTracksFromApi({ tracks })
+              setFeaturedTracks
             )
           }
         >
@@ -32,16 +33,7 @@ const Songs = () => {
 
         <div className="flex flex-wrap gap-5 w-full">
           {tracks.map((data) => (
-            <div key={data.id} className="w-48">
-              <div className="w-48 relative">
-                <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
-                <img src={data.image} className="h-48 w-48 rounded-xl"></img>
-              </div>
-
-              <Link to={`/track/${data.id}`} state={data}>
-                <p className="text-wrap mt-2">{data.name}</p>
-              </Link>
-            </div>
+            <AlbumDisplay data={data} basePath="track" key={data.id} />
           ))}
         </div>
       </div>

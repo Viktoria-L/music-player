@@ -127,7 +127,7 @@ export function formatTime(seconds: number): string {
 //   "tracks",
 //   { limit: "10", featured: 1 },
 //   dispatch,
-//   setTracksFromApi
+//   setTracksToPlay
 // );
 //}, []);
 
@@ -151,7 +151,7 @@ export function formatTime(seconds: number): string {
 
 //       if (response) {
 //         setMusicData(response.data);
-//         dispatch(setTracksFromApi(response.data.results));
+//         dispatch(setTracksToPlay(response.data.results));
 //       }
 //     } catch (error) {
 //       console.log(error);

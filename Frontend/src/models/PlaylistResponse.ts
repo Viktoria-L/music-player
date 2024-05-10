@@ -2,9 +2,9 @@ import { ApiHeaders } from "./ApiHeaderResponse";
 import { Track } from "./TracksResponse";
 
 export interface Playlist {
+  creationdate: string;
   id: string;
   name: string;
-  creationdate: string;
   user_id: string;
   user_name: string;
   zip: string;

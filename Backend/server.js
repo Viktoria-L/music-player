@@ -82,6 +82,8 @@ app.post("/api/logout", (req, res) => {
   });
 });
 
+//------ FAVORITES ------ //
+
 app.get("/api/favorites", restrict, async (req, res) => {
   const favorites = await favoritesCollection
     .find({ userId: req.session.user.id })
@@ -101,6 +103,25 @@ app.post("/api/favorites", restrict, async (req, res) => {
   });
   res.json(favorite);
 });
+
+// app.delete("/api/favorites/:id", restrict, async (req, res) => {
+//   const favorite = await favoritesCollection.deleteOne({
+//     id: req.body.trackId,
+//   });
+//   res.json(favorite);
+// });
+
+app.delete("/api/favorites/:id", restrict, async (req, res) => {
+  const favorite = await favoritesCollection.deleteOne({
+    id: req.params.id,
+  });
+  if (favorite.deletedCount === 0) {
+    return res.status(404).json({ message: "No favorite found with that ID" });
+  }
+  res.json({ message: "Favorite successfully deleted" });
+});
+
+//------ PLAYLISTS ------ //
 
 app.get("/api/playlists", restrict, async (req, res) => {
   const playlists = await playlistsCollection

@@ -135,8 +135,13 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           <span>YOUR PLAYLISTS</span>
           <ul className="flex flex-col gap-1">
             {userPlaylists.map((playlist) => (
-              <li>
-                <Link to={`/playlist/${playlist._id}`}>{playlist.name}</Link>
+              <li key={playlist._id}>
+                <Link
+                  to={`/playlist/${playlist._id}`}
+                  state={{ data: playlist, type: "Private" }}
+                >
+                  {playlist.name}
+                </Link>
               </li>
             ))}
             <li onClick={() => setShowCreateInput((prev) => !prev)}>

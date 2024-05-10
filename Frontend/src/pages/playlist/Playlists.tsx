@@ -64,7 +64,10 @@ const Playlists = () => {
                 <img src={playlist} className="h-48 w-48 rounded-xl"></img>
               </div>
 
-              <Link to={`/playlist/${data.id}`} state={data}>
+              <Link
+                to={`/playlist/${data.id}`}
+                state={{ data: data, type: "Public" }}
+              >
                 <p className="text-wrap mt-2">{data.name}</p>
               </Link>
             </div>
@@ -98,7 +101,10 @@ const Playlists = () => {
                     <img src={playlist} className="h-48 w-48 rounded-xl"></img>
                   </div>
 
-                  <Link to={`/playlist/${list._id}`} state={list}>
+                  <Link
+                    to={`/playlist/${list._id}`}
+                    state={{ data: list, type: "Private" }}
+                  >
                     <p className="text-wrap mt-2">{list.name}</p>
                   </Link>
                   {list.tracks &&

@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, register } from "../stores/authStore/authSlice";
 import { AppDispatch, RootState } from "../stores/configureStore";
+import { fetchFavorites, fetchPlaylists } from "../stores/userStore/userThunk";
 
 function AuthForm() {
   const dispatch: AppDispatch = useDispatch();
@@ -14,10 +15,12 @@ function AuthForm() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
-  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // const loginData = { user: user, pass: pass };
-    dispatch(login({ user, pass }));
+    await dispatch(login({ user, pass }));
+    dispatch(fetchFavorites());
+    dispatch(fetchPlaylists());
   };
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {

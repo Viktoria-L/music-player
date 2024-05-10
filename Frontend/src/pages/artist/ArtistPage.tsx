@@ -5,7 +5,7 @@ import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../stores/configureStore";
 import {
-  setTracksFromApi,
+  setTracksToPlay,
   setPlayStatus,
   setArtistTracks,
   setArtistAlbums,
@@ -57,7 +57,7 @@ const ArtistPage = () => {
   const handlePlay = (index: number) => {
     if (artistTracks) {
       const tracks: Track[] = artistTracks;
-      dispatch(setTracksFromApi({ tracks, index }));
+      dispatch(setTracksToPlay({ tracks, index }));
       dispatch(setPlayStatus(true));
     }
   };

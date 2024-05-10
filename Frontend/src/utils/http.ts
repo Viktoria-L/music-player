@@ -36,6 +36,7 @@ interface FetchParams {
   [key: string]: any;
 }
 
+//TODO, sätt in och kolla om headers är success eller failed
 export const fetchDataFromJamendo = async <T, P>(
   endpoint: string,
   params: FetchParams = {},
@@ -62,6 +63,8 @@ export const fetchDataFromJamendo = async <T, P>(
     return null;
   }
 };
+
+//TODO, ta bort denna nedan? använde jag den
 
 export const fetchData = async <T>(
   endpoint: string,
@@ -92,7 +95,7 @@ export const fetchData = async <T>(
 // MAN MÅSTE SKICKA IN endpoint, parametrar, dispatch och actionen
 
 // Exempel på att använda funktionen för 'tracks'
-// fetchDataFromJamendo<Track[]>('tracks', { artist_name: 'anitek', featured: '1', limit: '5' }, dispatch, setTracksFromApi);
+// fetchDataFromJamendo<Track[]>('tracks', { artist_name: 'anitek', featured: '1', limit: '5' }, dispatch, setTracksToPlay);
 
 // // Exempel på att använda funktionen för 'albums'
 // fetchDataFromJamendo<Album[]>('albums', { limit: '10' }, dispatch, setAlbumsFromApi);

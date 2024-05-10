@@ -5,7 +5,7 @@ import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 import {
   setPlayStatus,
-  setTracksFromApi,
+  setTracksToPlay,
 } from "../stores/musicStore/musicSlice";
 
 export const Tracklist = () => {
@@ -20,7 +20,7 @@ export const Tracklist = () => {
 
   const handlePlay = (index: number) => {
     if (tracks) {
-      dispatch(setTracksFromApi({ tracks, index }));
+      dispatch(setTracksToPlay({ tracks, index }));
       dispatch(setPlayStatus(true));
     }
   };

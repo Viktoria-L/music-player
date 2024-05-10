@@ -1,9 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
-import { Album } from "../models/AlbumResponse";
 import { Track } from "../models/TracksResponse";
 import { GoHeart, GoHeartFill } from "react-icons/go";
-import { addToFavorites, fetchFavorites } from "../stores/userStore/userThunk";
+import {
+  addToFavorites,
+  fetchFavorites,
+  removeFromFavorites,
+} from "../stores/userStore/userThunk";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../stores/configureStore";
@@ -18,9 +21,6 @@ interface DisplayProps {
   data: Track;
   basePath: string;
 }
-
-//TODO länk över hela albumdisplay? Nu är det bara länk äver titeln
-// TODO, vad är det som ska bara visas om man är inloggad, är det menyn och hjärtana
 
 const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -46,6 +46,8 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
     };
   }, [menuRef]);
 
+  //TODO , borde jag lyfta ut dessa funktioner och exportera/ importera dem där de behövs
+
   const handlePlay = (data: Track) => {
     dispatch(setCurrentTrack(data));
     dispatch(setPlayStatus(true));
@@ -56,26 +58,50 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
     dispatch(fetchFavorites());
   };
 
+  const removeFavorite = () => {
+    dispatch(removeFromFavorites(id));
+    dispatch(fetchFavorites());
+  };
+
   return (
     <div key={id} className="w-48">
       <div className="w-48 relative">
         {basePath === "track" && (
           <>
-            {favorites.map((favorite) =>
-              favorite.id === id ? (
-                <GoHeartFill className="cursor-pointer text-2xl absolute left-2 top-2" />
+            {isAuthenticated &&
+              (favorites?.length > 0 ? (
+                favorites.map((favorite) =>
+                  favorite.id === id ? (
+                    <GoHeartFill
+                      className="cursor-pointer text-2xl absolute left-2 top-2"
+                      onClick={removeFavorite}
+                    />
+                  ) : (
+                    <GoHeart
+                      className="cursor-pointer text-2xl absolute left-2 top-2"
+                      onClick={handleFavorite}
+                    />
+                  )
+                )
               ) : (
                 <GoHeart
                   className="cursor-pointer text-2xl absolute left-2 top-2"
                   onClick={handleFavorite}
                 />
-              )
+              ))}
+            {isAuthenticated && (
+              <HiDotsVertical
+                className="text-white cursor-pointer absolute text-2xl right-2 top-2"
+                onClick={() => setShowDropdown((prev) => !prev)}
+              />
             )}
-            <HiDotsVertical
-              className="text-white cursor-pointer absolute text-2xl right-2 top-2"
-              onClick={() => setShowDropdown((prev) => !prev)}
-            />
-            {showDropdown && <Dropdown menuRef={menuRef} track={data} />}
+            {showDropdown && (
+              <Dropdown
+                menuRef={menuRef}
+                track={data}
+                showDropdown={setShowDropdown}
+              />
+            )}
             <IoPlay
               className="cursor-pointer text-5xl absolute right-1 bottom-1"
               onClick={() => handlePlay(data)}

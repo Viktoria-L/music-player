@@ -5,30 +5,6 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { Artist } from "../../models/ArtistsResponse";
 import { Playlist } from "../../models/PlaylistResponse";
 
-// Fungerade inte med playbacken när denna funktion var med..
-//function getInitialTrack(): TrackInfo {
-//   const savedTrack = localStorage.getItem("currentTrack");
-//   if (savedTrack !== null) {
-//     try {
-//       return JSON.parse(savedTrack);
-//     } catch (e) {
-//       console.error("Error parsing JSON from localStorage", e);
-//     }
-//   }
-//   return {
-//     id: "",
-//     image: "",
-//     artist_name: "",
-//     name: "",
-//     audio:
-//       "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
-//   };
-// }
-
-// export function saveToLocalStorage(state: MusicState) {
-//   localStorage.setItem("currentTrack", JSON.stringify(state.currentTrack));
-// }
-
 interface TrackInfo {
   id: string;
   artist_name?: string;
@@ -51,6 +27,7 @@ interface MusicState {
   albums: Album[];
   currentAlbum: Album | null;
   playlists: Playlist[];
+  currentPlaylist: Playlist;
   searchResults: Track[];
   isPlaying: boolean;
 }
@@ -111,6 +88,15 @@ const initialState: MusicState = {
     tracks: [],
   },
   playlists: [],
+  currentPlaylist: {
+    id: "",
+    name: "",
+    creationdate: "",
+    user_id: "",
+    user_name: "",
+    zip: "",
+    tracks: [],
+  },
   searchResults: [],
   isPlaying: false,
 };
@@ -119,7 +105,7 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
-    setTracksFromApi: (
+    setTracksToPlay: (
       state,
       action: PayloadAction<{ tracks: Track[]; index?: number }>
     ) => {
@@ -155,6 +141,9 @@ const musicSlice = createSlice({
     },
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
+    },
+    setCurrentPlaylist: (state, action: PayloadAction<Playlist[]>) => {
+      state.currentPlaylist = action.payload[0];
     },
     setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
       state.playlists = action.payload;
@@ -210,7 +199,7 @@ export const {
   handlePrevious,
   setDuration,
   setTimeProgress,
-  setTracksFromApi,
+  setTracksToPlay,
   setFeaturedTracks,
   setArtists,
   setArtistTracks,
@@ -223,6 +212,7 @@ export const {
   togglePlay,
   setPlayStatus,
   setPlaylists,
+  setCurrentPlaylist,
   setSearchResults,
 } = musicSlice.actions;
 export default musicSlice.reducer;

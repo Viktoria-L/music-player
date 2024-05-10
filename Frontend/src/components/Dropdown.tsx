@@ -2,15 +2,24 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
-import { addSongToPlaylist } from "../stores/userStore/userThunk";
+import {
+  addSongToPlaylist,
+  addToFavorites,
+  fetchPlaylists,
+  fetchFavorites,
+} from "../stores/userStore/userThunk";
 
-//Todo, borde manage i menyn vara add to favorites?
 interface DropDownProps {
   menuRef: React.RefObject<HTMLDivElement>;
   track: Track;
+  showDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Dropdown: React.FC<DropDownProps> = ({ menuRef, track }) => {
+const Dropdown: React.FC<DropDownProps> = ({
+  menuRef,
+  track,
+  showDropdown,
+}) => {
   const dispatch: AppDispatch = useDispatch();
   const [showSubmenu, setShowSubmenu] = useState(false);
   const [submenuPosition, setSubmenuPosition] = useState<"left" | "right">(
@@ -44,11 +53,12 @@ const Dropdown: React.FC<DropDownProps> = ({ menuRef, track }) => {
     return () => {
       window.removeEventListener("resize", updateMenuPosition);
     };
-  }, [showSubmenu]); // Endast re-run när showSubmenu ändras
+  }, [showSubmenu]);
 
-  useEffect(() => {
-    console.log("playlists", userPlaylists);
-  }, [userPlaylists]);
+  const handleFavorite = () => {
+    dispatch(addToFavorites(track));
+    dispatch(fetchFavorites());
+  };
 
   return (
     <div className="relative block text-left" ref={menuRef}>
@@ -62,12 +72,12 @@ const Dropdown: React.FC<DropDownProps> = ({ menuRef, track }) => {
           aria-orientation="vertical"
           aria-labelledby="options-menu"
         >
-          <a
-            href="#manage"
+          <div
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            onClick={handleFavorite}
           >
-            Manage
-          </a>
+            Add to favorite
+          </div>
           <div
             onMouseEnter={() => setShowSubmenu(true)}
             className={`px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer 
@@ -94,7 +104,9 @@ const Dropdown: React.FC<DropDownProps> = ({ menuRef, track }) => {
                           track,
                         })
                       ),
-                        setShowSubmenu(false);
+                        dispatch(fetchPlaylists());
+                      setShowSubmenu(false);
+                      showDropdown(false);
                     }}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >

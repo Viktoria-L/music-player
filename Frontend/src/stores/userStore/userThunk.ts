@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Track } from "../../models/TracksResponse";
 
@@ -28,6 +29,20 @@ export const addToFavorites = createAsyncThunk(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(track),
+      credentials: "include",
+    });
+    return response.json();
+  }
+);
+
+export const removeFromFavorites = createAsyncThunk(
+  "user/removeFromFavorites",
+  async (trackId: string) => {
+    const response = await fetch(`${baseUrl}/favorites/${trackId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
       credentials: "include",
     });
     return response.json();
