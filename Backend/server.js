@@ -104,13 +104,6 @@ app.post("/api/favorites", restrict, async (req, res) => {
   res.json(favorite);
 });
 
-// app.delete("/api/favorites/:id", restrict, async (req, res) => {
-//   const favorite = await favoritesCollection.deleteOne({
-//     id: req.body.trackId,
-//   });
-//   res.json(favorite);
-// });
-
 app.delete("/api/favorites/:id", restrict, async (req, res) => {
   const favorite = await favoritesCollection.deleteOne({
     id: req.params.id,

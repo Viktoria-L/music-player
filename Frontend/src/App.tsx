@@ -54,7 +54,14 @@ function App() {
         <Route path="/songs" element={<Songs />}></Route>
         <Route path="/track/:id" element={<TrackPage />}></Route>
         <Route path="/playlists" element={<Playlists />}></Route>
-        <Route path="/playlist/:id" element={<PlaylistPage />}></Route>
+        <Route
+          path="/playlist/:id"
+          element={
+            <PrivateRoute>
+              <PlaylistPage />
+            </PrivateRoute>
+          }
+        ></Route>
         <Route path="/featured" element={<FeaturedPage />}></Route>
         <Route
           path="/favorites"

@@ -26,7 +26,9 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPlaylists());
+    if (isAuthenticated) {
+      dispatch(fetchPlaylists());
+    }
   }, [isAuthenticated]);
 
   const handleCreate = async () => {
@@ -35,6 +37,10 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
     setPlaylistName("");
     dispatch(fetchPlaylists());
   };
+
+  useEffect(() => {
+    console.log("userp", userPlaylists);
+  }, [userPlaylists]);
 
   return (
     <div
@@ -130,39 +136,45 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
       <br />
       <br />
 
-      {isAuthenticated && userPlaylists && (
+      {isAuthenticated ? (
         <>
-          <span>YOUR PLAYLISTS</span>
-          <ul className="flex flex-col gap-1">
-            {userPlaylists.map((playlist) => (
-              <li key={playlist._id}>
-                <Link
-                  to={`/playlist/${playlist._id}`}
-                  state={{ data: playlist, type: "Private" }}
-                >
-                  {playlist.name}
-                </Link>
-              </li>
-            ))}
-            <li onClick={() => setShowCreateInput((prev) => !prev)}>
-              Create new playlist +
-            </li>
-            {showCreateInput && (
-              <>
-                <input
-                  className="bg-teal"
-                  type="text"
-                  value={playlistName}
-                  onChange={(e) => setPlaylistName(e.target.value)}
-                  placeholder="Choose playlist name"
-                />
-                <button className="bg-teal border" onClick={handleCreate}>
-                  Create
-                </button>
-              </>
-            )}
-          </ul>
+          {userPlaylists && (
+            <>
+              <span>YOUR PLAYLISTS</span>
+              <ul className="flex flex-col gap-1">
+                {userPlaylists.map((playlist) => (
+                  <li key={playlist._id}>
+                    <Link
+                      to={`/playlist/${playlist._id}`}
+                      state={{ data: playlist, type: "Private" }}
+                    >
+                      {playlist.name}
+                    </Link>
+                  </li>
+                ))}
+                <li onClick={() => setShowCreateInput((prev) => !prev)}>
+                  Create new playlist +
+                </li>
+                {showCreateInput && (
+                  <>
+                    <input
+                      className="bg-teal"
+                      type="text"
+                      value={playlistName}
+                      onChange={(e) => setPlaylistName(e.target.value)}
+                      placeholder="Choose playlist name"
+                    />
+                    <button className="bg-teal border" onClick={handleCreate}>
+                      Create
+                    </button>
+                  </>
+                )}
+              </ul>
+            </>
+          )}
         </>
+      ) : (
+        <p>Please log in to view playlists.</p>
       )}
       <br />
       <br />

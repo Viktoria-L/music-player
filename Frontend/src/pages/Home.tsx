@@ -12,12 +12,13 @@ import { AppDispatch, RootState } from "../stores/configureStore";
 import { fetchPlaylists } from "../stores/userStore/userThunk";
 
 const Home = () => {
-  const [error, setError] = useState<string>("");
+  const [albumError, setAlbumError] = useState<string>("");
+  const [trackError, setTrackError] = useState<string>("");
+
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
   const dispatch: AppDispatch = useDispatch();
-  // const data = useSelector((state: RootState) => state.musicInStore.tracks);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -26,7 +27,6 @@ const Home = () => {
   }, [dispatch, isAuthenticated]);
 
   //Todo, lägg error på ett bra ställe där datat hämtas.. PLUS att alla sidor som hämtar data lär ha ett error-state som sen skrivs ut
-  if (error) return <div>{error}</div>;
 
   return (
     <>
@@ -38,11 +38,11 @@ const Home = () => {
           className="bold border mt-5"
           onClick={() =>
             fetchDataFromJamendo<Album[], Album[]>(
-              "albumkkiks",
+              "albums",
               { limit: "10", featured: 1 },
               dispatch,
               setAlbums,
-              setError
+              setAlbumError
             )
           }
         >
@@ -56,15 +56,33 @@ const Home = () => {
               { limit: "10", featured: 1 },
               dispatch,
               setFeaturedTracks,
-              setError
+              setTrackError
             )
           }
         >
           Fetch featured tracks from Jamendo
         </button>
 
-        <Featured entity={EntityType.Albums} />
-        <Featured entity={EntityType.Tracks} />
+        {albumError ? (
+          <div className="flex flex-col w-full mb-4">
+            <h3 className="font-semibold text-2xl tracking-wide mb-4">
+              Featured Albums
+            </h3>
+            <p>Could not load albums</p>
+          </div>
+        ) : (
+          <Featured entity={EntityType.Albums} />
+        )}
+        {trackError ? (
+          <div className="flex flex-col w-full">
+            <h3 className="font-semibold text-2xl tracking-wide mb-4">
+              Featured Tracks
+            </h3>
+            <p>Could not load tracks</p>
+          </div>
+        ) : (
+          <Featured entity={EntityType.Tracks} />
+        )}
         {isAuthenticated && <Favorites />}
         <GenreSelector />
       </div>
