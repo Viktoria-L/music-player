@@ -16,7 +16,7 @@ const Playlists = () => {
   const [playlistName, setPlaylistName] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
   const playlists = useSelector(
-    (state: RootState) => state.musicInStore.playlists
+    (state: RootState) => state.musicStore.playlists
   );
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated

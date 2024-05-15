@@ -8,7 +8,7 @@ import AlbumDisplay from "../../components/AlbumDisplay";
 const Songs = () => {
   const dispatch = useDispatch();
   const tracks = useSelector(
-    (state: RootState) => state.musicInStore.featuredTracks
+    (state: RootState) => state.musicStore.featuredTracks
   );
 
   return (

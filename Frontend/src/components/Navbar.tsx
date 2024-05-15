@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
-import { GoInfo, GoHome, GoListUnordered, GoLog } from "react-icons/go";
+import { GoInfo, GoHome, GoListUnordered } from "react-icons/go";
 import { PiMusicNotes } from "react-icons/pi";
 import { BiAlbum } from "react-icons/bi";
 import { GiHeadphones } from "react-icons/gi";

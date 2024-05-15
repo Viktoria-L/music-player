@@ -12,10 +12,10 @@ const DisplayTrack = ({
 }: AudioProps) => {
   const dispatch: AppDispatch = useDispatch();
   const currentTrack = useSelector(
-    (state: RootState) => state.musicInStore.currentTrack
+    (state: RootState) => state.musicStore.currentTrack
   );
   // const duration = useSelector(
-  //   (state: RootState) => state.musicInStore.duration
+  //   (state: RootState) => state.musicStore.duration
   // );
 
   const onLoadedMetadata = () => {

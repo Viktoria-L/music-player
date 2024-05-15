@@ -4,11 +4,9 @@ import { AudioProps } from "./MiniAudioPlayer";
 
 const ProgressBar = ({ progressBarRef, audioRef }: AudioProps) => {
   const timeProgress = useSelector(
-    (state: RootState) => state.musicInStore.timeProgress
+    (state: RootState) => state.musicStore.timeProgress
   );
-  const duration = useSelector(
-    (state: RootState) => state.musicInStore.duration
-  );
+  const duration = useSelector((state: RootState) => state.musicStore.duration);
 
   const handleProgressChange = () => {
     //    audioRef.current.currentTime = progressBarRef.current?.value;

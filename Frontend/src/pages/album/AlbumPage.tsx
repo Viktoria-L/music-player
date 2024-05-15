@@ -12,7 +12,7 @@ const AlbumPage = () => {
   const dispatch = useDispatch();
 
   const album = useSelector(
-    (state: RootState) => state.musicInStore.currentAlbum
+    (state: RootState) => state.musicStore.currentAlbum
   );
 
   useEffect(() => {

@@ -14,11 +14,11 @@ export enum EntityType {
 
 export const Featured = ({ entity }: { entity: EntityType }) => {
   const albums: Album[] = useSelector(
-    (state: RootState) => state.musicInStore.albums
+    (state: RootState) => state.musicStore.albums
   );
-  // const artists = useSelector((state: RootState) => state.musicInStore.artists);
+  // const artists = useSelector((state: RootState) => state.musicStore.artists);
   const tracks: Track[] = useSelector(
-    (state: RootState) => state.musicInStore.featuredTracks
+    (state: RootState) => state.musicStore.featuredTracks
   );
   const dispatch: AppDispatch = useDispatch();
 
@@ -55,7 +55,7 @@ export const Featured = ({ entity }: { entity: EntityType }) => {
           Show all
         </Link>
       </div>
-      <div className="flex flex-wrap gap-5 w-full">
+      <div className="flex flex-wrap w-full">
         {featuredData.slice(0, 4).map((data, i) => (
           <AlbumDisplay key={i} data={data} basePath={basePath} />
         ))}

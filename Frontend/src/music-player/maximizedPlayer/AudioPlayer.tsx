@@ -8,7 +8,7 @@ import { RootState } from "../../stores/configureStore";
 
 //Parent,root component
 const AudioPlayer = () => {
-  const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
+  const tracks = useSelector((state: RootState) => state.musicStore.tracks);
   useEffect(() => {
     console.log("Tracks", tracks);
   }, [tracks]);

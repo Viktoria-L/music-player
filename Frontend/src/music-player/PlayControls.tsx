@@ -28,14 +28,12 @@ export const PlayControls = ({
   mini = "",
 }: AudioProps) => {
   const dispatch = useDispatch();
-  // const trackIndex = useSelector((state) => state.musicInStore.trackIndex);
-  // const currentTrack = useSelector((state) => state.musicInStore.currentTrack);
-  // const timeProgress = useSelector((state) => state.musicInStore.timeProgress);
-  const duration = useSelector(
-    (state: RootState) => state.musicInStore.duration
-  );
+  // const trackIndex = useSelector((state) => state.musicStore.trackIndex);
+  // const currentTrack = useSelector((state) => state.musicStore.currentTrack);
+  // const timeProgress = useSelector((state) => state.musicStore.timeProgress);
+  const duration = useSelector((state: RootState) => state.musicStore.duration);
   const isPlaying = useSelector(
-    (state: RootState) => state.musicInStore.isPlaying
+    (state: RootState) => state.musicStore.isPlaying
   );
 
   const togglePlayPause = () => {

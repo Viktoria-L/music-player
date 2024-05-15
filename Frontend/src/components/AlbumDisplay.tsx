@@ -63,62 +63,83 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
     dispatch(fetchFavorites());
   };
 
-  return (
-    <div key={id} className="w-48">
-      <div className="w-48 relative">
-        {basePath === "track" && (
-          <>
-            {isAuthenticated &&
-              (favorites?.length > 0 ? (
-                favorites.map((favorite) =>
-                  favorite.id === id ? (
-                    <GoHeartFill
-                      className="cursor-pointer text-2xl absolute left-2 top-2"
-                      onClick={removeFavorite}
-                    />
-                  ) : (
-                    <GoHeart
-                      className="cursor-pointer text-2xl absolute left-2 top-2"
-                      onClick={handleFavorite}
-                    />
-                  )
-                )
-              ) : (
-                <GoHeart
-                  className="cursor-pointer text-2xl absolute left-2 top-2"
-                  onClick={handleFavorite}
-                />
-              ))}
-            {isAuthenticated && (
-              <HiDotsVertical
-                className="text-white cursor-pointer absolute text-2xl right-2 top-2"
-                onClick={() => setShowDropdown((prev) => !prev)}
-              />
-            )}
-            {showDropdown && (
-              <Dropdown
-                menuRef={menuRef}
-                track={data}
-                showDropdown={setShowDropdown}
-              />
-            )}
-            <IoPlay
-              className="cursor-pointer text-5xl absolute right-1 bottom-1"
-              onClick={() => handlePlay(data)}
-            />
-          </>
-        )}
-        <img src={image} className="h-48 w-48 rounded-xl"></img>
-      </div>
+  //TODO, gör playkappen inuti en annan rund knapp, för annars synd den inte alltid på vissa ljusa album
 
-      {basePath && (
-        <Link to={`/${basePath}/${id}`} state={data}>
-          <p className="text-wrap mt-2">{name}</p>
-          {location.pathname === "/featured" && (
-            <p className="text-wrap mt-2">{artist_name}</p>
+  return (
+    <div key={id} className="p-3 hover:bg-red-400 rounded-xl">
+      <div key={id} className="w-48">
+        <div className="w-48 relative">
+          {basePath === "track" && (
+            <>
+              {isAuthenticated &&
+                (favorites?.length > 0 ? (
+                  favorites.map((favorite) =>
+                    favorite.id === id ? (
+                      <GoHeartFill
+                        className="cursor-pointer text-2xl absolute left-2 top-2"
+                        onClick={(e: React.MouseEvent<SVGElement>) => {
+                          e.stopPropagation();
+                          removeFavorite();
+                        }}
+                      />
+                    ) : (
+                      <GoHeart
+                        className="cursor-pointer text-2xl absolute left-2 top-2"
+                        onClick={(e: React.MouseEvent<SVGElement>) => {
+                          e.stopPropagation();
+                          handleFavorite();
+                        }}
+                      />
+                    )
+                  )
+                ) : (
+                  <GoHeart
+                    className="cursor-pointer text-2xl absolute left-2 top-2"
+                    onClick={(e: React.MouseEvent<SVGElement>) => {
+                      e.stopPropagation();
+                      handleFavorite();
+                    }}
+                  />
+                ))}
+              {isAuthenticated && (
+                <HiDotsVertical
+                  className="text-white cursor-pointer absolute text-2xl right-2 top-2"
+                  onClick={(e: React.MouseEvent<SVGElement>) => {
+                    e.stopPropagation();
+                    setShowDropdown((prev) => !prev);
+                  }}
+                />
+              )}
+              {showDropdown && (
+                <Dropdown
+                  menuRef={menuRef}
+                  track={data}
+                  showDropdown={setShowDropdown}
+                />
+              )}
+              <span className="rounded-full p-2 bg-red-500 absolute right-1 bottom-1 flex justify-center items-center">
+                <IoPlay
+                  className="cursor-pointer text-3xl"
+                  onClick={(e: React.MouseEvent<SVGElement>) => {
+                    e.stopPropagation();
+                    handlePlay(data);
+                  }}
+                />
+              </span>
+            </>
           )}
-        </Link>
-      )}
+          <img src={image} className="h-48 w-48 rounded-xl"></img>
+        </div>
+
+        {basePath && (
+          <Link key={id} to={`/${basePath}/${id}`} state={data}>
+            <p className="text-wrap mt-2">{name}</p>
+            {location.pathname === "/featured" && (
+              <p className="text-wrap mt-2">{artist_name}</p>
+            )}
+          </Link>
+        )}
+      </div>
     </div>
   );
 };

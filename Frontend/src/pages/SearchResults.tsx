@@ -21,7 +21,7 @@ interface GroupedResults {
 const SearchResults = () => {
   const dispatch = useDispatch();
   const searchResults = useSelector(
-    (state: RootState) => state.musicInStore.searchResults
+    (state: RootState) => state.musicStore.searchResults
   );
   const { query } = useParams();
   const [groupedResults, setGroupedResults] = useState<GroupedResults>({

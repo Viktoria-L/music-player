@@ -164,6 +164,9 @@ const musicSlice = createSlice({
       };
     },
     handleNext: (state) => {
+      if (state.tracks.length === 0) {
+        return;
+      }
       if (state.trackIndex >= state.tracks.length - 1) {
         state.trackIndex = 0;
       } else {
@@ -172,6 +175,9 @@ const musicSlice = createSlice({
       state.currentTrack = state.tracks[state.trackIndex];
     },
     handlePrevious: (state) => {
+      if (state.tracks.length === 0) {
+        return;
+      }
       if (state.trackIndex === 0) {
         state.trackIndex = state.tracks.length - 1;
       } else {

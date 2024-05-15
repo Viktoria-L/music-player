@@ -6,7 +6,7 @@ import userReducer from "./userStore/userSlice";
 
 export const store = configureStore({
   reducer: {
-    musicInStore: musicReducer,
+    musicStore: musicReducer,
     auth: authReducer,
     user: userReducer,
   },
@@ -16,7 +16,7 @@ export const store = configureStore({
 //Prenumererar på förändringar i min store för att uppdatera localstorage
 // store.subscribe(() => {
 //   const state = store.getState();
-//   saveToLocalStorage(state.musicInStore);
+//   saveToLocalStorage(state.musicStore);
 // });
 
 export type RootState = ReturnType<typeof store.getState>;

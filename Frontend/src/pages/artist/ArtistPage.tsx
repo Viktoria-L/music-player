@@ -18,12 +18,12 @@ const ArtistPage = () => {
   const { state } = useLocation();
   const { id } = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
+  const tracks = useSelector((state: RootState) => state.musicStore.tracks);
   const artistTracks = useSelector(
-    (state: RootState) => state.musicInStore.artistTracks.tracks
+    (state: RootState) => state.musicStore.artistTracks.tracks
   );
   const artistAlbums = useSelector(
-    (state: RootState) => state.musicInStore.artistAlbums.albums
+    (state: RootState) => state.musicStore.artistAlbums.albums
   );
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const ArtistPage = () => {
               </thead>
               <tbody className="divide-y divide-gray-500">
                 {artistTracks &&
-                  artistTracks.map((track, index) => (
+                  artistTracks.slice(0, 10).map((track, index) => (
                     <tr key={track.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -122,10 +122,10 @@ const ArtistPage = () => {
             </table>
           </div>
 
-          <div className="flex flex-col flex-wrap gap-5 w-full">
-            <h3>Albums</h3>
+          <h3>Albums</h3>
+          <div className="flex flex-wrap gap-5 w-full">
             {artistAlbums &&
-              artistAlbums.map((data) => (
+              artistAlbums.slice(0, 10).map((data) => (
                 <div key={data.id} className="w-48">
                   <div className="w-48 relative">
                     <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />

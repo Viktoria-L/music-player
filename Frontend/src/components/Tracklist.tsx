@@ -11,7 +11,7 @@ import {
 export const Tracklist = () => {
   const dispatch = useDispatch();
   const tracks = useSelector(
-    (state: RootState) => state.musicInStore.currentAlbum?.tracks
+    (state: RootState) => state.musicStore.currentAlbum?.tracks
   );
 
   useEffect(() => {

@@ -16,14 +16,14 @@ export interface AudioProps {
 
 //Parent,root component
 const MiniAudioPlayer = () => {
-  const tracks = useSelector((state: RootState) => state.musicInStore.tracks);
+  const tracks = useSelector((state: RootState) => state.musicStore.tracks);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="mini-audio-player fixed bottom-0 h-20 w-full">
-      <div className="inner flex md:gap-20">
+      <div className="inner flex justify-center md:gap-20">
         <MiniDisplayTrack
           {...{ audioRef, progressBarRef, tracks }}
           mini="mini"

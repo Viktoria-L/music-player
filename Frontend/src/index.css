@@ -26,6 +26,8 @@ body {
     #0b8793,
     #360033
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to top, #510f63, #0c000c);
+  background: #161616;
 }
 
 /* img {
@@ -43,7 +45,9 @@ body {
     #0b8793,
     #360033
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: #360033; /* fallback for old browsers */
+  background: #360033;
+  background: #0a0a0a; /* fallback for old browsers */
+
   opacity: 98%;
 }
 

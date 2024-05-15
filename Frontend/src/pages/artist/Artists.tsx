@@ -7,7 +7,7 @@ import { Artist } from "../../models/ArtistsResponse";
 
 const Artists = () => {
   const dispatch = useDispatch();
-  const artists = useSelector((state: RootState) => state.musicInStore.artists);
+  const artists = useSelector((state: RootState) => state.musicStore.artists);
 
   return (
     <>

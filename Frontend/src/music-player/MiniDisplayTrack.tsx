@@ -13,19 +13,16 @@ const MiniDisplayTrack = ({
   const dispatch = useDispatch();
 
   const currentTrack = useSelector(
-    (state: RootState) => state.musicInStore.currentTrack
+    (state: RootState) => state.musicStore.currentTrack
   );
   const currentAlbumInfo = useSelector(
-    (state: RootState) => state.musicInStore.currentAlbum
+    (state: RootState) => state.musicStore.currentAlbum
   );
 
-  const duration = useSelector(
-    (state: RootState) => state.musicInStore.duration
-  );
+  const duration = useSelector((state: RootState) => state.musicStore.duration);
 
   const onLoadedMetadata = () => {
     const seconds = audioRef.current?.duration;
-    // setDuration(seconds);
     dispatch(setDuration(seconds));
     if (progressBarRef.current && seconds) {
       progressBarRef.current.max = seconds.toString();

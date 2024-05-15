@@ -17,7 +17,7 @@ const PlaylistPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const { state } = useLocation();
   const publicPlaylist = useSelector(
-    (state: RootState) => state.musicInStore.currentPlaylist
+    (state: RootState) => state.musicStore.currentPlaylist
   );
 
   useEffect(() => {

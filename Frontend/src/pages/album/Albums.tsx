@@ -8,7 +8,7 @@ import { IoPlay } from "react-icons/io5";
 
 const Albums = () => {
   const dispatch = useDispatch();
-  const albums = useSelector((state: RootState) => state.musicInStore.albums);
+  const albums = useSelector((state: RootState) => state.musicStore.albums);
 
   return (
     <>
