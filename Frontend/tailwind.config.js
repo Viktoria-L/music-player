@@ -5,6 +5,8 @@ export default {
     extend: {
       colors: {
         teal: "#0E7D8C",
+        orange: "#FF6500",
+        grey: "#292524",
       },
     },
     fontFamily: {

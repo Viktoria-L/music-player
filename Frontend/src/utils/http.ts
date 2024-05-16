@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
@@ -37,12 +38,11 @@ interface FetchParams {
   [key: string]: any;
 }
 
-//TODO, sätt in och kolla om headers är success eller failed
-export const fetchDataFromJamendo = async <T, P>(
+export const fetchDataFromJamendo = async <T>(
   endpoint: string,
   params: FetchParams = {},
   dispatch: Dispatch<any>,
-  action: (data: T) => { type: string; payload: P },
+  action: (data: T) => { type: string; payload: T },
   setError: (errorMsg: string) => void
 ) => {
   const queryParams: Record<string, string> = {
@@ -63,7 +63,6 @@ export const fetchDataFromJamendo = async <T, P>(
       console.error("API error:", errorMsg);
     }
     if (response.data.headers.status === "success") {
-      console.log("response", response);
       dispatch(action(response.data.results));
     }
   } catch (error) {

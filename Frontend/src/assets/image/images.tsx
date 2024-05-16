@@ -6,7 +6,7 @@ import front from "./front.png";
 import lost from "./Lost Diamonds.jpg";
 import psytechno from "./psytechno.jpg";
 import woman1 from "./woman1.png";
-import playlist from "./playlistcover.webp";
+import playlist from "./playlistcover.jpg";
 
 export const images = [
   { title: "Space", src: album },

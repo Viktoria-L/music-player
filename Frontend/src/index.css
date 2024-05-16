@@ -15,7 +15,7 @@ body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   font-family: "Poppins";
-  background: #360033; /* fallback for old browsers */
+  background: #360033;
   background: -webkit-linear-gradient(
     to top,
     #0b8793,
@@ -30,14 +30,24 @@ body {
   background: #161616;
 }
 
-/* img {
-  border-radius: 10px;
-  display: inline;
-  margin: 0 auto;
-  height: 100%;
-  width: auto;
+/* Chrome, Safari, Edge och Opera */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-} */
+::-webkit-scrollbar-track {
+  background: #161616;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #303030;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #303030;
+}
 
 .mini-audio-player {
   background: linear-gradient(
@@ -112,9 +122,9 @@ body {
   cursor: pointer;
 }
 
-button:not(.volBtn) svg {
+/* button:not(.volBtn) svg {
   font-size: 40px;
-}
+} */
 
 .volume {
   display: flex;

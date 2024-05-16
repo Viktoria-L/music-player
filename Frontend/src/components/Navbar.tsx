@@ -9,6 +9,7 @@ import { AppDispatch, RootState } from "../stores/configureStore";
 import { logout } from "../stores/authStore/authSlice";
 import { fetchPlaylists, createPlaylist } from "../stores/userStore/userThunk";
 import { useEffect, useState } from "react";
+import { BiLogOut, BiLogIn } from "react-icons/bi";
 
 interface NavbarProps {
   openNav: boolean;
@@ -38,14 +39,10 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
     dispatch(fetchPlaylists());
   };
 
-  useEffect(() => {
-    console.log("userp", userPlaylists);
-  }, [userPlaylists]);
-
   return (
     <div
-      className={`min-h-screen -mt-20 p-5 pt-8 ${
-        openNav ? "w-72" : "w-20"
+      className={`flex flex-col justify-between min-h-screen -mt-20 p-5 pt-8 ${
+        openNav ? "w-72" : "w-16"
       } fixed duration-300 bg-black bg-opacity-40 transition-width ease-in-out`}
     >
       {openNav ? (
@@ -63,6 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           className="rounded-full bg-teal text-2xl p-1 absolute -right-3 top-20 cursor-pointer"
         />
       )}
+
       <ul className="mt-24 flex flex-col gap-6">
         <li>
           <NavLink to="/" className="">
@@ -131,15 +129,11 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           </NavLink>
         </li>
       </ul>
-      <br />
-      <br />
-      <br />
-      <br />
 
       {isAuthenticated ? (
         <>
           {userPlaylists && (
-            <>
+            <div className={`${openNav ? "block" : "hidden"}`}>
               <span>YOUR PLAYLISTS</span>
               <ul className="flex flex-col gap-1">
                 {userPlaylists.map((playlist) => (
@@ -170,25 +164,23 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
                   </>
                 )}
               </ul>
-            </>
+            </div>
           )}
         </>
       ) : (
-        <p>Please log in to view playlists.</p>
+        <p className={`${openNav ? "block" : "hidden"}`}>
+          Please log in to view playlists.
+        </p>
       )}
-      <br />
-      <br />
-      <br />
-      <br />
 
-      <p>{isAuthenticated ? "Logged in" : "Not logged in"}</p>
+      {/* <p>{isAuthenticated ? "Logged in" : "Not logged in"}</p> */}
       {isAuthenticated ? (
-        <button className="p-2 bg-slate-400" onClick={() => dispatch(logout())}>
-          Log out
+        <button className="bg-red-400 mb-24" onClick={() => dispatch(logout())}>
+          {openNav ? "Log out" : <BiLogOut className="text-2xl" />}
         </button>
       ) : (
-        <button className="p-2 bg-slate-400" onClick={() => navigate("/login")}>
-          Log in
+        <button className="bg-red-400 mb-24" onClick={() => navigate("/login")}>
+          {openNav ? "Log in" : <BiLogIn className="text-2xl" />}
         </button>
       )}
     </div>

@@ -20,9 +20,10 @@ import {
 interface DisplayProps {
   data: Track;
   basePath: string;
+  display: string;
 }
 
-const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
+const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const isAuthenticated = useSelector(
@@ -53,22 +54,22 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
     dispatch(setPlayStatus(true));
   };
 
-  const handleFavorite = () => {
-    dispatch(addToFavorites(data));
+  const handleFavorite = async () => {
+    await dispatch(addToFavorites(data));
     dispatch(fetchFavorites());
   };
 
-  const removeFavorite = () => {
-    dispatch(removeFromFavorites(id));
+  const removeFavorite = async () => {
+    await dispatch(removeFromFavorites(id));
     dispatch(fetchFavorites());
   };
 
   //TODO, gör playkappen inuti en annan rund knapp, för annars synd den inte alltid på vissa ljusa album
 
   return (
-    <div key={id} className="p-3 hover:bg-red-400 rounded-xl">
-      <div key={id} className="w-48">
-        <div className="w-48 relative">
+    <div key={id} className="p-3 hover:bg-grey rounded-xl">
+      <div className={`${display === "grid" ? "w-full" : "w-48"}`}>
+        <div className={`${display === "grid" ? "w-full" : "w-48"} relative`}>
           {basePath === "track" && (
             <>
               {isAuthenticated &&
@@ -76,6 +77,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
                   favorites.map((favorite) =>
                     favorite.id === id ? (
                       <GoHeartFill
+                        key={favorite.id}
                         className="cursor-pointer text-2xl absolute left-2 top-2"
                         onClick={(e: React.MouseEvent<SVGElement>) => {
                           e.stopPropagation();
@@ -117,7 +119,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
                   showDropdown={setShowDropdown}
                 />
               )}
-              <span className="rounded-full p-2 bg-red-500 absolute right-1 bottom-1 flex justify-center items-center">
+              <span className="rounded-full p-2 bg-orange absolute right-1 bottom-1 flex justify-center items-center">
                 <IoPlay
                   className="cursor-pointer text-3xl"
                   onClick={(e: React.MouseEvent<SVGElement>) => {
@@ -128,7 +130,10 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath }) => {
               </span>
             </>
           )}
-          <img src={image} className="h-48 w-48 rounded-xl"></img>
+          <img
+            src={image}
+            className={`${display === "grid" ? "w-full" : "w-48"} rounded-xl`}
+          ></img>
         </div>
 
         {basePath && (

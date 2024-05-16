@@ -1,13 +1,9 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { IoPlay } from "react-icons/io5";
 import { Track } from "../models/TracksResponse";
 import AlbumDisplay from "../components/AlbumDisplay";
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/configureStore";
 
 const FavoritesPage = () => {
-  const { state } = useLocation();
   const tracks = useSelector((state: RootState) => state.user.favorites);
 
   return (

@@ -21,9 +21,11 @@ interface MusicState {
   artistTracks: Artist;
   artistAlbums: Artist;
   tracks: Track[];
+  popularTracks: Track[];
   featuredTracks: Track[];
   singleTrack: TrackInfo;
   currentTrack: TrackInfo;
+  featuredAlbums: Album[];
   albums: Album[];
   currentAlbum: Album | null;
   playlists: Playlist[];
@@ -56,6 +58,7 @@ const initialState: MusicState = {
     albums: [],
   },
   tracks: [],
+  popularTracks: [],
   featuredTracks: [],
   singleTrack: {
     id: "",
@@ -73,6 +76,7 @@ const initialState: MusicState = {
     audio:
       "https://prod-1.storage.jamendo.com?trackid=731375&format=mp31&from=i5U7MWMtdOYWAz65k7b3CA%3D%3D%7Croc11GGo7TJaoivljQquHw%3D%3D",
   },
+  featuredAlbums: [],
   albums: [],
   currentAlbum: {
     id: "",
@@ -123,6 +127,12 @@ const musicSlice = createSlice({
     },
     setFeaturedTracks: (state, action: PayloadAction<Track[]>) => {
       state.featuredTracks = action.payload;
+    },
+    setPopularTracks: (state, action: PayloadAction<Track[]>) => {
+      state.popularTracks = action.payload;
+    },
+    setFeaturedAlbums: (state, action: PayloadAction<Album[]>) => {
+      state.featuredAlbums = action.payload;
     },
     setArtists: (state, action: PayloadAction<Artist[]>) => {
       state.artists = action.payload;
@@ -210,9 +220,11 @@ export const {
   setArtists,
   setArtistTracks,
   setArtistAlbums,
+  setFeaturedAlbums,
   setAlbums,
   setCurrentAlbum,
   setCurrentTrack,
+  setPopularTracks,
   setSingleTrack,
   resetTracks,
   togglePlay,

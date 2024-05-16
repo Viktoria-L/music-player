@@ -1,6 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useSelector } from "react-redux";
 import { Album } from "../models/AlbumResponse";
-import { AppDispatch, RootState } from "../stores/configureStore";
+import { RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
 import { Link } from "react-router-dom";
 import AlbumDisplay from "./AlbumDisplay";
@@ -14,13 +15,12 @@ export enum EntityType {
 
 export const Featured = ({ entity }: { entity: EntityType }) => {
   const albums: Album[] = useSelector(
-    (state: RootState) => state.musicStore.albums
+    (state: RootState) => state.musicStore.featuredAlbums
   );
   // const artists = useSelector((state: RootState) => state.musicStore.artists);
   const tracks: Track[] = useSelector(
     (state: RootState) => state.musicStore.featuredTracks
   );
-  const dispatch: AppDispatch = useDispatch();
 
   let featuredData: any[] = [];
   let title: string = "";
@@ -51,13 +51,22 @@ export const Featured = ({ entity }: { entity: EntityType }) => {
     <div className="mt-8">
       <div className="flex justify-between w-full items-center">
         <h3 className="font-semibold text-2xl tracking-wide mb-8">{title}</h3>
-        <Link to="/featured" state={{ entity, basePath, featuredData }}>
+        <Link
+          to="/featured"
+          state={{ entity, basePath, featuredData }}
+          className="text-orange text-sm font-semibold"
+        >
           Show all
         </Link>
       </div>
-      <div className="flex flex-wrap w-full">
-        {featuredData.slice(0, 4).map((data, i) => (
-          <AlbumDisplay key={i} data={data} basePath={basePath} />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full">
+        {featuredData.slice(0, 5).map((data, i) => (
+          <AlbumDisplay
+            key={i}
+            data={data}
+            basePath={basePath}
+            display="grid"
+          />
         ))}
       </div>
     </div>

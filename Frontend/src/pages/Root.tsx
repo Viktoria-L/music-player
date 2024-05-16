@@ -3,15 +3,9 @@ import { Navbar } from "../components/Navbar";
 import { Header } from "../components/Header";
 import MiniAudioPlayer from "../music-player/MiniAudioPlayer";
 import { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { AppDispatch, RootState } from "../stores/configureStore";
 import { NavigationArrow } from "../components/NavigationArrow";
 
 const Root = () => {
-  // const dispatch: AppDispatch = useDispatch();
-  // const isAuthenticated = useSelector(
-  //   (state: RootState) => state.auth.isAuthenticated
-  // );
   const location = useLocation();
   const [openNav, setOpenNav] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);

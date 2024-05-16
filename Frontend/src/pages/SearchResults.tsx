@@ -11,6 +11,7 @@ import {
 } from "../stores/musicStore/musicSlice";
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
+import { Error } from "../components/Error";
 
 interface GroupedResults {
   tracks: Track[];
@@ -19,6 +20,7 @@ interface GroupedResults {
 }
 
 const SearchResults = () => {
+  const [error, setError] = useState<string>("");
   const dispatch = useDispatch();
   const searchResults = useSelector(
     (state: RootState) => state.musicStore.searchResults
@@ -34,11 +36,12 @@ const SearchResults = () => {
 
   useEffect(() => {
     if (query) {
-      fetchDataFromJamendo<Track[], Track[]>(
+      fetchDataFromJamendo<Track[]>(
         "tracks",
         { limit: 30, search: query },
         dispatch,
-        setSearchResults
+        setSearchResults,
+        setError
       );
     }
   }, [query]);
@@ -126,115 +129,132 @@ const SearchResults = () => {
           Search results for "{query}"
         </h2>
 
-        <div>
-          <h3 className="text-xl font-semibold">Tracks matching '{query}'</h3>
+        {error ? (
+          <Error message={error} />
+        ) : (
+          <>
+            <div>
+              <h3 className="text-xl font-semibold">
+                Tracks matching '{query}'
+              </h3>
 
-          <table className="min-w-full divide-y divide-gray-500">
-            <thead className="">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4"
-                >
-                  Play
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex-grow"
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-10"
-                >
-                  Duration
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-500">
-              {groupedResults.tracks.map((track, index) => (
-                <tr key={track.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <IoPlay
-                        className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
-                        aria-hidden="true"
-                        onClick={() => handlePlay(index)}
-                      />
-                    </div>
-                  </td>
+              <table className="min-w-full divide-y divide-gray-500">
+                <thead className="">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4"
+                    >
+                      Play
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex-grow"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-10"
+                    >
+                      Duration
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-500">
+                  {groupedResults.tracks.map((track, index) => (
+                    <tr key={track.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <IoPlay
+                            className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
+                            aria-hidden="true"
+                            onClick={() => handlePlay(index)}
+                          />
+                        </div>
+                      </td>
 
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex gap-5">
-                      <img
-                        src={track.image}
-                        className="h-12 w-12 rounded-md"
-                      ></img>
-                      <div className="flex flex-col">
-                        <span className="text-md bold capitalize">
-                          {track.name.length > 25
-                            ? `${track.name.slice(0, 25)}...`
-                            : track.name}
-                        </span>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex gap-5">
+                          <img
+                            src={track.image}
+                            className="h-12 w-12 rounded-md"
+                          ></img>
+                          <div className="flex flex-col">
+                            <span className="text-md bold capitalize">
+                              {track.name.length > 25
+                                ? `${track.name.slice(0, 25)}...`
+                                : track.name}
+                            </span>
 
-                        <span className="text-sm capitalize">
-                          {track.artist_name}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {formatTime(track.duration)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div>
-          <h3 className="text-xl font-semibold">Albums matching '{query}'</h3>
-
-          <div className="flex flex-wrap gap-6 w-full mt-2">
-            {uniqueAlbums.map((album: Track) => (
-              <div key={album.id} className="w-48">
-                <div className="w-48 relative">
-                  <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
-                  <img src={album.image} className="h-48 w-48 rounded-xl"></img>
-                </div>
-
-                <Link to={`/album/${album.album_id}`}>
-                  <p className="text-wrap mt-2 text-md">{album.album_name}</p>
-                  <p className="text-wrap text-sm">{album.artist_name}</p>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold">Artists matching '{query}'</h3>
-          {uniqueArtists.map((artist: Track) => (
-            // <div key={artist.id} className="border-white border p-2">
-            //   <p>{artist.artist_name}</p>
-            // </div>
-            <div key={artist.id} className="w-48">
-              <div className="w-48 relative">
-                {/* <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" /> */}
-                <img
-                  src={artist.image}
-                  className="h-48 w-48 rounded-full"
-                ></img>
-              </div>
-
-              <Link to={`/artist/${artist.id}`} state={artist}>
-                <p className="text-wrap text-center mt-2">
-                  {artist.artist_name}
-                </p>
-              </Link>
+                            <span className="text-sm capitalize">
+                              {track.artist_name}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {formatTime(track.duration)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))}
-        </div>
+
+            <div>
+              <h3 className="text-xl font-semibold">
+                Albums matching '{query}'
+              </h3>
+
+              <div className="flex flex-wrap gap-6 w-full mt-2">
+                {uniqueAlbums.map((album: Track) => (
+                  <div key={album.id} className="w-48">
+                    <div className="w-48 relative">
+                      <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
+                      <img
+                        src={album.image}
+                        className="h-48 w-48 rounded-xl"
+                      ></img>
+                    </div>
+
+                    <Link to={`/album/${album.album_id}`}>
+                      <p className="text-wrap mt-2 text-md">
+                        {album.album_name}
+                      </p>
+                      <p className="text-wrap text-sm">{album.artist_name}</p>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold">
+                Artists matching '{query}'
+              </h3>
+              {uniqueArtists.map((artist: Track) => (
+                // <div key={artist.id} className="border-white border p-2">
+                //   <p>{artist.artist_name}</p>
+                // </div>
+                <div key={artist.id} className="w-48">
+                  <div className="w-48 relative">
+                    {/* <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" /> */}
+                    <img
+                      src={artist.image}
+                      className="h-48 w-48 rounded-full"
+                    ></img>
+                  </div>
+
+                  <Link to={`/artist/${artist.id}`} state={artist}>
+                    <p className="text-wrap text-center mt-2">
+                      {artist.artist_name}
+                    </p>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

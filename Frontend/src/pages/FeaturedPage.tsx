@@ -1,13 +1,10 @@
-import { useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
+import { Album } from "../models/AlbumResponse";
+import { Track } from "../models/TracksResponse";
 
 const FeaturedPage = () => {
   const { state } = useLocation();
-
-  useEffect(() => {
-    console.log("state", state);
-  }, [state]);
 
   return (
     <>
@@ -17,7 +14,7 @@ const FeaturedPage = () => {
         </h2>
 
         <div className="flex flex-wrap my-8 gap-10 w-full">
-          {state.featuredData.map((data) => (
+          {state.featuredData.map((data: Album | Track) => (
             <div key={data.id} className="w-48">
               <div className="w-48 relative">
                 <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />

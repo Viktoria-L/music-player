@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { login, register } from "../stores/authStore/authSlice";
+import { login, register } from "../stores/authStore/authThunk";
 import { AppDispatch, RootState } from "../stores/configureStore";
 import { fetchFavorites, fetchPlaylists } from "../stores/userStore/userThunk";
 //TODO, byt språk

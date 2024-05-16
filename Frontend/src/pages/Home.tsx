@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAlbums, setFeaturedTracks } from "../stores/musicStore/musicSlice";
+import {
+  setFeaturedAlbums,
+  setFeaturedTracks,
+} from "../stores/musicStore/musicSlice";
 import { Album } from "../models/AlbumResponse";
 import { fetchDataFromJamendo } from "../utils/http";
 import { Featured } from "../components/Featured";
@@ -14,6 +17,12 @@ import { fetchPlaylists } from "../stores/userStore/userThunk";
 const Home = () => {
   const [albumError, setAlbumError] = useState<string>("");
   const [trackError, setTrackError] = useState<string>("");
+  const featuredAlbums = useSelector(
+    (state: RootState) => state.musicStore.featuredAlbums
+  );
+  const featureTracks = useSelector(
+    (state: RootState) => state.musicStore.featuredTracks
+  );
 
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -21,47 +30,37 @@ const Home = () => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
+    if (featuredAlbums.length === 0) {
+      fetchDataFromJamendo<Album[]>(
+        "albums",
+        { limit: "10", featured: 1 },
+        dispatch,
+        setFeaturedAlbums,
+        setAlbumError
+      );
+    }
+    if (featureTracks.length === 0) {
+      fetchDataFromJamendo<Track[]>(
+        "tracks",
+        { limit: "10", featured: 1 },
+        dispatch,
+        setFeaturedTracks,
+        setTrackError
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchPlaylists());
     }
   }, [dispatch, isAuthenticated]);
-
-  //Todo, lägg error på ett bra ställe där datat hämtas.. PLUS att alla sidor som hämtar data lär ha ett error-state som sen skrivs ut
 
   return (
     <>
       <div className="home wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Welcome back!</h2>
         <p className="tracking-wide mt-2">Explore new music everyday</p>
-
-        <button
-          className="bold border mt-5"
-          onClick={() =>
-            fetchDataFromJamendo<Album[], Album[]>(
-              "albums",
-              { limit: "10", featured: 1 },
-              dispatch,
-              setAlbums,
-              setAlbumError
-            )
-          }
-        >
-          Fetch featured albums from Jamendo
-        </button>
-        <button
-          className="bold border mt-5"
-          onClick={() =>
-            fetchDataFromJamendo<Track[], Track[]>(
-              "tracks",
-              { limit: "10", featured: 1 },
-              dispatch,
-              setFeaturedTracks,
-              setTrackError
-            )
-          }
-        >
-          Fetch featured tracks from Jamendo
-        </button>
 
         {albumError ? (
           <div className="flex flex-col w-full mb-4">

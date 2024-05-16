@@ -5,45 +5,49 @@ import { setAlbums } from "../../stores/musicStore/musicSlice";
 import { RootState } from "../../stores/configureStore";
 import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
+import { Error } from "../../components/Error";
+import { useEffect, useState } from "react";
 
 const Albums = () => {
+  const [error, setError] = useState<string>("");
   const dispatch = useDispatch();
   const albums = useSelector((state: RootState) => state.musicStore.albums);
+
+  useEffect(() => {
+    if (albums.length === 0) {
+      fetchDataFromJamendo<Album[]>(
+        "albums",
+        { limit: "20" },
+        dispatch,
+        setAlbums,
+        setError
+      );
+    }
+  }, []);
 
   return (
     <>
       <div className="albumspage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular albums</h2>
-        <p className="tracking-wide mt-2">Explore new music everyday</p>
+        <p className="tracking-wide mt-2">Explore new albums everyday</p>
+        {error ? (
+          <Error message={error} />
+        ) : (
+          <div className="flex flex-wrap gap-5 w-full">
+            {albums.map((data) => (
+              <div key={data.id} className="w-48">
+                <div className="w-48 relative">
+                  <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
+                  <img src={data.image} className="h-48 w-48 rounded-xl"></img>
+                </div>
 
-        <button
-          className="bold border mt-5"
-          onClick={() =>
-            fetchDataFromJamendo<Album[], Album[]>(
-              "albums",
-              { limit: "20" },
-              dispatch,
-              setAlbums
-            )
-          }
-        >
-          Fetch featured albums from Jamendo
-        </button>
-
-        <div className="flex flex-wrap gap-5 w-full">
-          {albums.map((data) => (
-            <div key={data.id} className="w-48">
-              <div className="w-48 relative">
-                <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
-                <img src={data.image} className="h-48 w-48 rounded-xl"></img>
+                <Link to={`/album/${data.id}`} state={data}>
+                  <p className="text-wrap mt-2">{data.name}</p>
+                </Link>
               </div>
-
-              <Link to={`/album/${data.id}`} state={data}>
-                <p className="text-wrap mt-2">{data.name}</p>
-              </Link>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
