@@ -12,6 +12,8 @@ import {
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 import { Error } from "../components/Error";
+import { Tracklist } from "../components/Tracklist";
+import AlbumDisplay from "../components/AlbumDisplay";
 
 interface GroupedResults {
   tracks: Track[];
@@ -161,20 +163,20 @@ const SearchResults = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-500">
+                <tbody className="">
                   {groupedResults.tracks.map((track, index) => (
-                    <tr key={track.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={track.id} className="hover:bg-red-400">
+                      <td className="px-6 py-2 whitespace-nowrap">
                         <div className="flex items-center">
                           <IoPlay
-                            className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
+                            className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
                             aria-hidden="true"
                             onClick={() => handlePlay(index)}
                           />
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-2 whitespace-nowrap">
                         <div className="flex gap-5">
                           <img
                             src={track.image}
@@ -193,7 +195,7 @@ const SearchResults = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-2 whitespace-nowrap">
                         {formatTime(track.duration)}
                       </td>
                     </tr>
@@ -208,23 +210,30 @@ const SearchResults = () => {
               </h3>
 
               <div className="flex flex-wrap gap-6 w-full mt-2">
-                {uniqueAlbums.map((album: Track) => (
-                  <div key={album.id} className="w-48">
-                    <div className="w-48 relative">
-                      <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
-                      <img
-                        src={album.image}
-                        className="h-48 w-48 rounded-xl"
-                      ></img>
-                    </div>
+                {uniqueAlbums.map((album: Track, i) => (
+                  <>
+                    {/* <AlbumDisplay key={i}
+                  data={album}
+                  basePath="album"
+                  display="grid" /> */}
 
-                    <Link to={`/album/${album.album_id}`}>
-                      <p className="text-wrap mt-2 text-md">
-                        {album.album_name}
-                      </p>
-                      <p className="text-wrap text-sm">{album.artist_name}</p>
-                    </Link>
-                  </div>
+                    <div key={album.id} className="w-48">
+                      <div className="w-48 relative">
+                        <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
+                        <img
+                          src={album.image}
+                          className="h-48 w-48 rounded-xl"
+                        ></img>
+                      </div>
+
+                      <Link to={`/album/${album.album_id}`}>
+                        <p className="text-wrap mt-2 text-md">
+                          {album.album_name}
+                        </p>
+                        <p className="text-wrap text-sm">{album.artist_name}</p>
+                      </Link>
+                    </div>
+                  </>
                 ))}
               </div>
             </div>

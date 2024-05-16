@@ -7,10 +7,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../stores/configureStore";
 import { Track } from "../models/TracksResponse";
 
+//TODO, bort med alla "Mini"
 export interface AudioProps {
   audioRef: RefObject<HTMLAudioElement>;
   progressBarRef: RefObject<HTMLInputElement>;
-  mini?: string;
+  // mini?: string;
   tracks?: Track[];
 }
 
@@ -23,12 +24,9 @@ const MiniAudioPlayer = () => {
 
   return (
     <div className="mini-audio-player fixed bottom-0 h-20 w-full">
-      <div className="inner flex justify-center md:gap-20">
-        <MiniDisplayTrack
-          {...{ audioRef, progressBarRef, tracks }}
-          mini="mini"
-        />
-        <div className="flex flex-col w-full items-center justify-center">
+      <div className="inner h-20 flex justify-center md:gap-20">
+        <MiniDisplayTrack {...{ audioRef, progressBarRef, tracks }} />
+        <div className="flex flex-col w-full items-center justify-evenly">
           <PlayControls {...{ audioRef, progressBarRef, tracks }} />
           <ProgressBar {...{ progressBarRef, audioRef, tracks }} />
         </div>

@@ -7,12 +7,17 @@ import {
   setPlayStatus,
   setTracksToPlay,
 } from "../stores/musicStore/musicSlice";
+import { Track } from "../models/TracksResponse";
 
-export const Tracklist = () => {
+interface TracklistProps {
+  tracks: Track[];
+}
+
+export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
   const dispatch = useDispatch();
-  const tracks = useSelector(
-    (state: RootState) => state.musicStore.currentAlbum?.tracks
-  );
+  // const tracks = useSelector(
+  //   (state: RootState) => state.musicStore.currentAlbum?.tracks
+  // );
 
   useEffect(() => {
     console.log("tracks", tracks);
@@ -57,7 +62,7 @@ export const Tracklist = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <IoPlay
-                      className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
+                      className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
                       aria-hidden="true"
                       onClick={() => handlePlay(index)}
                     />

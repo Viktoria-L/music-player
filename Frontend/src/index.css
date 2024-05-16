@@ -56,8 +56,7 @@ body {
     #360033
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: #360033;
-  background: #0a0a0a; /* fallback for old browsers */
-
+  background: #0a0a0a;
   opacity: 98%;
 }
 
@@ -98,16 +97,16 @@ body {
 }
 
 .mini .audio-image {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
 }
 
-.display-container .mini {
+/* .display-container .mini {
   flex-direction: row;
-}
+} */
 
 .mini .title {
-  font-size: 16px;
+  font-size: 14px;
   line-height: normal;
   letter-spacing: normal;
 }
@@ -151,7 +150,7 @@ body {
 .time {
   color: #d6d6d6e4;
   font-size: 13px;
-  line-height: 46px;
+  /* line-height: 46px; */
 }
 
 .time.current {

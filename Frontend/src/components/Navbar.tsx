@@ -50,14 +50,14 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           onClick={() => {
             setOpenNav((prev) => !prev);
           }}
-          className="rounded-full bg-teal text-2xl p-1 absolute -right-3 top-20 cursor-pointer"
+          className="rounded-full bg-orange text-2xl p-1 absolute -right-3 top-20 cursor-pointer"
         />
       ) : (
         <FaAnglesRight
           onClick={() => {
             setOpenNav((prev) => !prev);
           }}
-          className="rounded-full bg-teal text-2xl p-1 absolute -right-3 top-20 cursor-pointer"
+          className="rounded-full bg-orange text-2xl p-1 absolute -right-3 top-20 cursor-pointer"
         />
       )}
 
@@ -146,13 +146,16 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
                     </Link>
                   </li>
                 ))}
-                <li onClick={() => setShowCreateInput((prev) => !prev)}>
+                <li
+                  className="text-orange"
+                  onClick={() => setShowCreateInput((prev) => !prev)}
+                >
                   Create new playlist +
                 </li>
                 {showCreateInput && (
                   <>
                     <input
-                      className="bg-teal"
+                      className="bg-orange"
                       type="text"
                       value={playlistName}
                       onChange={(e) => setPlaylistName(e.target.value)}
@@ -175,11 +178,17 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
 
       {/* <p>{isAuthenticated ? "Logged in" : "Not logged in"}</p> */}
       {isAuthenticated ? (
-        <button className="bg-red-400 mb-24" onClick={() => dispatch(logout())}>
+        <button
+          className="bg-orange hover:opacity-70 mb-24 w-24 self-center rounded-full"
+          onClick={() => dispatch(logout())}
+        >
           {openNav ? "Log out" : <BiLogOut className="text-2xl" />}
         </button>
       ) : (
-        <button className="bg-red-400 mb-24" onClick={() => navigate("/login")}>
+        <button
+          className="bg-orange mb-24 w-24 self-center rounded-full"
+          onClick={() => navigate("/login")}
+        >
           {openNav ? "Log in" : <BiLogIn className="text-2xl" />}
         </button>
       )}

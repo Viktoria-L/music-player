@@ -53,7 +53,7 @@ const AlbumPage = () => {
               </div>
             </div>
             <h3>Tracklist</h3>
-            <Tracklist />
+            {album?.tracks && <Tracklist tracks={album?.tracks} />}
           </>
         )
       )}

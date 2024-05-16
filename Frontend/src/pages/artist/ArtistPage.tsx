@@ -14,6 +14,7 @@ import { formatTime } from "../../utils/helperFunctions";
 import { Artist } from "../../models/ArtistsResponse";
 import { Track } from "../../models/TracksResponse";
 import { Error } from "../../components/Error";
+import { Tracklist } from "../../components/Tracklist";
 
 const ArtistPage = () => {
   const [albumError, setAlbumError] = useState<string>("");
@@ -22,10 +23,10 @@ const ArtistPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const tracks = useSelector((state: RootState) => state.musicStore.tracks);
   const artistTracks = useSelector(
-    (state: RootState) => state.musicStore.artistTracks.tracks
+    (state: RootState) => state.musicStore.artistTracks?.tracks
   );
   const artistAlbums = useSelector(
-    (state: RootState) => state.musicStore.artistAlbums.albums
+    (state: RootState) => state.musicStore.artistAlbums?.albums
   );
 
   useEffect(() => {
@@ -37,13 +38,15 @@ const ArtistPage = () => {
         setArtistTracks,
         setTrackError
       );
-      fetchDataFromJamendo<Artist[]>(
-        "artists/albums",
-        { id: state.id },
-        dispatch,
-        setArtistAlbums,
-        setAlbumError
-      );
+      if (state) {
+        fetchDataFromJamendo<Artist[]>(
+          "artists/albums",
+          { id: state.id },
+          dispatch,
+          setArtistAlbums,
+          setAlbumError
+        );
+      }
     }
   }, [state]);
 
@@ -70,10 +73,13 @@ const ArtistPage = () => {
             </div>
           </div>
           <h3>Tracklist</h3>
+
           {trackError ? (
             <Error message={trackError} />
           ) : (
-            <div>
+            <>
+              {artistTracks && <Tracklist tracks={artistTracks} />}
+              {/* <div>
               <table className="min-w-full divide-y divide-gray-500">
                 <thead className="">
                   <tr>
@@ -120,7 +126,8 @@ const ArtistPage = () => {
                     ))}
                 </tbody>
               </table>
-            </div>
+            </div> */}
+            </>
           )}
 
           <h3>Albums</h3>
@@ -132,7 +139,7 @@ const ArtistPage = () => {
                 artistAlbums.slice(0, 10).map((data) => (
                   <div key={data.id} className="w-48">
                     <div className="w-48 relative">
-                      <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
+                      {/* <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" /> */}
                       <img
                         src={data.image}
                         className="h-48 w-48 rounded-xl"

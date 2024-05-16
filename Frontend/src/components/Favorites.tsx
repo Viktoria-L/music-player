@@ -17,15 +17,10 @@ export const Favorites = () => {
     dispatch(fetchFavorites());
   }, []);
 
-  //Ta bort
-  useEffect(() => {
-    console.log("tracksfav", tracks);
-  }, [tracks]);
-
   return (
     <div className="mt-8">
       <div className="flex justify-between w-full items-center">
-        <h3 className="font-semibold text-2xl tracking-wide mb-8">
+        <h3 className="font-semibold text-2xl tracking-wide mb-5">
           Your Favorite Tracks
         </h3>
         <Link to="/favorites" state={{ basePath, tracks }}>

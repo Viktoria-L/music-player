@@ -13,6 +13,7 @@ import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../../utils/helperFunctions";
 import { Track } from "../../models/TracksResponse";
 import { Error } from "../../components/Error";
+import { Tracklist } from "../../components/Tracklist";
 
 const PlaylistPage = () => {
   const [error, setError] = useState<string>("");
@@ -68,8 +69,19 @@ const PlaylistPage = () => {
           </p>
 
           <h3>Tracklist</h3>
+
           <div>
-            <table className="min-w-full divide-y divide-gray-500">
+            {state.type === "Public" &&
+              publicPlaylist &&
+              publicPlaylist.tracks && (
+                <Tracklist tracks={publicPlaylist.tracks} />
+              )}
+
+            {state.type === "Private" && state.data && state.data.tracks && (
+              <Tracklist tracks={state.data.tracks} />
+            )}
+
+            {/* <table className="min-w-full divide-y divide-gray-500">
               <thead>
                 <tr>
                   <th
@@ -145,7 +157,7 @@ const PlaylistPage = () => {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table> */}
           </div>
         </>
       )}

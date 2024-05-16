@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 import { Error } from "../../components/Error";
 import { useEffect, useState } from "react";
+import AlbumDisplay from "../../components/AlbumDisplay";
 
 const Albums = () => {
   const [error, setError] = useState<string>("");
@@ -33,17 +34,22 @@ const Albums = () => {
         {error ? (
           <Error message={error} />
         ) : (
-          <div className="flex flex-wrap gap-5 w-full">
+          <div className="flex flex-wrap w-full">
             {albums.map((data) => (
-              <div key={data.id} className="w-48">
-                <div className="w-48 relative">
-                  <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
-                  <img src={data.image} className="h-48 w-48 rounded-xl"></img>
-                </div>
+              <div key={data.id} className="p-3 hover:bg-grey rounded-xl">
+                <div className="w-48">
+                  <div className="w-48 relative">
+                    <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
+                    <img
+                      src={data.image}
+                      className="h-48 w-48 rounded-xl"
+                    ></img>
+                  </div>
 
-                <Link to={`/album/${data.id}`} state={data}>
-                  <p className="text-wrap mt-2">{data.name}</p>
-                </Link>
+                  <Link to={`/album/${data.id}`} state={data}>
+                    <p className="text-wrap mt-2">{data.name}</p>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

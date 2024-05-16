@@ -78,7 +78,6 @@ const TrackPage = () => {
               </thead>
               <tbody className="divide-y divide-gray-500">
                 {state && (
-                  // tracks.map((track) => (
                   <tr key={state.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">

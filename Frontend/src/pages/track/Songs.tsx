@@ -34,7 +34,7 @@ const Songs = () => {
         {error ? (
           <Error message={error} />
         ) : (
-          <div className="flex flex-wrap gap-5 w-full">
+          <div className="flex flex-wrap w-full">
             {tracks.map((data) => (
               <AlbumDisplay
                 data={data}

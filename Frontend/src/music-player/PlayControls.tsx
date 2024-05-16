@@ -3,6 +3,8 @@ import {
   IoPlaySkipForward,
   IoPlay,
   IoPause,
+  IoShuffle,
+  IoRepeat,
 } from "react-icons/io5";
 
 import { useEffect, useRef, useCallback } from "react";
@@ -16,21 +18,9 @@ import {
 import { RootState } from "../stores/configureStore";
 import { AudioProps } from "./MiniAudioPlayer";
 
-// interface PlayControlsProps {
-//   audioRef: RefObject<HTMLAudioElement>;
-//   progressBarRef: RefObject<HTMLInputElement>;
-//   mini?: string;
-// }
-
-export const PlayControls = ({
-  audioRef,
-  progressBarRef,
-  mini = "",
-}: AudioProps) => {
+export const PlayControls = ({ audioRef, progressBarRef }: AudioProps) => {
   const dispatch = useDispatch();
-  // const trackIndex = useSelector((state) => state.musicStore.trackIndex);
-  // const currentTrack = useSelector((state) => state.musicStore.currentTrack);
-  // const timeProgress = useSelector((state) => state.musicStore.timeProgress);
+
   const duration = useSelector((state: RootState) => state.musicStore.duration);
   const isPlaying = useSelector(
     (state: RootState) => state.musicStore.isPlaying
@@ -71,22 +61,25 @@ export const PlayControls = ({
   }, [isPlaying, audioRef, repeat]);
 
   return (
-    <div className={`controls flex text-center ${mini}`}>
+    <div className={`controls flex text-center gap-2`}>
+      <button>
+        <IoShuffle className="text-xl hover:text-orange" />
+      </button>
       <button
         onClick={() => {
           dispatch(handlePrevious());
         }}
       >
-        <IoPlaySkipBack className="text-sm" />
+        <IoPlaySkipBack className="text-2xl hover:text-orange" />
       </button>
       {/* <button onClick={skipBackward} className='skip'>
         <IoPlayBack className='skip' />
     </button> */}
       <button onClick={togglePlayPause}>
         {isPlaying ? (
-          <IoPause className="text-sm" />
+          <IoPause className="text-4xl hover:text-orange" />
         ) : (
-          <IoPlay className="text-sm" />
+          <IoPlay className="text-4xl hover:text-orange" />
         )}
       </button>
       {/* <button onClick={skipForward} className='skip'>
@@ -97,7 +90,10 @@ export const PlayControls = ({
           dispatch(handleNext());
         }}
       >
-        <IoPlaySkipForward className="text-sm" />
+        <IoPlaySkipForward className="text-2xl hover:text-orange" />
+      </button>
+      <button>
+        <IoRepeat className="text-xl hover:text-orange" />
       </button>
     </div>
   );

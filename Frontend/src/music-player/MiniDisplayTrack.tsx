@@ -30,7 +30,7 @@ const MiniDisplayTrack = ({
   };
 
   return (
-    <div className="display-container">
+    <div className="">
       <audio
         src={currentTrack.audio}
         ref={audioRef}
@@ -39,20 +39,18 @@ const MiniDisplayTrack = ({
           dispatch(handleNext());
         }}
       />
-      <div className={`flex gap-4 flex-col ${mini}`}>
-        <div className="audio-image">
+      <div className={`pl-4 flex gap-4 items-center`}>
+        <div className="h-14 w-14">
           {currentTrack.image || currentAlbumInfo?.image ? (
-            <div className="image-crop">
-              <img
-                className="audio-icon"
-                src={
-                  currentTrack.image
-                    ? currentTrack.image
-                    : currentAlbumInfo?.image
-                }
-                alt="nånting"
-              />
-            </div>
+            <img
+              className=""
+              src={
+                currentTrack.image
+                  ? currentTrack.image
+                  : currentAlbumInfo?.image
+              }
+              alt="track image"
+            />
           ) : (
             <div className="icon-wrapper">
               <span className="audio-icon">
@@ -62,10 +60,10 @@ const MiniDisplayTrack = ({
           )}
         </div>
         <div
-          className={`text-orange-500 font-bold leading-6 tracking-wider text-center ${mini}`}
+          className={`h-20 flex flex-col justify-center text-orange-500 leading-6 tracking-wider ${mini}`}
         >
-          <p className="title font-bold">{currentTrack.name}</p>
-          <p>{currentTrack.artist_name}</p>
+          <p className="font-semibold">{currentTrack.name}</p>
+          <p className="">{currentTrack.artist_name}</p>
         </div>
       </div>
     </div>
