@@ -55,15 +55,15 @@ const Dropdown: React.FC<DropDownProps> = ({
     };
   }, [showSubmenu]);
 
-  const handleFavorite = () => {
-    dispatch(addToFavorites(track));
+  const handleFavorite = async () => {
+    await dispatch(addToFavorites(track));
     dispatch(fetchFavorites());
   };
 
   return (
     <div className="relative block text-left" ref={menuRef}>
       <div
-        className="absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+        className="absolute right-0 z-10 mt-2 w-48 rounded-md shadow-lg text-white bg-grey ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
         onMouseLeave={() => setShowSubmenu(false)}
       >
         <div
@@ -73,14 +73,14 @@ const Dropdown: React.FC<DropDownProps> = ({
           aria-labelledby="options-menu"
         >
           <div
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-2 text-sm  hover:bg-orange"
             onClick={handleFavorite}
           >
             Add to favorite
           </div>
           <div
             onMouseEnter={() => setShowSubmenu(true)}
-            className={`px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer 
+            className={`px-4 py-2 text-sm  hover:bg-orange cursor-pointer 
             ${
               submenuPosition === "left"
                 ? "origin-top-right left-0"
@@ -92,7 +92,7 @@ const Dropdown: React.FC<DropDownProps> = ({
               <div
                 className={`submenu ${
                   submenuPosition === "left" ? "submenu-left" : "submenu-right"
-                } absolute top-0 mt-1 w-56 rounded-md shadow-lg bg-white`}
+                } absolute top-0 mt-1 w-56 rounded-md shadow-lg bg-grey`}
               >
                 {userPlaylists.map((playlist, i) => (
                   <div
@@ -108,7 +108,7 @@ const Dropdown: React.FC<DropDownProps> = ({
                       setShowSubmenu(false);
                       showDropdown(false);
                     }}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm hover:bg-orange"
                   >
                     {playlist.name}
                   </div>
@@ -118,7 +118,7 @@ const Dropdown: React.FC<DropDownProps> = ({
           </div>
           <a
             href="#delete"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-2 text-sm  hover:bg-orange"
           >
             Delete
           </a>

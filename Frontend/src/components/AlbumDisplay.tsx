@@ -16,6 +16,7 @@ import {
   setCurrentTrack,
   setPlayStatus,
 } from "../stores/musicStore/musicSlice";
+import { nocover } from "../assets/image/images";
 
 interface DisplayProps {
   data: Track;
@@ -47,8 +48,6 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
     };
   }, [menuRef]);
 
-  //TODO , borde jag lyfta ut dessa funktioner och exportera/ importera dem där de behövs?
-
   const handlePlay = (data: Track) => {
     dispatch(setCurrentTrack(data));
     dispatch(setPlayStatus(true));
@@ -63,8 +62,6 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
     await dispatch(removeFromFavorites(id));
     dispatch(fetchFavorites());
   };
-
-  //TODO, gör playkappen inuti en annan rund knapp, för annars synd den inte alltid på vissa ljusa album
 
   return (
     <div key={id} className="p-3 hover:bg-grey rounded-xl">
@@ -86,6 +83,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
                       />
                     ) : (
                       <GoHeart
+                        key={favorite.id}
                         className="cursor-pointer text-2xl absolute left-2 top-2"
                         onClick={(e: React.MouseEvent<SVGElement>) => {
                           e.stopPropagation();
@@ -96,6 +94,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
                   )
                 ) : (
                   <GoHeart
+                    key={id}
                     className="cursor-pointer text-2xl absolute left-2 top-2"
                     onClick={(e: React.MouseEvent<SVGElement>) => {
                       e.stopPropagation();
@@ -131,7 +130,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
             </>
           )}
           <img
-            src={image}
+            src={image ? image : nocover}
             className={`${display === "grid" ? "w-full" : "w-48"} rounded-xl`}
           ></img>
         </div>

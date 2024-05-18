@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../stores/configureStore";
+import { AppDispatch, RootState } from "../stores/configureStore";
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 import {
@@ -8,26 +8,52 @@ import {
   setTracksToPlay,
 } from "../stores/musicStore/musicSlice";
 import { Track } from "../models/TracksResponse";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  fetchFavorites,
+} from "../stores/userStore/userThunk";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 
 interface TracklistProps {
   tracks: Track[];
 }
 
 export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   // const tracks = useSelector(
   //   (state: RootState) => state.musicStore.currentAlbum?.tracks
   // );
+  const favorites = useSelector((state: RootState) => state.user.favorites);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   useEffect(() => {
     console.log("tracks", tracks);
-  }, [tracks]);
+    console.log("favorites", favorites);
+    console.log("isAuthenticated", isAuthenticated);
+  }, [tracks, favorites, isAuthenticated]);
 
   const handlePlay = (index: number) => {
     if (tracks) {
       dispatch(setTracksToPlay({ tracks, index }));
       dispatch(setPlayStatus(true));
     }
+  };
+
+  const handleFavorite = async (data: Track) => {
+    await dispatch(addToFavorites(data));
+    dispatch(fetchFavorites());
+  };
+
+  const removeFavorite = async (id: string) => {
+    await dispatch(removeFromFavorites(id));
+    dispatch(fetchFavorites());
+  };
+
+  const isFavorite = (trackId: string) => {
+    return favorites?.some((favorite) => favorite.id === trackId);
   };
 
   return (
@@ -53,6 +79,12 @@ export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
             >
               Name
             </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {" "}
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-500">
@@ -72,6 +104,26 @@ export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
                   {formatTime(track.duration)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{track.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {isAuthenticated && favorites && isFavorite(track.id) ? (
+                    <GoHeartFill
+                      key={track.id}
+                      className="cursor-pointer text-2xl"
+                      onClick={(e: React.MouseEvent<SVGElement>) => {
+                        e.stopPropagation();
+                        removeFavorite(track.id);
+                      }}
+                    />
+                  ) : (
+                    <GoHeart
+                      className="cursor-pointer text-2xl"
+                      onClick={(e: React.MouseEvent<SVGElement>) => {
+                        e.stopPropagation();
+                        handleFavorite(track);
+                      }}
+                    />
+                  )}
+                </td>
               </tr>
             ))}
         </tbody>

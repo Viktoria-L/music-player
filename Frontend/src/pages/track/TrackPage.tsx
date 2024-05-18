@@ -8,16 +8,27 @@ import {
   setSingleTrack,
 } from "../../stores/musicStore/musicSlice";
 import { formatTime } from "../../utils/helperFunctions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Track } from "../../models/TracksResponse";
 import { Error } from "../../components/Error";
+import { AppDispatch } from "../../stores/configureStore";
+import { RootState } from "../../stores/configureStore";
+import { GoHeart, GoHeartFill } from "react-icons/go";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  fetchFavorites,
+} from "../../stores/userStore/userThunk";
 
 const TrackPage = () => {
   const [error, setError] = useState<string>("");
   const { state } = useLocation();
-  const dispatch = useDispatch();
+  const favorites = useSelector((state: RootState) => state.user.favorites);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const dispatch: AppDispatch = useDispatch();
 
-  //Todo, lägg in hjärtan för att favoritesa varje låt favoriter
   useEffect(() => {
     if (state) {
       fetchDataFromJamendo<Track>(
@@ -33,6 +44,20 @@ const TrackPage = () => {
   const handlePlay = (data: Track) => {
     dispatch(setCurrentTrack(data));
     dispatch(setPlayStatus(true));
+  };
+
+  const handleFavorite = async () => {
+    await dispatch(addToFavorites(state));
+    dispatch(fetchFavorites());
+  };
+
+  const removeFavorite = async (id: string) => {
+    await dispatch(removeFromFavorites(id));
+    dispatch(fetchFavorites());
+  };
+
+  const isFavorite = (trackId: string) => {
+    return favorites?.some((favorite) => favorite.id === trackId);
   };
 
   return (
@@ -74,6 +99,12 @@ const TrackPage = () => {
                   >
                     Name
                   </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    {" "}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-500">
@@ -82,7 +113,7 @@ const TrackPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <IoPlay
-                          className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
+                          className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
                           aria-hidden="true"
                           onClick={() => handlePlay(state)}
                         />
@@ -93,6 +124,26 @@ const TrackPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {state.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {isAuthenticated && favorites && isFavorite(state.id) ? (
+                        <GoHeartFill
+                          key={state.id}
+                          className="cursor-pointer text-2xl"
+                          onClick={(e: React.MouseEvent<SVGElement>) => {
+                            e.stopPropagation();
+                            removeFavorite(state.id);
+                          }}
+                        />
+                      ) : (
+                        <GoHeart
+                          className="cursor-pointer text-2xl"
+                          onClick={(e: React.MouseEvent<SVGElement>) => {
+                            e.stopPropagation();
+                            handleFavorite();
+                          }}
+                        />
+                      )}
                     </td>
                   </tr>
                 )}

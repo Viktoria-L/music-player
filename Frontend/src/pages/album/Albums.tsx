@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 import { Error } from "../../components/Error";
 import { useEffect, useState } from "react";
-import AlbumDisplay from "../../components/AlbumDisplay";
 
 const Albums = () => {
   const [error, setError] = useState<string>("");
@@ -30,7 +29,7 @@ const Albums = () => {
     <>
       <div className="albumspage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular albums</h2>
-        <p className="tracking-wide mt-2">Explore new albums everyday</p>
+        <p className="tracking-wide mt-2 mb-8">Explore new albums everyday</p>
         {error ? (
           <Error message={error} />
         ) : (

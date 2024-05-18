@@ -23,7 +23,7 @@ const Playlists = () => {
     (state: RootState) => state.auth.isAuthenticated
   );
   const userPlaylists = useSelector((state: RootState) => state.user.playlists);
-  const favorites = useSelector((state: RootState) => state.user.favorites);
+  //const favorites = useSelector((state: RootState) => state.user.favorites);
 
   useEffect(() => {
     if (playlists.length === 0) {
@@ -43,9 +43,16 @@ const Playlists = () => {
     }
   }, [isAuthenticated]);
 
+  useEffect(() => {
+    console.log(playlistName);
+  }, [playlistName]);
+
   const handleCreate = async () => {
-    await dispatch(createPlaylist(playlistName));
-    dispatch(fetchPlaylists());
+    if (playlistName) {
+      await dispatch(createPlaylist(playlistName));
+      dispatch(fetchPlaylists());
+    }
+    setPlaylistName("");
   };
 
   return (
@@ -60,7 +67,7 @@ const Playlists = () => {
           <>
             <div className="flex flex-wrap w-full">
               {playlists.map((data) => (
-                <div key={data.id} className="p-3 hover:bg-red-400 rounded-xl">
+                <div key={data.id} className="p-3 hover:bg-grey rounded-xl">
                   <div className="w-48">
                     <div className="w-48 relative">
                       <img
@@ -87,35 +94,32 @@ const Playlists = () => {
             <>
               <h2>Your playlists</h2>
               <div className="flex flex-wrap w-full">
-                <div className="p-3 hover:bg-red-400 rounded-xl">
+                <div className="p-3 hover:bg-grey rounded-xl">
                   <div className="w-48">
                     <div className="w-48 relative">
                       <img
                         src={playlist}
-                        className="h-48 w-48 rounded-xl"
+                        className="h-48 w-48 rounded-[46px]"
                       ></img>
                     </div>
 
                     <Link to={`/favorites`}>
                       <p className="text-wrap mt-2">Your favorites</p>
                     </Link>
-                    {favorites &&
+                    {/* {favorites &&
                       favorites.map((track) => (
                         <p key={track.id}>Track: {track.name}</p>
-                      ))}
+                      ))} */}
                   </div>
                 </div>
 
                 {userPlaylists.map((list) => (
-                  <div
-                    key={list._id}
-                    className="p-3 hover:bg-red-400 rounded-xl"
-                  >
+                  <div key={list._id} className="p-3 hover:bg-grey rounded-xl">
                     <div className="w-48">
                       <div className="w-48 relative">
                         <img
                           src={playlist}
-                          className="h-48 w-48 rounded-xl"
+                          className="h-48 w-48 rounded-[46px]"
                         ></img>
                       </div>
 
@@ -125,10 +129,10 @@ const Playlists = () => {
                       >
                         <p className="text-wrap mt-2">{list.name}</p>
                       </Link>
-                      {list.tracks &&
+                      {/* {list.tracks &&
                         list.tracks.map((track) => (
                           <p key={track.id}>Track: {track.name}</p>
-                        ))}
+                        ))} */}
                     </div>
                   </div>
                 ))}
@@ -137,17 +141,17 @@ const Playlists = () => {
           )}
 
           {isAuthenticated && (
-            <div className="mt-5 flex flex-col gap-4">
-              <button onClick={handleCreate}>Create new playlist</button>
+            <div className="mt-5 flex flex-col gap-2 mb-8 max-w-[345px]">
+              <h3>Create new playlist</h3>
               <input
-                className="bg-teal"
+                className="bg-grey rounded-md"
                 type="text"
                 value={playlistName}
                 onChange={(e) => setPlaylistName(e.target.value)}
-                placeholder="Choose playlist name"
+                placeholder=" Choose playlist name"
               />
-              <p>{playlistName}</p>
-              <button className="bg-teal border" onClick={handleCreate}>
+
+              <button className="bg-orange rounded-full" onClick={handleCreate}>
                 Create
               </button>
             </div>

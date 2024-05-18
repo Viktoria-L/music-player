@@ -14,77 +14,90 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   handleNext,
   handlePrevious,
-  setDuration,
+  togglePlay,
   setTimeProgress,
 } from "../../stores/musicStore/musicSlice";
 import { AudioProps } from "../MiniAudioPlayer";
 import { RootState } from "../../stores/configureStore";
 
-//TODO, ordna allt här som e rött
-
-const Controls = ({ audioRef, progressBarRef, tracks }: AudioProps) => {
+const Controls = ({ audioRef, progressBarRef }: AudioProps) => {
   const dispatch = useDispatch();
-  // const trackIndex = useSelector((state) => state.musicStore.trackIndex);
-  // const currentTrack = useSelector((state) => state.musicStore.currentTrack);
-  // const timeProgress = useSelector((state) => state.musicStore.timeProgress);
-  const duration = useSelector((state: RootState) => state.musicStore.duration);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const duration = useSelector((state: RootState) => state.musicStore.duration);
+  const isPlaying = useSelector(
+    (state: RootState) => state.musicStore.isPlaying
+  );
+
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
 
   const togglePlayPause = () => {
-    setIsPlaying((prevState) => !prevState);
+    dispatch(togglePlay());
   };
 
-  const playAnimationRef = useRef();
+  const playAnimationRef = useRef<number | null>(null);
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current.currentTime;
-    dispatch(setTimeProgress(currentTime));
-    progressBarRef.current.value = currentTime;
-    progressBarRef.current.style.setProperty(
-      "--range-progress",
-      `${(progressBarRef.current.value / duration) * 100}%`
-    );
+    if (audioRef.current && progressBarRef.current) {
+      const currentTime = audioRef.current.currentTime;
+      dispatch(setTimeProgress(currentTime));
+      progressBarRef.current.value = currentTime.toString();
+      const progressPercentage = (currentTime / duration) * 100;
+      progressBarRef.current.style.setProperty(
+        "--range-progress",
+        `${progressPercentage}%`
+      );
+      // progressBarRef.current.style.setProperty(
+      //   "--range-progress",
+      //   `${(progressBarRef.current.value / duration) * 100}%`
+      // );
 
-    playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [audioRef, duration, progressBarRef, setTimeProgress]);
+      playAnimationRef.current = requestAnimationFrame(repeat);
+    }
+  }, [audioRef, duration, progressBarRef, setTimeProgress, dispatch]);
+
+  // const togglePlayPause = () => {
+  //   setIsPlaying((prevState) => !prevState);
+  // };
+
+  // const playAnimationRef = useRef();
+  // const repeat = useCallback(() => {
+  //   const currentTime = audioRef.current.currentTime;
+  //   dispatch(setTimeProgress(currentTime));
+  //   progressBarRef.current.value = currentTime;
+  //   progressBarRef.current.style.setProperty(
+  //     "--range-progress",
+  //     `${(progressBarRef.current.value / duration) * 100}%`
+  //   );
+
+  //   playAnimationRef.current = requestAnimationFrame(repeat);
+  // }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current.play();
+      audioRef.current?.play();
     } else {
-      audioRef.current.pause();
+      audioRef.current?.pause();
     }
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [isPlaying, audioRef, repeat]);
 
-  //Jump forward/backward 15 sec
   const skipForward = () => {
-    audioRef.current.currentTime += 15;
+    if (audioRef.current) audioRef.current.currentTime += 15;
   };
   const skipBackward = () => {
-    audioRef.current.currentTime -= 15;
+    if (audioRef.current) audioRef.current.currentTime -= 15;
   };
 
-  //Set and jump to next/prev track
-  // const handlePrevious = () => {
-  //     if (trackIndex === 0) {
-  //         let lastTrackIndex = tracks.length - 1;
-  //         setTrackIndex(lastTrackIndex);
-  //         setCurrentTrack(tracks[lastTrackIndex]);
-  //       } else {
-  //         setTrackIndex((prev) => prev - 1);
-  //         setCurrentTrack(tracks[trackIndex - 1]);
-  //       }
-  //     };
-
   useEffect(() => {
-    if (audioRef) {
+    if (audioRef && audioRef.current) {
       audioRef.current.volume = volume / 100;
       audioRef.current.muted = muteVolume;
     }
   }, [volume, audioRef, muteVolume]);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value));
+  };
 
   return (
     <div className={`controlwrapper flex flex-col justify-center gap-4 w-full`}>
@@ -138,9 +151,7 @@ const Controls = ({ audioRef, progressBarRef, tracks }: AudioProps) => {
           value={volume}
           min={0}
           max={100}
-          onChange={(e) => {
-            setVolume(e.target.value);
-          }}
+          onChange={handleVolumeChange}
         />
       </div>
     </div>
@@ -148,10 +159,3 @@ const Controls = ({ audioRef, progressBarRef, tracks }: AudioProps) => {
 };
 
 export default Controls;
-
-// Controls.propTypes = {
-//     audioRef: PropTypes.object.isRequired,
-//     progressBarRef: PropTypes.object.isRequired,
-//     tracks: PropTypes.object.isRequired,
-//     mini: PropTypes.string
-// }

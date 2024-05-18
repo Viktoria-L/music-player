@@ -1,35 +1,26 @@
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
-import { useState, useEffect, useRef, useCallback } from "react";
-//import { useSelector, useDispatch } from "react-redux";
-//import { setDuration, setTimeProgress } from '../../configureStore/musicSlice';
+import { useState, useEffect } from "react";
+import { AudioProps } from "./MiniAudioPlayer";
 
-export const VolumeControls = ({ audioRef }) => {
-  const [volume, setVolume] = useState(60);
+export const VolumeControls = ({ audioRef }: AudioProps) => {
+  const [volume, setVolume] = useState<number>(60);
   const [muteVolume, setMuteVolume] = useState(false);
 
-  //Set and jump to next/prev track
-  // const handlePrevious = () => {
-  //     if (trackIndex === 0) {
-  //         let lastTrackIndex = tracks.length - 1;
-  //         setTrackIndex(lastTrackIndex);
-  //         setCurrentTrack(tracks[lastTrackIndex]);
-  //       } else {
-  //         setTrackIndex((prev) => prev - 1);
-  //         setCurrentTrack(tracks[trackIndex - 1]);
-  //       }
-  //     };
-
   useEffect(() => {
-    if (audioRef) {
+    if (audioRef && audioRef.current) {
       audioRef.current.volume = volume / 100;
       audioRef.current.muted = muteVolume;
     }
   }, [volume, audioRef, muteVolume]);
 
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value));
+  };
+
   return (
-    <div className="volume w-40 flex self-center">
+    <div className=" hidden sm:flex items-center w-40 self-center pr-4">
       <button
-        className="volBtn"
+        className="m-0"
         onClick={() => {
           setMuteVolume((prev) => !prev);
         }}
@@ -50,15 +41,8 @@ export const VolumeControls = ({ audioRef }) => {
         value={volume}
         min={0}
         max={100}
-        onChange={(e) => {
-          setVolume(e.target.value);
-        }}
+        onChange={handleVolumeChange}
       />
     </div>
   );
 };
-
-// VolumeControls.propTypes = {
-//     audioRef: PropTypes.object.isRequired,
-//     mini: PropTypes.string
-// }

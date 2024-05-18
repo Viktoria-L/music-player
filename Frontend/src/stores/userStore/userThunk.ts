@@ -67,7 +67,7 @@ export const createPlaylist = createAsyncThunk(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(playlistDetails),
+      body: JSON.stringify({ name: playlistDetails }),
       credentials: "include",
     });
     return response.json();

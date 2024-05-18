@@ -52,7 +52,7 @@ export const Header = () => {
 
   return (
     <header className="w-full h-20 fixed top-0 flex justify-between items-center px-4 z-9">
-      <GiAllSeeingEye className="text-5xl z-10" />
+      <GiAllSeeingEye className="invisible text-5xl z-10" />
 
       {showSearch ? (
         <SearchBar />
@@ -65,7 +65,7 @@ export const Header = () => {
 
       {/* Dropdown menu /collapse menu */}
       {collapseMenu ? (
-        <span onClick={(e) => toggleDropdownMenu(e)} className="cursor-pointer">
+        <span onClick={() => toggleDropdownMenu()} className="cursor-pointer">
           <GoChevronDown className="text-2xl" />
         </span>
       ) : (

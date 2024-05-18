@@ -1,8 +1,5 @@
 // Här lägger jag sånt som kan vara till nytta eller behöver skrivas om
 
-import { Album } from "../models/AlbumResponse";
-import { Track } from "../models/TracksResponse";
-
 // ----------------- ALLA GET FUNKTIONER OCH VAD DE HÄMTAR ------------ //
 // Tracks - const response = await axios.get(`${API_URL}tracks/?client_id=${clientId}&format=jsonpretty&limit=5&tags=electronic&featured=1`)
 // similar Tracks - const response = await axios.get(`${API_URL}tracks/similar?client_id=${clientId}
@@ -35,128 +32,9 @@ import { Track } from "../models/TracksResponse";
 // and then boost (boost, not order!) choosing your favorite rating.
 // Your chart should look fantastic!.
 
-//funktion för att rendera till albumsida?
-const handleAlbumClick = () => {
-  dispatch(setCurrentAlbum(album));
-  // Eventuellt navigera till en detaljsida eller uppdatera UI för att visa albumdetaljer
-};
-
 //Omräknad sekunder till min:sek
 export function formatTime(seconds: number): string {
   const minutes = Math.floor(seconds / 60);
   const secondsLeft = seconds % 60;
   return `${minutes}:${secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}`;
 }
-
-// //Funktioner mot mitt API/mongoDB databas
-// const baseUrl = "http://localhost:3000/api";
-
-// interface PlaylistDetails {
-//   name: string;
-//   songs?: string[];
-// }
-
-// // interface SongId {
-// //   songId: string;
-// // }
-
-// export const fetchFavorites = async () => {
-//   const response = await fetch(`${baseUrl}/favorites`, {
-//     credentials: "include",
-//   });
-//   return response.json();
-// };
-
-// // Function to add a favorite song
-// export const addToFavorites = async (songDetails: Track) => {
-//   const response = await fetch(`${baseUrl}/favorites`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(songDetails),
-//     credentials: "include",
-//   });
-//   return response.json();
-// };
-
-// // Function to fetch playlists
-// export const fetchPlaylists = async () => {
-//   const response = await fetch(`${baseUrl}/playlists`, {
-//     credentials: "include",
-//   });
-//   return response.json();
-// };
-
-// // Function to create a new playlist
-// export const createPlaylist = async (playlistDetails: PlaylistDetails) => {
-//   const response = await fetch(`${baseUrl}/playlists`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(playlistDetails),
-//     credentials: "include",
-//   });
-//   return response.json();
-// };
-
-// // Function to add a song to a playlist
-// export const addSongToPlaylist = async (
-//   playlistId: string,
-//   songDetails: Track
-// ) => {
-//   const response = await fetch(`${baseUrl}/playlists/${playlistId}`, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(songDetails),
-//     credentials: "include",
-//   });
-//   return response.json();
-// };
-
-//borttagen kod
-
-// useEffect(() => {
-//   console.log("tracks från slice", data);
-//TODO, antingen måste datan hämtas här eller sparas i ett FeaturedTrack state, jag behöver separera på playibg tracks och
-//tracks som visas ut i featured tracks för den uppdateras till annan musik om jag t.ex gåre in på listan songs
-// fetchDataFromJamendo<Track[]>(
-//   "tracks",
-//   { limit: "10", featured: 1 },
-//   dispatch,
-//   setTracksToPlay
-// );
-//}, []);
-
-// SE GENERISK HÄMTNING I HTTP.JS FILEN //
-
-//   const fetchDataFromJamendo = async () => {
-//     const API_URL = state.api.baseUrl;
-//     const clientId = "5bcc718f";
-
-//     try {
-//       // limit parameter sätter gränsen för hur många responer,default är 10
-//       //   const response = await axios.get(`${API_URL}albums/?client_id=${clientId}&format=jsonpretty&artist_name=anitek`)
-//       // GET 10 artists - const response = await axios.get(`${API_URL}artists/?client_id=${clientId}&format=jsonpretty`)
-
-//       // const response = await axios.get(`${API_URL}artists/tracks?client_id=${clientId}&format=jsonpretty`)
-
-//       const response = await axios.get(
-//         `${API_URL}tracks/?client_id=${clientId}&format=jsonpretty&limit=5&tags=electronic&featured=1`
-//       );
-//       //const response = await axios.get(`${API_URL}playlists/?client_id=${clientId}&format=jsonpretty`)
-
-//       if (response) {
-//         setMusicData(response.data);
-//         dispatch(setTracksToPlay(response.data.results));
-//       }
-//     } catch (error) {
-//       console.log(error);
-//       return null;
-//     }
-//   };
-
-//   fetchDataFromJamendo<Album[]>('albums', { limit: '10' }, dispatch, setAlbums);

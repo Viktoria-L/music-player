@@ -28,7 +28,7 @@ export const SearchBar = () => {
           <input
             type="search"
             id="default-search"
-            className="block w-full p-2 pl-10 text-sm text-white border border-black rounded-full bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-2 pl-10 text-sm text-white border focus:border-orange rounded-full bg-grey border-grey"
             placeholder=" Search artist, song..."
             required
             value={searchInput}

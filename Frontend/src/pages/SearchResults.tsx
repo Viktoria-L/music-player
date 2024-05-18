@@ -12,8 +12,6 @@ import {
 import { IoPlay } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 import { Error } from "../components/Error";
-import { Tracklist } from "../components/Tracklist";
-import AlbumDisplay from "../components/AlbumDisplay";
 
 interface GroupedResults {
   tracks: Track[];
@@ -121,9 +119,6 @@ const SearchResults = () => {
     }
   };
 
-  //Gör album utskrivften likadan som featured bilderna
-  // gör artist till runda precis som på artistpage
-  // Eventuellt göra en tags meny upptill med All, artists, songs/tracks, albums
   return (
     <>
       <div className="searchpage wrapper">
@@ -136,7 +131,7 @@ const SearchResults = () => {
         ) : (
           <>
             <div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold my-4">
                 Tracks matching '{query}'
               </h3>
 
@@ -165,7 +160,7 @@ const SearchResults = () => {
                 </thead>
                 <tbody className="">
                   {groupedResults.tracks.map((track, index) => (
-                    <tr key={track.id} className="hover:bg-red-400">
+                    <tr key={track.id} className="hover:bg-grey">
                       <td className="px-6 py-2 whitespace-nowrap">
                         <div className="flex items-center">
                           <IoPlay
@@ -205,18 +200,13 @@ const SearchResults = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold my-8">
                 Albums matching '{query}'
               </h3>
 
               <div className="flex flex-wrap gap-6 w-full mt-2">
-                {uniqueAlbums.map((album: Track, i) => (
+                {uniqueAlbums.map((album: Track) => (
                   <>
-                    {/* <AlbumDisplay key={i}
-                  data={album}
-                  basePath="album"
-                  display="grid" /> */}
-
                     <div key={album.id} className="w-48">
                       <div className="w-48 relative">
                         <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
@@ -238,16 +228,12 @@ const SearchResults = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-xl font-semibold my-8">
                 Artists matching '{query}'
               </h3>
               {uniqueArtists.map((artist: Track) => (
-                // <div key={artist.id} className="border-white border p-2">
-                //   <p>{artist.artist_name}</p>
-                // </div>
                 <div key={artist.id} className="w-48">
                   <div className="w-48 relative">
-                    {/* <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" /> */}
                     <img
                       src={artist.image}
                       className="h-48 w-48 rounded-full"

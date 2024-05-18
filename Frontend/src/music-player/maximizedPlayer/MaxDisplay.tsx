@@ -4,30 +4,19 @@ import { handleNext, setDuration } from "../../stores/musicStore/musicSlice";
 import { AppDispatch, RootState } from "../../stores/configureStore";
 import { AudioProps } from "../MiniAudioPlayer";
 
-const DisplayTrack = ({
-  audioRef,
-  progressBarRef,
-  mini = "",
-  tracks,
-}: AudioProps) => {
+export const MaxDisplay = ({ audioRef, progressBarRef }: AudioProps) => {
   const dispatch: AppDispatch = useDispatch();
   const currentTrack = useSelector(
     (state: RootState) => state.musicStore.currentTrack
   );
-  // const duration = useSelector(
-  //   (state: RootState) => state.musicStore.duration
-  // );
 
   const onLoadedMetadata = () => {
     const seconds = audioRef.current?.duration;
-    // setDuration(seconds);
     dispatch(setDuration(seconds));
     if (progressBarRef.current && seconds) {
       progressBarRef.current.max = seconds.toString();
     }
   };
-
-  //TODO, fråga Datan i responsen ser olika ut beroende på om man hämtar tracks eller album eller artist.. hur ska man lösa det?
 
   return (
     <div className="display-container w-full">
@@ -40,10 +29,10 @@ const DisplayTrack = ({
         }}
       />
 
-      <div className={`flex gap-4 flex-col ${mini}`}>
-        <div className="audio-image">
+      <div className={`flex gap-4 flex-col`}>
+        <div className="self-center">
           {currentTrack.image ? (
-            <div className="image-crop">
+            <div className="">
               <img src={currentTrack.image} alt="album image" />
             </div>
           ) : (
@@ -55,7 +44,7 @@ const DisplayTrack = ({
           )}
         </div>
         <div
-          className={`text-orange-500 font-bold leading-6 tracking-wider text-center ${mini}`}
+          className={`text-orange-500 font-bold leading-6 tracking-wider text-center`}
         >
           <p className="title font-bold">{currentTrack.name}</p>
           <p>{currentTrack.artist_name}</p>
@@ -64,5 +53,3 @@ const DisplayTrack = ({
     </div>
   );
 };
-
-export default DisplayTrack;

@@ -28,7 +28,6 @@ export const PlayControls = ({ audioRef, progressBarRef }: AudioProps) => {
 
   const togglePlayPause = () => {
     dispatch(togglePlay());
-    // setIsPlaying((prevState) => !prevState);
   };
 
   const playAnimationRef = useRef<number | null>(null);
@@ -62,10 +61,11 @@ export const PlayControls = ({ audioRef, progressBarRef }: AudioProps) => {
 
   return (
     <div className={`controls flex text-center gap-2`}>
-      <button>
+      <button className="hidden sm:block">
         <IoShuffle className="text-xl hover:text-orange" />
       </button>
       <button
+        className="hidden sm:block"
         onClick={() => {
           dispatch(handlePrevious());
         }}
@@ -75,7 +75,7 @@ export const PlayControls = ({ audioRef, progressBarRef }: AudioProps) => {
       {/* <button onClick={skipBackward} className='skip'>
         <IoPlayBack className='skip' />
     </button> */}
-      <button onClick={togglePlayPause}>
+      <button onClick={togglePlayPause} className="pr-3 sm:pr-0">
         {isPlaying ? (
           <IoPause className="text-4xl hover:text-orange" />
         ) : (
@@ -86,13 +86,14 @@ export const PlayControls = ({ audioRef, progressBarRef }: AudioProps) => {
         <IoPlayForward />
     </button> */}
       <button
+        className="hidden sm:block"
         onClick={() => {
           dispatch(handleNext());
         }}
       >
         <IoPlaySkipForward className="text-2xl hover:text-orange" />
       </button>
-      <button>
+      <button className="hidden sm:block">
         <IoRepeat className="text-xl hover:text-orange" />
       </button>
     </div>

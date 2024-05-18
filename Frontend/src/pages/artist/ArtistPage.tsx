@@ -4,15 +4,10 @@ import { fetchDataFromJamendo } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../stores/configureStore";
 import {
-  setTracksToPlay,
-  setPlayStatus,
   setArtistTracks,
   setArtistAlbums,
 } from "../../stores/musicStore/musicSlice";
-import { IoPlay } from "react-icons/io5";
-import { formatTime } from "../../utils/helperFunctions";
 import { Artist } from "../../models/ArtistsResponse";
-import { Track } from "../../models/TracksResponse";
 import { Error } from "../../components/Error";
 import { Tracklist } from "../../components/Tracklist";
 
@@ -33,7 +28,7 @@ const ArtistPage = () => {
     if (state) {
       fetchDataFromJamendo<Artist[]>(
         "artists/tracks",
-        { id: state.id, limit: "10" },
+        { id: state.id ? state.id : state.artist_id, limit: "10" },
         dispatch,
         setArtistTracks,
         setTrackError
@@ -41,7 +36,7 @@ const ArtistPage = () => {
       if (state) {
         fetchDataFromJamendo<Artist[]>(
           "artists/albums",
-          { id: state.id },
+          { id: state.id ? state.id : state.artist_id },
           dispatch,
           setArtistAlbums,
           setAlbumError
@@ -50,13 +45,9 @@ const ArtistPage = () => {
     }
   }, [state]);
 
-  const handlePlay = (index: number) => {
-    if (artistTracks) {
-      const tracks: Track[] = artistTracks;
-      dispatch(setTracksToPlay({ tracks, index }));
-      dispatch(setPlayStatus(true));
-    }
-  };
+  useEffect(() => {
+    console.log("artistpage", state);
+  }, [state]);
 
   return (
     <div className="albumpage wrapper">
@@ -77,57 +68,7 @@ const ArtistPage = () => {
           {trackError ? (
             <Error message={trackError} />
           ) : (
-            <>
-              {artistTracks && <Tracklist tracks={artistTracks} />}
-              {/* <div>
-              <table className="min-w-full divide-y divide-gray-500">
-                <thead className="">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Play
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Duration
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Name
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-500">
-                  {artistTracks &&
-                    artistTracks.slice(0, 10).map((track, index) => (
-                      <tr key={track.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <IoPlay
-                              className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-teal"
-                              aria-hidden="true"
-                              onClick={() => handlePlay(index)}
-                            />
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {formatTime(track.duration)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {track.name}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div> */}
-            </>
+            <>{artistTracks && <Tracklist tracks={artistTracks} />}</>
           )}
 
           <h3>Albums</h3>

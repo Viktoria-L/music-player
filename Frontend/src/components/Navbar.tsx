@@ -10,6 +10,7 @@ import { logout } from "../stores/authStore/authSlice";
 import { fetchPlaylists, createPlaylist } from "../stores/userStore/userThunk";
 import { useEffect, useState } from "react";
 import { BiLogOut, BiLogIn } from "react-icons/bi";
+import { GiAllSeeingEye } from "react-icons/gi";
 
 interface NavbarProps {
   openNav: boolean;
@@ -60,75 +61,78 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
           className="rounded-full bg-orange text-2xl p-1 absolute -right-3 top-20 cursor-pointer"
         />
       )}
+      <div>
+        <GiAllSeeingEye className={`${openNav ? "text-5xl" : "text-3xl"}`} />
 
-      <ul className="mt-24 flex flex-col gap-6">
-        <li>
-          <NavLink to="/" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <GoHome className="text-xl" /> Home
-              </div>
-            ) : (
-              <GoHome className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/artists" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <PiMusicNotes className="text-xl" /> Artists
-              </div>
-            ) : (
-              <PiMusicNotes className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/albums" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <BiAlbum className="text-xl" /> Albums
-              </div>
-            ) : (
-              <BiAlbum className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/songs" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <GiHeadphones className="text-xl" /> Songs
-              </div>
-            ) : (
-              <GiHeadphones className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/playlists" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <GoListUnordered className="text-xl" /> Playlists
-              </div>
-            ) : (
-              <GoListUnordered className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/about" className="">
-            {openNav ? (
-              <div className="flex gap-2 items-center">
-                <GoInfo className="text-xl" /> About
-              </div>
-            ) : (
-              <GoInfo className="text-2xl" />
-            )}
-          </NavLink>
-        </li>
-      </ul>
+        <ul className="mt-24 flex flex-col gap-6">
+          <li>
+            <NavLink to="/" className="">
+              {openNav ? (
+                <div className="flex gap-2 items-center">
+                  <GoHome className="text-xl" /> Home
+                </div>
+              ) : (
+                <GoHome className="text-2xl" />
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/artists" className="">
+              {openNav ? (
+                <div className="flex gap-2 items-center">
+                  <PiMusicNotes className="text-xl" /> Artists
+                </div>
+              ) : (
+                <PiMusicNotes className="text-2xl" />
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/albums" className="">
+              {openNav ? (
+                <div className="flex gap-2 items-center">
+                  <BiAlbum className="text-xl" /> Albums
+                </div>
+              ) : (
+                <BiAlbum className="text-2xl" />
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/songs" className="">
+              {openNav ? (
+                <div className="flex gap-2 items-center">
+                  <GiHeadphones className="text-xl" /> Songs
+                </div>
+              ) : (
+                <GiHeadphones className="text-2xl" />
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/playlists" className="">
+              {openNav ? (
+                <div className="flex gap-2 items-center">
+                  <GoListUnordered className="text-xl" /> Playlists
+                </div>
+              ) : (
+                <GoListUnordered className="text-2xl" />
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/about" className="">
+              {openNav ? (
+                <div className="flex gap-2 items-center">
+                  <GoInfo className="text-xl" /> About
+                </div>
+              ) : (
+                <GoInfo className="text-2xl" />
+              )}
+            </NavLink>
+          </li>
+        </ul>
+      </div>
 
       {isAuthenticated ? (
         <>
@@ -152,20 +156,25 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
                 >
                   Create new playlist +
                 </li>
-                {showCreateInput && (
-                  <>
-                    <input
-                      className="bg-orange"
-                      type="text"
-                      value={playlistName}
-                      onChange={(e) => setPlaylistName(e.target.value)}
-                      placeholder="Choose playlist name"
-                    />
-                    <button className="bg-teal border" onClick={handleCreate}>
-                      Create
-                    </button>
-                  </>
-                )}
+                <>
+                  <input
+                    className={`${
+                      showCreateInput ? "visible" : "invisible"
+                    } bg-grey rounded-md`}
+                    type="text"
+                    value={playlistName}
+                    onChange={(e) => setPlaylistName(e.target.value)}
+                    placeholder=" Choose playlist name"
+                  />
+                  <button
+                    className={`${
+                      showCreateInput ? "visible" : "invisible"
+                    } bg-orange rounded-full`}
+                    onClick={handleCreate}
+                  >
+                    Create
+                  </button>
+                </>
               </ul>
             </div>
           )}
@@ -179,14 +188,18 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
       {/* <p>{isAuthenticated ? "Logged in" : "Not logged in"}</p> */}
       {isAuthenticated ? (
         <button
-          className="bg-orange hover:opacity-70 mb-24 w-24 self-center rounded-full"
+          className={`${
+            openNav ? "w-24" : "w-0 bg-transparent"
+          } bg-orange hover:opacity-70 mb-24 self-center rounded-full`}
           onClick={() => dispatch(logout())}
         >
           {openNav ? "Log out" : <BiLogOut className="text-2xl" />}
         </button>
       ) : (
         <button
-          className="bg-orange mb-24 w-24 self-center rounded-full"
+          className={`${
+            openNav ? "w-24" : "w-0 bg-transparent"
+          } bg-orange hover:opacity-70 mb-24 self-center rounded-full`}
           onClick={() => navigate("/login")}
         >
           {openNav ? "Log in" : <BiLogIn className="text-2xl" />}

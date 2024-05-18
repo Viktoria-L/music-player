@@ -28,7 +28,7 @@ const Artists = () => {
     <>
       <div className="artistspage wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular artists</h2>
-        <p className="tracking-wide mt-2">Explore new artists here</p>
+        <p className="tracking-wide mt-2 mb-8">Explore new artists here</p>
 
         {error ? (
           <Error message={error} />

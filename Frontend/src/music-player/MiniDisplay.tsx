@@ -4,12 +4,7 @@ import { handleNext, setDuration } from "../stores/musicStore/musicSlice";
 import { RootState } from "../stores/configureStore";
 import { AudioProps } from "./MiniAudioPlayer";
 
-const MiniDisplayTrack = ({
-  audioRef,
-  progressBarRef,
-  mini = "",
-  tracks,
-}: AudioProps) => {
+const MiniDisplayTrack = ({ audioRef, progressBarRef }: AudioProps) => {
   const dispatch = useDispatch();
 
   const currentTrack = useSelector(
@@ -18,8 +13,6 @@ const MiniDisplayTrack = ({
   const currentAlbumInfo = useSelector(
     (state: RootState) => state.musicStore.currentAlbum
   );
-
-  const duration = useSelector((state: RootState) => state.musicStore.duration);
 
   const onLoadedMetadata = () => {
     const seconds = audioRef.current?.duration;
@@ -39,7 +32,7 @@ const MiniDisplayTrack = ({
           dispatch(handleNext());
         }}
       />
-      <div className={`pl-4 flex gap-4 items-center`}>
+      <div className={`pl-4 sm:w-60 flex gap-4 items-center`}>
         <div className="h-14 w-14">
           {currentTrack.image || currentAlbumInfo?.image ? (
             <img
@@ -52,18 +45,20 @@ const MiniDisplayTrack = ({
               alt="track image"
             />
           ) : (
-            <div className="icon-wrapper">
-              <span className="audio-icon">
-                <BsMusicNoteBeamed className="" />
-              </span>
-            </div>
+            <span className="audio-icon text-4xl flex h-14 w-14 justify-center items-center rounded-md bg-orange">
+              <BsMusicNoteBeamed className="" />
+            </span>
           )}
         </div>
-        <div
-          className={`h-20 flex flex-col justify-center text-orange-500 leading-6 tracking-wider ${mini}`}
-        >
-          <p className="font-semibold">{currentTrack.name}</p>
-          <p className="">{currentTrack.artist_name}</p>
+        <div className="h-20 flex flex-col justify-center text-orange-500 tracking-wider">
+          <p className="font-semibold text-[12px] sm:text-sm">
+            {currentTrack.name.length > 25
+              ? `${currentTrack.name.slice(0, 25)}...`
+              : currentTrack.name}
+          </p>
+          <p className="text-[10px] sm:text-[12px]">
+            {currentTrack.artist_name}
+          </p>
         </div>
       </div>
     </div>

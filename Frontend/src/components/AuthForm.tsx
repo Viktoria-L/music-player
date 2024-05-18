@@ -1,15 +1,12 @@
 import { FormEvent, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login, register } from "../stores/authStore/authThunk";
-import { AppDispatch, RootState } from "../stores/configureStore";
+import { AppDispatch } from "../stores/configureStore";
 import { fetchFavorites, fetchPlaylists } from "../stores/userStore/userThunk";
-//TODO, byt språk
 
 function AuthForm() {
   const dispatch: AppDispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+
   const [isRegistering, setIsRegistering] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
@@ -40,13 +37,13 @@ function AuthForm() {
               type="text"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
-              placeholder="Förnamn"
+              placeholder="Firstname"
             />
             <input
               type="text"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
-              placeholder="Efternamn"
+              placeholder="Lastname"
             />
           </>
         )}
@@ -54,16 +51,16 @@ function AuthForm() {
           type="text"
           value={user}
           onChange={(e) => setUser(e.target.value)}
-          placeholder="Användarnamn"
+          placeholder="Username"
         />
         <input
           type="password"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
-          placeholder="Lösenord"
+          placeholder="Password"
         />
         <button type="submit" className="submitBtn">
-          {isRegistering ? "Register" : "Logga in"}
+          {isRegistering ? "Register" : "Log in"}
         </button>
         <button
           type="button"
@@ -71,8 +68,8 @@ function AuthForm() {
           className="toggleBtn"
         >
           {isRegistering
-            ? "Har du redan ett konto? Logga in"
-            : "Är du inte medlem än? Klicka här för att registrera dig!"}
+            ? "Already have an account? Log in"
+            : "Not a member yet? Click here to register!"}
         </button>
       </form>
     </>
