@@ -9,7 +9,7 @@ import {
   setTracksToPlay,
   setPlayStatus,
 } from "../stores/musicStore/musicSlice";
-import { IoPlay } from "react-icons/io5";
+import { IoPlay, IoPause } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 import { Error } from "../components/Error";
 
@@ -25,6 +25,13 @@ const SearchResults = () => {
   const searchResults = useSelector(
     (state: RootState) => state.musicStore.searchResults
   );
+  const currentTrack = useSelector(
+    (state: RootState) => state.musicStore.currentTrack
+  );
+  const isSomethingPlaying = useSelector(
+    (state: RootState) => state.musicStore.isPlaying
+  );
+
   const { query } = useParams();
   const [groupedResults, setGroupedResults] = useState<GroupedResults>({
     tracks: [],
@@ -74,9 +81,11 @@ const SearchResults = () => {
     setUniqueAlbums(Object.values(unique));
   }, [groupedResults.albums]);
 
-  useEffect(() => {
-    console.log("uniq artist", uniqueArtists);
-  }, [uniqueArtists]);
+  // useEffect(() => {
+  //   console.log("search tracks", groupedResults.tracks);
+  //   console.log("search albums", groupedResults.albums);
+  //   console.log("search artists", groupedResults.artists);
+  // }, [groupedResults]);
 
   if (!query) {
     return <p>Please enter a search term.</p>;
@@ -108,7 +117,7 @@ const SearchResults = () => {
         artistMap.set(artist.artist_name!.toLowerCase(), artist);
       }
     });
-    return Array.from(artistMap.values()); // Konvertera tillbaka till array
+    return Array.from(artistMap.values());
   };
 
   const handlePlay = (index: number) => {
@@ -130,74 +139,80 @@ const SearchResults = () => {
           <Error message={error} />
         ) : (
           <>
-            <div>
-              <h3 className="text-xl font-semibold my-4">
-                Tracks matching '{query}'
-              </h3>
+            {groupedResults.tracks && (
+              <div>
+                <h3 className="text-xl font-semibold my-4">
+                  Tracks matching '{query}'
+                </h3>
 
-              <table className="min-w-full divide-y divide-gray-500">
-                <thead className="">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4"
-                    >
-                      Play
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex-grow"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-10"
-                    >
-                      Duration
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="">
-                  {groupedResults.tracks.map((track, index) => (
-                    <tr key={track.id} className="hover:bg-grey">
-                      <td className="px-6 py-2 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <IoPlay
-                            className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
-                            aria-hidden="true"
-                            onClick={() => handlePlay(index)}
-                          />
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-2 whitespace-nowrap">
-                        <div className="flex gap-5">
-                          <img
-                            src={track.image}
-                            className="h-12 w-12 rounded-md"
-                          ></img>
-                          <div className="flex flex-col">
-                            <span className="text-md bold capitalize">
-                              {track.name.length > 25
-                                ? `${track.name.slice(0, 25)}...`
-                                : track.name}
-                            </span>
-
-                            <span className="text-sm capitalize">
-                              {track.artist_name}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-2 whitespace-nowrap">
-                        {formatTime(track.duration)}
-                      </td>
+                <table className="min-w-full divide-y divide-gray-500">
+                  <thead className="">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4"
+                      >
+                        Play
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex-grow"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-10"
+                      >
+                        Duration
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="">
+                    {groupedResults.tracks.map((track, index) => (
+                      <tr key={track.id} className="hover:bg-grey">
+                        <td className="px-6 py-2 whitespace-nowrap">
+                          <div className="flex items-center">
+                            {isSomethingPlaying &&
+                            currentTrack.id === track.id ? (
+                              <IoPause className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange" />
+                            ) : (
+                              <IoPlay
+                                className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
+                                onClick={() => handlePlay(index)}
+                              />
+                            )}
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-2 whitespace-nowrap">
+                          <div className="flex gap-5">
+                            <img
+                              src={track.image}
+                              className="h-12 w-12 rounded-md"
+                            ></img>
+                            <div className="flex flex-col">
+                              <span className="text-md bold capitalize">
+                                {track.name.length > 25
+                                  ? `${track.name.slice(0, 25)}...`
+                                  : track.name}
+                              </span>
+
+                              <span className="text-sm capitalize">
+                                {track.artist_name}
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-nowrap">
+                          {formatTime(track.duration)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
             <div>
               <h3 className="text-xl font-semibold my-8">

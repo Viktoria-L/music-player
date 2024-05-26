@@ -13,7 +13,6 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
-//Prenumererar på förändringar i min store för att uppdatera localstorage
 // store.subscribe(() => {
 //   const state = store.getState();
 //   saveToLocalStorage(state.musicStore);

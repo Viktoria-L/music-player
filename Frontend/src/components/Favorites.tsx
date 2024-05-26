@@ -26,7 +26,7 @@ export const Favorites = () => {
         <Link
           to="/favorites"
           state={{ basePath, tracks }}
-          className="text-orange font-semibold text-sm"
+          className="text-orange font-semibold text-[10px] md:text-sm"
         >
           Show all
         </Link>

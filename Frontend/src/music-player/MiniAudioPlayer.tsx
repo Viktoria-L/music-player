@@ -2,7 +2,7 @@ import ProgressBar from "./ProgressBar";
 import { useRef, RefObject, useState } from "react";
 import { PlayControls } from "./PlayControls";
 import { VolumeControls } from "./VolumeControls";
-import MiniDisplayTrack from "./MiniDisplay";
+import MiniTrackDisplay from "./MiniDisplay";
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/configureStore";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
@@ -13,7 +13,6 @@ export interface AudioProps {
   progressBarRef: RefObject<HTMLInputElement>;
 }
 
-//Parent,root component
 const MiniAudioPlayer = () => {
   const [fullView, setFullView] = useState(false);
 
@@ -36,7 +35,7 @@ const MiniAudioPlayer = () => {
       } mini-audio-player h-20 w-full z-50`}
     >
       <div className="inner absolute w-full h-20 flex justify-center">
-        <MiniDisplayTrack {...{ audioRef, progressBarRef, tracks }} />
+        <MiniTrackDisplay {...{ audioRef, progressBarRef, tracks }} />
         <div
           className={`${
             currentTrack ? "flex" : "hidden"

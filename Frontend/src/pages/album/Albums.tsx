@@ -4,7 +4,7 @@ import { Album } from "../../models/AlbumResponse";
 import { setAlbums } from "../../stores/musicStore/musicSlice";
 import { RootState } from "../../stores/configureStore";
 import { Link } from "react-router-dom";
-import { IoPlay } from "react-icons/io5";
+// import { IoPlay } from "react-icons/io5";
 import { Error } from "../../components/Error";
 import { useEffect, useState } from "react";
 
@@ -38,7 +38,7 @@ const Albums = () => {
               <div key={data.id} className="p-3 hover:bg-grey rounded-xl">
                 <div className="w-48">
                   <div className="w-48 relative">
-                    <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
+                    {/* <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" /> */}
                     <img
                       src={data.image}
                       className="h-48 w-48 rounded-xl"

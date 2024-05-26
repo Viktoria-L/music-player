@@ -47,19 +47,3 @@ export interface TrackApiResponse {
   headers: ApiHeaders;
   results: Track[];
 }
-
-// "tracks":[
-//     {
-//       "album_id":"104336",
-//       "album_name":"Season One",
-//       "id":"887209",
-//       "name":"Scene 5",
-//       "duration":"325",
-//       "releasedate":"2011-12-29",
-//       "license_ccurl":"http:\/\/creativecommons.org\/licenses\/by-nc-sa\/3.0\/",
-//       "album_image":"https:\/\/usercontent.jamendo.com?type=album&id=104336&width=300&trackid=887209",
-//       "image":"https:\/\/usercontent.jamendo.com?type=album&id=104336&width=300&trackid=887209",
-//       "audio":"https:\/\/prod-1.storage.jamendo.com\/?trackid=887209&format=mp31&from=app-devsite",
-//       "audiodownload":"https:\/\/prod-1.storage.jamendo.com\/download\/track\/887209\/mp31\/",
-//       "audiodownload_allowed":true
-//     },

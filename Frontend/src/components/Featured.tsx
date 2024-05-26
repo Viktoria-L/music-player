@@ -54,7 +54,7 @@ export const Featured = ({ entity }: { entity: EntityType }) => {
         <Link
           to="/featured"
           state={{ entity, basePath, featuredData }}
-          className="text-orange text-sm font-semibold"
+          className="text-orange text-[10px] md:text-sm font-semibold"
         >
           Show all
         </Link>

@@ -43,10 +43,6 @@ const Playlists = () => {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    console.log(playlistName);
-  }, [playlistName]);
-
   const handleCreate = async () => {
     if (playlistName) {
       await dispatch(createPlaylist(playlistName));
@@ -59,7 +55,9 @@ const Playlists = () => {
     <>
       <div className="playslists wrapper">
         <h2 className="text-4xl font-bold tracking-wider">Popular playlists</h2>
-        <p className="tracking-wide mt-2">Explore new music everyday</p>
+        <p className="tracking-wide mt-2 mb-8">
+          Explore new playlists everyday
+        </p>
 
         {error ? (
           <Error message={error} />
@@ -80,7 +78,7 @@ const Playlists = () => {
                       to={`/playlist/${data.id}`}
                       state={{ data: data, type: "Public" }}
                     >
-                      <p className="text-wrap mt-2">{data.name}</p>
+                      <p className="pl-3 text-wrap mt-2">{data.name}</p>
                     </Link>
                   </div>
                 </div>
@@ -89,10 +87,12 @@ const Playlists = () => {
           </>
         )}
 
-        <div className="text-xl bold">
+        <div className="mt-8">
           {isAuthenticated && userPlaylists && (
             <>
-              <h2>Your playlists</h2>
+              <h2 className="font-semibold text-orange text-xl mb-8">
+                Your playlists
+              </h2>
               <div className="flex flex-wrap w-full">
                 <div className="p-3 hover:bg-grey rounded-xl">
                   <div className="w-48">
@@ -104,7 +104,7 @@ const Playlists = () => {
                     </div>
 
                     <Link to={`/favorites`}>
-                      <p className="text-wrap mt-2">Your favorites</p>
+                      <p className="pl-3 text-wrap mt-2">Your favorites</p>
                     </Link>
                     {/* {favorites &&
                       favorites.map((track) => (
@@ -127,7 +127,7 @@ const Playlists = () => {
                         to={`/playlist/${list._id}`}
                         state={{ data: list, type: "Private" }}
                       >
-                        <p className="text-wrap mt-2">{list.name}</p>
+                        <p className="pl-3 text-wrap mt-2">{list.name}</p>
                       </Link>
                       {/* {list.tracks &&
                         list.tracks.map((track) => (

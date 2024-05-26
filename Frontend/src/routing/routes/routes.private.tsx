@@ -10,8 +10,6 @@ export const PrivateRoute: React.FC<{ children: ReactElement }> = ({
     (state: RootState) => state.auth.isAuthenticated
   );
 
-  // const isAuthenticated = auth.data && auth.data.authToken && auth.data.authToken.token
-
   return isAuthenticated ? (
     children
   ) : (

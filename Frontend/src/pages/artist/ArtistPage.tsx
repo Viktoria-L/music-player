@@ -28,7 +28,7 @@ const ArtistPage = () => {
     if (state) {
       fetchDataFromJamendo<Artist[]>(
         "artists/tracks",
-        { id: state.id ? state.id : state.artist_id, limit: "10" },
+        { id: state.joindate ? state.id : state.artist_id, limit: "10" },
         dispatch,
         setArtistTracks,
         setTrackError
@@ -36,17 +36,13 @@ const ArtistPage = () => {
       if (state) {
         fetchDataFromJamendo<Artist[]>(
           "artists/albums",
-          { id: state.id ? state.id : state.artist_id },
+          { id: state.joindate ? state.id : state.artist_id },
           dispatch,
           setArtistAlbums,
           setAlbumError
         );
       }
     }
-  }, [state]);
-
-  useEffect(() => {
-    console.log("artistpage", state);
   }, [state]);
 
   return (
@@ -71,7 +67,7 @@ const ArtistPage = () => {
             <>{artistTracks && <Tracklist tracks={artistTracks} />}</>
           )}
 
-          <h3>Albums</h3>
+          <h3 className="my-8">Albums</h3>
           {albumError ? (
             <Error message={trackError} />
           ) : (

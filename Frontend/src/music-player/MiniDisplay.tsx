@@ -4,7 +4,7 @@ import { handleNext, setDuration } from "../stores/musicStore/musicSlice";
 import { RootState } from "../stores/configureStore";
 import { AudioProps } from "./MiniAudioPlayer";
 
-const MiniDisplayTrack = ({ audioRef, progressBarRef }: AudioProps) => {
+const MiniTrackDisplay = ({ audioRef, progressBarRef }: AudioProps) => {
   const dispatch = useDispatch();
 
   const currentTrack = useSelector(
@@ -65,4 +65,4 @@ const MiniDisplayTrack = ({ audioRef, progressBarRef }: AudioProps) => {
   );
 };
 
-export default MiniDisplayTrack;
+export default MiniTrackDisplay;

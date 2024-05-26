@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { IoPlay } from "react-icons/io5";
+import { IoPlay, IoPause } from "react-icons/io5";
 import { Track } from "../models/TracksResponse";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import {
@@ -29,6 +29,12 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
+  );
+  const currentTrack = useSelector(
+    (state: RootState) => state.musicStore.currentTrack
+  );
+  const isSomethingPlaying = useSelector(
+    (state: RootState) => state.musicStore.isPlaying
   );
   const favorites = useSelector((state: RootState) => state.user.favorites);
   const dispatch: AppDispatch = useDispatch();
@@ -118,14 +124,18 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
                   showDropdown={setShowDropdown}
                 />
               )}
-              <span className="rounded-full p-2 bg-orange absolute right-1 bottom-1 flex justify-center items-center">
-                <IoPlay
-                  className="cursor-pointer text-3xl"
-                  onClick={(e: React.MouseEvent<SVGElement>) => {
-                    e.stopPropagation();
-                    handlePlay(data);
-                  }}
-                />
+              <span className="rounded-full p-[6px] bg-orange absolute right-1 bottom-1 flex justify-center items-center">
+                {isSomethingPlaying && currentTrack.id === data.id ? (
+                  <IoPause className="cursor-pointer text-3xl" />
+                ) : (
+                  <IoPlay
+                    className="cursor-pointer text-3xl"
+                    onClick={(e: React.MouseEvent<SVGElement>) => {
+                      e.stopPropagation();
+                      handlePlay(data);
+                    }}
+                  />
+                )}
               </span>
             </>
           )}

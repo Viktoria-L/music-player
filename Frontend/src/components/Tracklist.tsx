@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../stores/configureStore";
-import { IoPlay } from "react-icons/io5";
+import { IoPlay, IoPause } from "react-icons/io5";
 import { formatTime } from "../utils/helperFunctions";
 import {
   setPlayStatus,
@@ -21,19 +20,16 @@ interface TracklistProps {
 
 export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
   const dispatch: AppDispatch = useDispatch();
-  // const tracks = useSelector(
-  //   (state: RootState) => state.musicStore.currentAlbum?.tracks
-  // );
   const favorites = useSelector((state: RootState) => state.user.favorites);
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-
-  useEffect(() => {
-    console.log("tracks", tracks);
-    console.log("favorites", favorites);
-    console.log("isAuthenticated", isAuthenticated);
-  }, [tracks, favorites, isAuthenticated]);
+  const currentTrack = useSelector(
+    (state: RootState) => state.musicStore.currentTrack
+  );
+  const isSomethingPlaying = useSelector(
+    (state: RootState) => state.musicStore.isPlaying
+  );
 
   const handlePlay = (index: number) => {
     if (tracks) {
@@ -71,13 +67,13 @@ export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Duration
+              Time
             </th>
             <th
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Name
+              Title
             </th>
             <th
               scope="col"
@@ -87,42 +83,52 @@ export const Tracklist: React.FC<TracklistProps> = ({ tracks }) => {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-500">
+        <tbody className="">
           {tracks &&
             tracks.map((track, index) => (
-              <tr key={track.id}>
+              <tr key={track.id} className="hover:bg-grey">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <IoPlay
-                      className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
-                      aria-hidden="true"
-                      onClick={() => handlePlay(index)}
-                    />
+                    {isSomethingPlaying && currentTrack.id === track.id ? (
+                      <IoPause className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange" />
+                    ) : (
+                      <IoPlay
+                        className="cursor-pointer hover:scale-150 text-3xl h-5 w-5 text-orange"
+                        onClick={() => handlePlay(index)}
+                      />
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {formatTime(track.duration)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{track.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap flex flex-col">
+                  <>
+                    <span className="text-md">{track.name}</span>
+                    <span className="text-sm">{track.artist_name}</span>
+                  </>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {isAuthenticated && favorites && isFavorite(track.id) ? (
-                    <GoHeartFill
-                      key={track.id}
-                      className="cursor-pointer text-2xl"
-                      onClick={(e: React.MouseEvent<SVGElement>) => {
-                        e.stopPropagation();
-                        removeFavorite(track.id);
-                      }}
-                    />
-                  ) : (
-                    <GoHeart
-                      className="cursor-pointer text-2xl"
-                      onClick={(e: React.MouseEvent<SVGElement>) => {
-                        e.stopPropagation();
-                        handleFavorite(track);
-                      }}
-                    />
-                  )}
+                  {isAuthenticated &&
+                    favorites &&
+                    (isFavorite(track.id) ? (
+                      <GoHeartFill
+                        key={track.id}
+                        className="cursor-pointer text-2xl"
+                        onClick={(e: React.MouseEvent<SVGElement>) => {
+                          e.stopPropagation();
+                          removeFavorite(track.id);
+                        }}
+                      />
+                    ) : (
+                      <GoHeart
+                        className="cursor-pointer text-2xl"
+                        onClick={(e: React.MouseEvent<SVGElement>) => {
+                          e.stopPropagation();
+                          handleFavorite(track);
+                        }}
+                      />
+                    ))}
                 </td>
               </tr>
             ))}

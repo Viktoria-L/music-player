@@ -15,7 +15,12 @@ const FavoritesPage = () => {
 
         <div className="flex flex-wrap my-8 w-full">
           {tracks.map((data: Track) => (
-            <AlbumDisplay data={data} basePath="track" display="flex" />
+            <AlbumDisplay
+              data={data}
+              basePath="track"
+              display="flex"
+              key={data.id}
+            />
           ))}
         </div>
       </div>

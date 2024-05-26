@@ -24,6 +24,7 @@ import PlaylistPage from "./pages/playlist/Playlist";
 import { useSelector } from "react-redux";
 import { RootState } from "./stores/configureStore";
 import ArtistPage from "./pages/artist/ArtistPage";
+import About from "./pages/About";
 
 function App() {
   const isAuthenticated = useSelector(
@@ -72,6 +73,7 @@ function App() {
           }
         ></Route>
         <Route path="/search/:query" element={<SearchResults />} />
+        <Route path="/about" element={<About />} />
       </Route>
     )
   );

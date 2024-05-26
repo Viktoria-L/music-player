@@ -13,15 +13,6 @@ export interface Artist {
   albums?: Album[];
 }
 
-// export interface ArtistAlbum {
-//   id: string;
-//   name: string;
-//   website: string;
-//   joindate: string;
-//   image: string;
-//   albums: Album[];
-// }
-
 interface Album {
   id: string;
   name: string;
@@ -33,8 +24,3 @@ export interface ArtistsApiResponse {
   headers: ApiHeaders;
   results: Artist[];
 }
-
-// export interface ArtistAlbumApiResponse {
-//   headers: ApiHeaders;
-//   results: ArtistAlbum[];
-// }

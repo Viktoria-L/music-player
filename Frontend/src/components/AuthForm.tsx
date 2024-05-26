@@ -1,20 +1,25 @@
 import { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../stores/authStore/authThunk";
-import { AppDispatch } from "../stores/configureStore";
+import { AppDispatch, RootState } from "../stores/configureStore";
 import { fetchFavorites, fetchPlaylists } from "../stores/userStore/userThunk";
 
-function AuthForm() {
+export const AuthForm = () => {
   const dispatch: AppDispatch = useDispatch();
-
+  const [error, setError] = useState<string>("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+  const authError = useSelector((state: RootState) => state.auth.error);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!user || !pass) {
+      setError("All fields are required to login.");
+      return;
+    }
     await dispatch(login({ user, pass }));
     dispatch(fetchFavorites());
     dispatch(fetchPlaylists());
@@ -22,6 +27,10 @@ function AuthForm() {
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!firstname || !lastname || !user || !pass) {
+      setError("All fields are required for registration.");
+      return;
+    }
     dispatch(register({ firstname, lastname, user, pass }));
   };
 
@@ -59,6 +68,10 @@ function AuthForm() {
           onChange={(e) => setPass(e.target.value)}
           placeholder="Password"
         />
+        {error && <div className="error my-1 text-red-600">{error}</div>}
+        {authError && (
+          <div className="error my-1 text-red-600">{authError}</div>
+        )}
         <button type="submit" className="submitBtn">
           {isRegistering ? "Register" : "Log in"}
         </button>
@@ -74,6 +87,4 @@ function AuthForm() {
       </form>
     </>
   );
-}
-
-export default AuthForm;
+};

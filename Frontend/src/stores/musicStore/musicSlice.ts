@@ -118,8 +118,6 @@ const musicSlice = createSlice({
       state.trackIndex = index;
       if (tracks.length > 0) {
         state.currentTrack = tracks[index];
-        // tracks[index >= 0 && index < tracks.length ? index : 0];
-        // state.trackIndex = index;
       }
     },
     setSingleTrack: (state, action: PayloadAction<Track>) => {

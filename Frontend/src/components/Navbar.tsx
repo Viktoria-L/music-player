@@ -189,8 +189,8 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
       {isAuthenticated ? (
         <button
           className={`${
-            openNav ? "w-24" : "w-0 bg-transparent"
-          } bg-orange hover:opacity-70 mb-24 self-center rounded-full`}
+            openNav ? "w-24 self-center" : "w-0 bg-transparent"
+          } bg-orange hover:opacity-70 mb-24 rounded-full`}
           onClick={() => dispatch(logout())}
         >
           {openNav ? "Log out" : <BiLogOut className="text-2xl" />}
@@ -198,8 +198,8 @@ export const Navbar: React.FC<NavbarProps> = ({ openNav, setOpenNav }) => {
       ) : (
         <button
           className={`${
-            openNav ? "w-24" : "w-0 bg-transparent"
-          } bg-orange hover:opacity-70 mb-24 self-center rounded-full`}
+            openNav ? "w-24 self-center" : "w-0 bg-transparent"
+          } bg-orange hover:opacity-70 mb-24  rounded-full`}
           onClick={() => navigate("/login")}
         >
           {openNav ? "Log in" : <BiLogIn className="text-2xl" />}

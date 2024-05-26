@@ -36,7 +36,9 @@ export const login = createAsyncThunk<
     });
     const data: AuthResponse = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Unable to login");
+      throw new Error(
+        data.message || "An unexpected error occurred, please try again"
+      );
     }
     return data;
   } catch (error) {
