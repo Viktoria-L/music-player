@@ -1,4 +1,6 @@
-# EN MUSIKSTREAMING-TJÄNST I REACT MED MUSIK FRÅN JAMENDO MUSIC API
+# EN MUSIKSTREAMING-TJÄNST I REACT
+
+## MED MUSIK FRÅN JAMENDO MUSIC API
 
 En musikspelare byggt med Typescript och React i frontend och node.js i backend.
 Frontenden hämtar och renderar ut musik från Jamendo som tillhandahåller royaltyfri musik under creative common-licenser.
