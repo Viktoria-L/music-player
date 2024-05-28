@@ -41,7 +41,7 @@ const MiniAudioPlayer = () => {
             currentTrack ? "flex" : "hidden"
           } h-20 items-start justify-start`}
         >
-          {fullView ? (
+          {/* {fullView ? (
             <FaChevronDown
               className="relative cursor-pointer top-2 -right-2 rounded-full p-1 text-2xl hover:bg-orange"
               onClick={toggleView}
@@ -51,7 +51,7 @@ const MiniAudioPlayer = () => {
               className="relative cursor-pointer top-2 -right-2 rounded-full p-1 text-2xl hover:bg-orange"
               onClick={toggleView}
             />
-          )}
+          )} */}
         </div>
         <div className="flex flex-col w-full items-end sm:items-center justify-evenly">
           <PlayControls {...{ audioRef, progressBarRef, tracks }} />

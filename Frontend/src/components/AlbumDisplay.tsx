@@ -59,6 +59,10 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
     dispatch(setPlayStatus(true));
   };
 
+  const handlePause = () => {
+    dispatch(setPlayStatus(false));
+  };
+
   const handleFavorite = async () => {
     await dispatch(addToFavorites(data));
     dispatch(fetchFavorites());
@@ -126,7 +130,13 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
               )}
               <span className="rounded-full p-[6px] bg-orange absolute right-1 bottom-1 flex justify-center items-center">
                 {isSomethingPlaying && currentTrack.id === data.id ? (
-                  <IoPause className="cursor-pointer text-3xl" />
+                  <IoPause
+                    className="cursor-pointer text-3xl"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePause();
+                    }}
+                  />
                 ) : (
                   <IoPlay
                     className="cursor-pointer text-3xl"

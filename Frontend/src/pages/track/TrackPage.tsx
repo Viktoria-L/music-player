@@ -34,7 +34,7 @@ const TrackPage = () => {
       ) : (
         <>
           <div className="my-5 flex items-end gap-5">
-            <img src={state.image} className="w-64 h-64"></img>
+            <img src={state.image} className="image"></img>
             <div className="flex flex-col justify-start items-start">
               <h2 className="text-4xl font-bold tracking-wider">
                 {state.name}

@@ -59,7 +59,9 @@ const Home = () => {
   return (
     <>
       <div className="home wrapper">
-        <h2 className="text-4xl font-bold tracking-wider">Welcome back!</h2>
+        <h2 className="text-4xl font-bold tracking-wider">
+          {isAuthenticated ? "Welcome back!" : "Welcome!"}
+        </h2>
         <p className="tracking-wide mt-2">Explore new music everyday</p>
 
         {albumError ? (

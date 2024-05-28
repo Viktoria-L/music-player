@@ -41,7 +41,7 @@ const AlbumPage = () => {
             <div className="my-5 flex items-end gap-5">
               <img
                 src={state ? state.image : album?.image}
-                className="w-64 h-64"
+                className="image"
               ></img>
               <div className="flex flex-col justify-start items-start">
                 <h2 className="text-4xl font-bold tracking-wider">
