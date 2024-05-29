@@ -5,10 +5,12 @@
     "dev": "nodemon backend/server.js",
     "client": "cd frontend && npm start",
     "server": "nodemon --watch backend backend/server.js",
-    "dev:all": "concurrently \"npm run server\" \"npm run client\""
+    "dev:all": "concurrently \"npm run server\" \"npm run client\"",
+    "deploy": "gh-pages -d Frontend"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "gh-pages": "^6.1.1",
     "nodemon": "^3.1.0"
   }
 }
