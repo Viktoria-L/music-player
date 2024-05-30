@@ -5,7 +5,7 @@ import { VolumeControls } from "./VolumeControls";
 import MiniTrackDisplay from "./MiniDisplay";
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/configureStore";
-import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
+import { FaChevronDown } from "react-icons/fa6";
 import AudioPlayer from "./maximizedPlayer/AudioPlayer";
 
 export interface AudioProps {
