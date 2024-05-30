@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14" # Eller den version du använder
+          node-version: "20" # Eller den version du använder
 
       - name: Install dependencies
         run: cd frontend && npm install
