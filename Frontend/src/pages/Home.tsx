@@ -69,7 +69,7 @@ const Home = () => {
             <h3 className="font-semibold text-2xl tracking-wide mb-4">
               Featured Albums
             </h3>
-            <p>Could not load albums</p>
+            <p>Could not load albums.</p>
           </div>
         ) : (
           <Featured entity={EntityType.Albums} />
@@ -79,7 +79,7 @@ const Home = () => {
             <h3 className="font-semibold text-2xl tracking-wide mb-4">
               Featured Tracks
             </h3>
-            <p>Could not load tracks</p>
+            <p>Could not load tracks.</p>
           </div>
         ) : (
           <Featured entity={EntityType.Tracks} />
