@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../stores/configureStore";
@@ -32,13 +32,13 @@ const GenreSelector = () => {
         <h3 className="font-semibold text-2xl tracking-wide mb-4">
           Find your genre
         </h3>
-        <Link
+        {/* <Link
           to="/featured"
           state={{}}
           className="text-orange font-semibold text-[10px] md:text-sm"
         >
           Show all
-        </Link>
+        </Link> */}
       </div>
       <div className="flex gap-4 flex-wrap mb-4">
         <span
