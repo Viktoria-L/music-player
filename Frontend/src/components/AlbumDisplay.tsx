@@ -76,8 +76,12 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
 
   return (
     <div key={id} className="p-3 hover:bg-grey rounded-xl relative group">
-      <div className={`${display === "grid" ? "w-full" : "w-48"}`}>
-        <div className={`${display === "grid" ? "w-full" : "w-48"} relative`}>
+      <div className={`${display === "grid" ? "w-full" : "w-24 sm:w-48"}`}>
+        <div
+          className={`${
+            display === "grid" ? "w-full" : "w-24 sm:w-48"
+          } relative`}
+        >
           <a
             href={`${data.shareurl}`}
             target="_blank"
@@ -137,10 +141,10 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
                   showDropdown={setShowDropdown}
                 />
               )}
-              <span className="rounded-full p-[6px] bg-orange absolute right-1 bottom-1 flex justify-center items-center">
+              <span className="rounded-full p-[4px] sm:p-[6px] bg-orange absolute right-1 bottom-1 flex justify-center items-center ">
                 {isSomethingPlaying && currentTrack.id === data.id ? (
                   <IoPause
-                    className="cursor-pointer text-3xl"
+                    className="cursor-pointer text-xl sm:text-3xl"
                     onClick={(e) => {
                       e.stopPropagation();
                       handlePause();
@@ -148,7 +152,7 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
                   />
                 ) : (
                   <IoPlay
-                    className="cursor-pointer text-3xl"
+                    className="cursor-pointer text-xl sm:text-3xl"
                     onClick={(e: React.MouseEvent<SVGElement>) => {
                       e.stopPropagation();
                       handlePlay(data);
@@ -160,7 +164,9 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
           )}
           <img
             src={image ? image : nocover}
-            className={`${display === "grid" ? "w-full" : "w-48"} rounded-xl`}
+            className={`${
+              display === "grid" ? "w-full" : "w-24 sm:w-48"
+            } rounded-xl`}
           ></img>
         </div>
 
