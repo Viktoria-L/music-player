@@ -23,6 +23,7 @@ interface MusicState {
   tracks: Track[];
   popularTracks: Track[];
   featuredTracks: Track[];
+  genreTracks: Track[];
   singleTrack: TrackInfo;
   currentTrack: TrackInfo;
   featuredAlbums: Album[];
@@ -60,6 +61,7 @@ const initialState: MusicState = {
   tracks: [],
   popularTracks: [],
   featuredTracks: [],
+  genreTracks: [],
   singleTrack: {
     id: "",
     image: "",
@@ -128,6 +130,9 @@ const musicSlice = createSlice({
     },
     setPopularTracks: (state, action: PayloadAction<Track[]>) => {
       state.popularTracks = action.payload;
+    },
+    setGenreTracks: (state, action: PayloadAction<Track[]>) => {
+      state.genreTracks = action.payload;
     },
     setFeaturedAlbums: (state, action: PayloadAction<Album[]>) => {
       state.featuredAlbums = action.payload;
@@ -223,6 +228,7 @@ export const {
   setCurrentAlbum,
   setCurrentTrack,
   setPopularTracks,
+  setGenreTracks,
   setSingleTrack,
   resetTracks,
   togglePlay,

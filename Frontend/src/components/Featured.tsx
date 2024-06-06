@@ -59,13 +59,13 @@ export const Featured = ({ entity }: { entity: EntityType }) => {
           Show all
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full">
+      <div className="flex flex-wrap w-full">
         {featuredData.slice(0, 5).map((data, i) => (
           <AlbumDisplay
             key={i}
             data={data}
             basePath={basePath}
-            display="grid"
+            display="flex"
           />
         ))}
       </div>

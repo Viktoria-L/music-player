@@ -42,7 +42,7 @@ const Home = () => {
     if (featureTracks.length === 0) {
       fetchDataFromJamendo<Track[]>(
         "tracks",
-        { limit: "10", featured: 1 },
+        { limit: "10", featured: 1, tags: "electronic" },
         dispatch,
         setFeaturedTracks,
         setTrackError

@@ -1,7 +1,31 @@
 import { Link } from "react-router-dom";
-import { IoPlay } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../stores/configureStore";
+import { fetchDataFromJamendo } from "../utils/http";
+import { Track } from "../models/TracksResponse";
+import { setGenreTracks } from "../stores/musicStore/musicSlice";
+import AlbumDisplay from "./AlbumDisplay";
 
 const GenreSelector = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const [trackError, setTrackError] = useState<string>("");
+  const [parameter, setParameter] = useState<string>("");
+
+  const genreTracks = useSelector(
+    (state: RootState) => state.musicStore.genreTracks
+  );
+
+  useEffect(() => {
+    fetchDataFromJamendo<Track[]>(
+      "tracks",
+      { limit: "10", featured: 1, groupby: "artist_id", tags: parameter },
+      dispatch,
+      setGenreTracks,
+      setTrackError
+    );
+  }, [parameter]);
+
   return (
     <div className="mt-8">
       <div className="flex justify-between w-full items-center">
@@ -13,28 +37,49 @@ const GenreSelector = () => {
         </Link>
       </div>
       <div className="flex gap-4 flex-wrap mb-4">
-        <span className="rounded-full text-sm bold py-2 px-4 self-start bg-slate-500 text-white">
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          onClick={() => setParameter("electronic")}
+        >
           Electronic
         </span>
-        <span className="rounded-full text-sm bold py-2 px-4 self-start bg-slate-500 text-white">
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          onClick={() => setParameter("pop")}
+        >
+          Pop
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          onClick={() => setParameter("lounge")}
+        >
+          Lounge
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          onClick={() => setParameter("rock")}
+        >
           Rock
         </span>
-        <span className="rounded-full text-sm bold py-2 px-4 self-start bg-slate-500 text-white">
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          onClick={() => setParameter("hiphop")}
+        >
           Hiphop
         </span>
       </div>
-      <div className="flex flex-wrap gap-5 w-full">
-        {/* {featuredData.slice(0, 4).map((data) => ( */}
-        <div className="w-48">
-          <div className="w-48 relative">
-            <IoPlay className="cursor-pointer text-6xl absolute right-1 bottom-1" />
-            <img src="" className="h-48 w-48 rounded-xl"></img>
+      <div className="flex flex-wrap w-full">
+        {trackError ? (
+          <div className="flex flex-col w-full">
+            <p>Could not load tracks.</p>
           </div>
-
-          <Link to={`/`}>
-            <p className="text-wrap mt-2">Album</p>
-          </Link>
-        </div>
+        ) : (
+          genreTracks &&
+          genreTracks.length > 0 &&
+          genreTracks.map((track) => (
+            <AlbumDisplay data={track} basePath={"track"} display={"flex"} />
+          ))
+        )}
       </div>
     </div>
   );
