@@ -17,6 +17,7 @@ import {
   setPlayStatus,
 } from "../stores/musicStore/musicSlice";
 import { nocover } from "../assets/image/images";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 interface DisplayProps {
   data: Track;
@@ -74,9 +75,17 @@ const AlbumDisplay: React.FC<DisplayProps> = ({ data, basePath, display }) => {
   };
 
   return (
-    <div key={id} className="p-3 hover:bg-grey rounded-xl">
+    <div key={id} className="p-3 hover:bg-grey rounded-xl relative group">
       <div className={`${display === "grid" ? "w-full" : "w-48"}`}>
         <div className={`${display === "grid" ? "w-full" : "w-48"} relative`}>
+          <a
+            href={`${data.shareurl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            <IoMdInformationCircleOutline />
+          </a>
           {basePath === "track" && (
             <>
               {isAuthenticated &&

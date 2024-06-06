@@ -33,7 +33,7 @@ const Artists = () => {
         {error ? (
           <Error message={error} />
         ) : (
-          <div className="flex flex-wrap gap-5 w-full">
+          <div className="flex flex-wrap gap-6 w-full">
             {artists.map((data) => {
               if (data.image) {
                 return (

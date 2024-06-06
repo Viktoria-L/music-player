@@ -32,40 +32,68 @@ const GenreSelector = () => {
         <h3 className="font-semibold text-2xl tracking-wide mb-4">
           Find your genre
         </h3>
-        <Link to="/featured" state={{}}>
+        <Link
+          to="/featured"
+          state={{}}
+          className="text-orange font-semibold text-[10px] md:text-sm"
+        >
           Show all
         </Link>
       </div>
       <div className="flex gap-4 flex-wrap mb-4">
         <span
-          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
           onClick={() => setParameter("electronic")}
         >
           Electronic
         </span>
         <span
-          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
+          onClick={() => setParameter("techno")}
+        >
+          Techno
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
+          onClick={() => setParameter("house")}
+        >
+          House
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
           onClick={() => setParameter("pop")}
         >
           Pop
         </span>
         <span
-          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
-          onClick={() => setParameter("lounge")}
-        >
-          Lounge
-        </span>
-        <span
-          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
           onClick={() => setParameter("rock")}
         >
           Rock
         </span>
         <span
-          className="cursor-pointer rounded-full text-sm bold py-2 px-4 self-start bg-orange text-white"
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
           onClick={() => setParameter("hiphop")}
         >
           Hiphop
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
+          onClick={() => setParameter("trance")}
+        >
+          Trance
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
+          onClick={() => setParameter("reggae")}
+        >
+          Reggae
+        </span>
+        <span
+          className="cursor-pointer rounded-full text-sm bold py-1 px-3 self-start bg-orange text-white"
+          onClick={() => setParameter("metal")}
+        >
+          Metal
         </span>
       </div>
       <div className="flex flex-wrap w-full">
